@@ -1,182 +1,774 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROCK STYLE LIFE | E-Commerce de Remeras de Nicho</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Enlace a fuentes de Google (opcional, usar fuentes sans-serif similares) -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SS - Smoke Sale E-Commerce</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smoke Sale E-Commerce - Rock &amp; Geek Tees</title>
+<link href="[https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;display=swap](https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;display=swap)" rel="stylesheet">
+<style>
+    /* CSS Styles based on the image_0.png layout and game theme */
+    :root {
+        --bg-dark: #1a1a1a;
+        --accent-color: #8a2be2; /* Violet from image_0.png */
+        --panel-bg: rgba(0, 0, 0, 0.7);
+        --glow-color: rgba(138, 43, 226, 0.5);
+        --text-base: #eee;
+        --pixel-font: 'Press Start 2P', cursive;
+        --terminal-font: 'VT323', monospace;
+    }
+
+    body {
+        background-color: var(--bg-dark);
+        background-image: url('data:image/png;base64,...(pixel pattern data)...'), url('path/to/brick_texture.jpg');
+        background-blend-mode: color-burn, normal;
+        color: var(--text-base);
+        font-family: var(--terminal-font);
+        margin: 0;
+        overflow-x: hidden;
+    }
+
+    /* Game-like UI elements */
+    .game-panel {
+        background-color: var(--panel-bg);
+        border: 4px solid var(--accent-color);
+        border-image: linear-gradient(to right, violet, indigo, blue) 1;
+        box-shadow: 0 0 10px var(--glow-color);
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    .pixel-button {
+        font-family: var(--pixel-font);
+        background-color: transparent;
+        border: 2px solid var(--accent-color);
+        color: var(--accent-color);
+        text-transform: uppercase;
+        padding: 5px 15px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        image-rendering: pixelated;
+    }
+
+    .pixel-button:hover {
+        background-color: var(--accent-color);
+        color: #fff;
+        box-shadow: 0 0 8px #fff;
+    }
+
+    /* --- Upper Navigation --- */
+    #main-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 5%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: rgba(0, 0, 0, 0.9);
+        border-bottom: 2px solid var(--accent-color);
+    }
+
+    #logo {
+        color: #fff;
+        text-shadow: 0 0 10px violet;
+        transform: rotate(-15deg);
+    }
+
+    #logo h1 {
+        font-family: var(--pixel-font);
+        font-size: 2em;
+        margin: 0;
+    }
+
+    #logo-rs {
+        display: none;
+    }
+
+    #logo-ss {
+        display: block;
+    }
+
+    #menu-links ul {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+        margin: 0;
+        padding: 0;
+    }
+
+    #menu-links a {
+        text-decoration: none;
+        color: inherit;
+        font-family: var(--pixel-font);
+        font-size: 0.8em;
+        transition: color 0.2s;
+    }
+
+    #menu-links a:hover {
+        color: #fff;
+        text-shadow: 0 0 10px #fff;
+    }
+
+    #search-bar {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    #search-input {
+        background-color: transparent;
+        border: 2px solid violet;
+        color: violet;
+        font-family: var(--terminal-font);
+        padding: 5px 10px;
+        border-radius: 4px;
+        width: 200px;
+    }
+
+    #search-scanline {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(138, 43, 226, 0.1) 50%, rgba(0,0,0,0) 50%);
+        background-size: 100% 4px;
+        opacity: 0.2;
+    }
+
+    #quick-cart {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+    }
+
+    #cart-status-grid {
+        position: absolute;
+        top: -10px;
+        right: 40px;
+        background-color: gold;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        box-shadow: 0 0 10px gold;
+    }
+
+    #cart-link {
+        color: #fff;
+        font-size: 1.5em;
+        text-shadow: 0 0 10px #fff;
+    }
+
+    /* --- Hero Slider (Carrusel) --- */
+    #hero-slider {
+        position: relative;
+        width: 100vw;
+        height: 80vh;
+        margin-top: -80px; /* Overlap with nav for immersive effect */
+        overflow: hidden;
+    }
+
+    .slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .slide.active {
+        opacity: 1;
+    }
+
+    .hero-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        padding: 20px;
+    }
+
+    .slide h2 {
+        font-family: var(--pixel-font);
+        color: violet;
+        text-shadow: 0 0 15px violet;
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
+
+    .hero-cta {
+        display: inline-block;
+    }
+
+    #slider-controls {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .slider-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+    }
+
+    .slider-dot.active {
+        background-color: #fff;
+    }
+
+    /* --- Dynamic Cart Sidebar --- */
+    #inventory-panel {
+        position: fixed;
+        right: -400px;
+        top: 80px;
+        width: 380px;
+        height: calc(100vh - 120px);
+        transition: right 0.5s ease;
+        z-index: 1001;
+        overflow-y: auto;
+    }
+
+    #inventory-panel.active {
+        right: 10px;
+    }
+
+    #inv-title {
+        color: gold;
+        font-family: var(--pixel-font);
+        text-align: center;
+    }
+
+    #inv-items {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .inv-item {
+        display: flex;
+        gap: 10px;
+        border-bottom: 1px solid var(--accent-color);
+        padding-bottom: 5px;
+    }
+
+    .inv-item-img {
+        width: 60px;
+        height: 60px;
+        border: 1px solid #fff;
+    }
+
+    .inv-item-details h4 {
+        font-family: var(--pixel-font);
+        font-size: 0.8em;
+        margin: 0;
+    }
+
+    .inv-item-details p {
+        margin: 0;
+        font-family: var(--pixel-font);
+        font-size: 0.7em;
+    }
+
+    .confirm-order-btn {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    #checkout-form {
+        display: none;
+        margin-top: 20px;
+    }
+
+    #checkout-form input, #checkout-form select {
+        width: calc(100% - 20px);
+        margin-bottom: 10px;
+        padding: 8px;
+        background-color: transparent;
+        border: 2px solid violet;
+        color: violet;
+        font-family: var(--terminal-font);
+    }
+
+    #close-cart {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        cursor: pointer;
+    }
+
+    /* --- Main Section --- */
+    #main-content {
+        margin-top: 80px;
+        padding: 50px 5%;
+    }
+
+    #gallery-title {
+        color: violet;
+        font-family: var(--pixel-font);
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 50px;
+        text-shadow: 0 0 10px violet;
+    }
+
+    /* Featured Products Gallery */
+    #product-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+    .product-card {
+        border: 4px solid var(--accent-color);
+        border-image: linear-gradient(to right, violet, indigo, blue) 1;
+        transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px var(--accent-color);
+    }
+
+    .product-card-img {
+        width: 100%;
+        image-rendering: pixelated;
+    }
+
+    .product-card-info {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .product-card-info h3 {
+        font-family: var(--pixel-font);
+        font-size: 1em;
+        margin: 0;
+    }
+
+    .product-card-info p {
+        font-family: var(--pixel-font);
+        font-size: 0.9em;
+        margin: 5px 0 10px;
+    }
+
+    /* --- Footer --- */
+    #main-footer {
+        background-color: rgba(0, 0, 0, 0.9);
+        border-top: 2px solid var(--accent-color);
+        padding: 30px 5%;
+        margin-top: 50px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    #main-footer h4 {
+        color: #fff;
+        font-family: var(--pixel-font);
+        font-size: 0.9em;
+        margin-bottom: 15px;
+    }
+
+    #main-footer ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    #main-footer a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.2s;
+        font-size: 1.1em;
+    }
+
+    #main-footer a:hover {
+        color: violet;
+    }
+
+    #social-links {
+        font-size: 1.5em;
+        display: flex;
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+    #copyright {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.8em;
+        opacity: 0.7;
+    }
+
+    /* --- Responsive adjustments --- */
+    @media (max-width: 768px) {
+        #menu-links {
+            display: none;
+        }
+
+        #hero-slider h2 {
+            font-size: 1.8em;
+        }
+
+        #product-gallery {
+            grid-template-columns: 1fr;
+        }
+
+        #inventory-panel {
+            width: 90vw;
+            right: -100vw;
+        }
+
+        #inventory-panel.active {
+            right: 5vw;
+        }
+    }
+</style>
 </head>
 <body>
 
-    <!-- Header / Barra Superior con Estilo Pixel -->
-    <header>
-        <div class="header-container">
-            <a href="#" class="logo">
-                <!-- Reemplazar con imagen de logo RS skull original -->
-                <img src="path_to_rs_skull_logo.png" alt="RS Skull Logo" class="pixel-border">
-            </a>
-            <nav class="pixel-nav">
-                <a href="#">HOME</a>
-                <a href="#">BANDAS DE ROCK</a>
-                <a href="#" class="active">ANIME</a>
-                <a href="#">MANGA</a>
-                <a href="#">ROCKABILLY</a>
-                <div class="dropdown">
-                    <a href="#" class="nav-icon checkpoint-blue">NOVEDADES</a>
-                    <!-- El checkpoint azul es el ícono del dropdown -->
-                </div>
-            </nav>
-            <div class="header-tools">
-                <a href="#" class="search-icon">🔍</a>
-                <a href="#" class="cart-icon">🛒 <span class="cart-count">3</span></a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Sección Hero / Carrusel Principal -->
-    <section class="hero-carousel">
-        <div class="carousel-container">
-            <button class="carousel-prev pixel-arrow"></button>
-            <div class="carousel-slide grunge-border">
-                <img src="path_to_model_acdc_graffiti.jpg" alt="Carrusel Principal: Remeras de Bandas">
-                <div class="carousel-caption">
-                    <h1>ROCK BAND T-SHIRTS - CLASSIC & RARE</h1>
-                </div>
-            </div>
-            <button class="carousel-next pixel-arrow"></button>
-            <div class="carousel-pagination">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contenedor Principal (Rejilla de Productos y Panel Lateral) -->
-    <main class="main-content">
-        
-        <!-- Rejilla de Productos Destacados -->
-        <section class="featured-products">
-            <h2>REMERAS DESTACADAS</h2>
-            <div class="products-grid">
-                <!-- Replicar estas tarjetas para cada remera (Nirvana, Dragon Ball, Berserk, Misfits) -->
-                <article class="product-card">
-                    <img src="path_to_acdc_tshirt.jpg" alt="Remera AC/DC">
-                    <h3>ROCK BAND T-SHIRT (AC/DC)</h3>
-                    <p class="price">$14.99</p>
-                    <button class="pixel-btn">AÑADIR AL CARRITO</button>
-                </article>
-                <article class="product-card">
-                    <img src="path_to_dragonball_tshirt.jpg" alt="Remera Dragon Ball">
-                    <h3>ANIME T-SHIRT (DRAGON BALL)</h3>
-                    <p class="price">$20.99</p>
-                    <button class="pixel-btn">AÑADIR AL CARRITO</button>
-                </article>
-                <!-- ... más tarjetas de producto ... -->
-            </div>
-        </section>
-
-        <!-- Panel Lateral (Aside) -->
-        <aside class="sidebar-content">
-            <div class="goth-photo-container">
-                <img src="path_to_goth_model.jpg" alt="Estilo Goth">
-            </div>
-            <div class="accessories-panel grunge-border">
-                <h3>Accesories</h3>
-                <div class="accessories-grid">
-                    <article class="accessory-card">
-                        <img src="path_to_necklace1.jpg" alt="Collar Calavera">
-                        <button class="small-pixel-btn">SHOP NOW ></button>
-                    </article>
-                    <article class="accessory-card">
-                        <img src="path_to_necklace2.jpg" alt="Collar Calavera 2">
-                        <button class="small-pixel-btn">SHOP NOW ></button>
-                    </article>
-                    <!-- ... más accesorios ... -->
-                </div>
-            </div>
-        </aside>
-    </main>
-
-    <!-- Sección de Comunidad / Galería #ROCKSTYLELIFE -->
-    <section class="community-gallery">
-        <h3>#ROCKSTYLELIFE</h3>
-        <div class="gallery-row">
-            <!-- Replicar estas para las 6 fotos pequeñas -->
-            <img src="path_to_gallery_photo1.jpg" alt="Community Photo 1">
-            <img src="path_to_gallery_photo2.jpg" alt="Community Photo 2">
-            <!-- ... más fotos ... -->
-        </div>
-    </section>
-
-    <!-- Sidebar del Carrito (Desplegable) -->
-    <div class="cart-sidebar">
-        <h4>Carrito Rápido (3 artículos)</h4>
-        <div class="cart-items">
-            <!-- Ejemplo de un artículo en el carrito -->
-            <article class="cart-item">
-                <img src="path_to_acdc_tshirt.jpg" alt="T-shirt en carrito">
-                <div class="item-details">
-                    <p>Rock Band T-Shirt (AC/DC)</p>
-                    <p>$14.99</p>
-                </div>
-                <button class="remove-item">X</button>
-            </article>
-            <!-- ... más artículos ... -->
-        </div>
-        <div class="cart-summary">
-            <p>Subtotal: <span>$14.99</span></p>
-            <p>Total: <span>$14.99</span></p>
-        </div>
-        <button class="pixel-btn checkout-btn">AÑADIR AL CARRITO</button>
-        <!-- Nota: He mantenido el texto "Añadir al carrito" en el botón de checkout como en el diseño de referencia, aunque funcionalmente suele ser "Pagar" o "Checkout". -->
+<!-- Upper Navigation -->
+<nav id="main-nav">
+    <div id="logo">
+        <h1 id="logo-ss">SS</h1>
+        <h1 id="logo-rs">RS</h1>
     </div>
-
-    <!-- Icono de Chat Flotante -->
-    <a href="#" class="floating-chat">
-        💬
-    </a>
-
-    <!-- Pie de Página (Footer) -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-col">
-                <h5>HELP & INFO</h5>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5>SHIPPING</h5>
-                <ul>
-                    <li><a href="#">Shipping</a></li>
-                    <li><a href="#">Customs Accesories</a></li>
-                    <li><a href="#">Returns</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5>POLICIES</h5>
-                <ul>
-                    <li><a href="#">Shipping & Payments</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                </ul>
-            </div>
-            <div class="footer-social">
-                <a href="#">F</a>
-                <a href="#">X</a>
-                <a href="#">I</a>
-                <a href="#">Y</a>
-            </div>
-            <p class="copyright">© Copyright 2024 Rock Style Life. All rights reserved.</p>
+    <div id="menu-links">
+        <ul>
+            <li><a href="#">INICIO</a></li>
+            <li><a href="#">BANDAS</a></li>
+            <li><a href="#">ANIME</a></li>
+            <li><a href="#">MANGA</a></li>
+            <li><a href="#">ROCKABILLY</a></li>
+            <li><a href="#">OFERTAS</a></li>
+            <li><a href="#">CONTACTO</a></li>
+        </ul>
+    </div>
+    <div id="quick-cart">
+        <div id="search-bar">
+            <input type="text" id="search-input" placeholder="BUSCAR POR NOMBRE, CÓDIGO...">
+            <div id="search-scanline"></div>
         </div>
-    </footer>
+        <div id="cart-status-grid"></div>
+        <a href="#" id="cart-link"><i class="fas fa-shopping-cart"></i></a>
+    </div>
+</nav>
+
+<!-- Hero Carrusel (5 Slides for example) -->
+<header id="hero-slider">
+    <div class="slide active" style="background-image: url('data:image/png;base64,...(acdc_slide_data)...')">
+        <div class="hero-content">
+            <h2>NEW ROCK ARRIVALS</h2>
+            <button class="pixel-button hero-cta">VER COLECCIÓN</button>
+        </div>
+    </div>
+    <div class="slide" style="background-image: url('data:image/png;base64,...(anime_slide_data)...')">
+        <div class="hero-content">
+            <h2>LEGENDARY ANIME GEAR</h2>
+            <button class="pixel-button hero-cta">COMPRAR AHORA</button>
+        </div>
+    </div>
+    <div class="slide" style="background-image: url('data:image/png;base64,...(manga_slide_data)...')">
+        <div class="hero-content">
+            <h2>RARE MANGA RELEASES</h2>
+            <button class="pixel-button hero-cta">EXPLORAR</button>
+        </div>
+    </div>
+    <div class="slide" style="background-image: url('data:image/png;base64,...(rockabilly_slide_data)...')">
+        <div class="hero-content">
+            <h2>REBEL ROCKABILLY STYLE</h2>
+            <button class="pixel-button hero-cta">REBEL STYLE</button>
+        </div>
+    </div>
+    <div class="slide" style="background-image: url('data:image/png;base64,...(casual_slide_data)...')">
+        <div class="hero-content">
+            <h2>DAILY STREET GEAR</h2>
+            <button class="pixel-button hero-cta">GET READY</button>
+        </div>
+    </div>
+    <div id="slider-controls">
+        <div class="slider-dot active"></div>
+        <div class="slider-dot"></div>
+        <div class="slider-dot"></div>
+        <div class="slider-dot"></div>
+        <div class="slider-dot"></div>
+    </div>
+</header>
+
+<!-- Dynamic Cart Sidebar -->
+<aside id="inventory-panel" class="game-panel">
+    <div id="close-cart"><i class="fas fa-times"></i></div>
+    <h3 id="inv-title">INVENTARIO: <span id="cart-item-count">0</span> ITEMS</h3>
+    <div id="inv-items">
+        <!-- Cart items will be added here dynamically -->
+    </div>
+    <button class="pixel-button confirm-order-btn">CONFIRMAR PEDIDO</button>
+    <div id="checkout-form">
+        <input type="text" id="chk-nombre" placeholder="Nombre">
+        <input type="text" id="chk-apellido" placeholder="Apellido">
+        <input type="text" id="chk-ciudad" placeholder="Ciudad">
+        <input type="text" id="chk-direccion" placeholder="Dirección">
+        <input type="email" id="chk-email" placeholder="Correo electrónico">
+        <select id="chk-pago">
+            <option value="">Método de Pago</option>
+            <option value="transferencia">Transferencia Bancaria</option>
+            <option value="tarjeta">Tarjeta de Crédito/Débito</option>
+            <option value="otros">Otros Métodos</option>
+        </select>
+        <button class="pixel-button process-checkout-btn">PROCESAR PEDIDO</button>
+    </div>
+</aside>
+
+<!-- Featured Gallery / Products -->
+<main id="main-content">
+    <h2 id="gallery-title">REMERAS DESTACADAS</h2>
+    <div id="product-gallery">
+        <!-- 4 Cards from image_0.png as example -->
+        <article class="product-card">
+            <img src="data:image/png;base64,...(acdc_shirt_data)..." alt="AC/DC Shirt" class="product-card-img">
+            <div class="product-card-info">
+                <h3>AC/DC LEGENDARY</h3>
+                <p>$34.99</p>
+                <button class="pixel-button add-to-cart" data-name="AC/DC Legendary" data-price="34.99">ELEGIR ITEM</button>
+            </div>
+        </article>
+        <article class="product-card">
+            <img src="data:image/png;base64,...(dbz_shirt_data)..." alt="Dragon Ball Z Shirt" class="product-card-img">
+            <div class="product-card-info">
+                <h3>DRAGON BALL Z</h3>
+                <p>$39.99</p>
+                <button class="pixel-button add-to-cart" data-name="Dragon Ball Z" data-price="39.99">ELEGIR ITEM</button>
+            </div>
+        </article>
+        <article class="product-card">
+            <img src="data:image/png;base64,...(manga_shirt_data)..." alt="Manga Shirt" class="product-card-img">
+            <div class="product-card-info">
+                <h3>MANGA LIMITED</h3>
+                <p>$29.99</p>
+                <button class="pixel-button add-to-cart" data-name="Manga Limited" data-price="29.99">ELEGIR ITEM</button>
+            </div>
+        </article>
+        <article class="product-card">
+            <img src="data:image/png;base64,...(rockabilly_shirt_data)..." alt="Rockabilly Shirt" class="product-card-img">
+            <div class="product-card-info">
+                <h3>ROCKABILLY REBEL</h3>
+                <p>$39.99</p>
+                <button class="pixel-button add-to-cart" data-name="Rockabilly Rebel" data-price="39.99">ELEGIR ITEM</button>
+            </div>
+        </article>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer id="main-footer">
+    <div class="footer-column">
+        <h4>HELP &amp; INFO</h4>
+        <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+        </ul>
+    </div>
+    <div class="footer-column">
+        <h4>CATEGORIES</h4>
+        <ul>
+            <li><a href="#">Rock Tees</a></li>
+            <li><a href="#">Anime Gear</a></li>
+            <li><a href="#">Manga Releases</a></li>
+        </ul>
+    </div>
+    <div class="footer-column">
+        <h4>FOLLOW US</h4>
+        <p>Stay up to date.</p>
+        <div id="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+    <div id="copyright">
+        © SS SMOKE SALE 2024. All rights reserved.
+    </div>
+</footer>
+
+<script src="[https://cdnjs.cloudflare.com/beat-player/beat-player.min.js](https://cdnjs.cloudflare.com/beat-player/beat-player.min.js)"></script> <!-- Optional music script, like from image_2.png -->
+<script>
+    // JavaScript Logic for features and animations
+    // Using simple JS, can be upgraded to GSAP if required.
+
+    // 1. Carrusel Logic
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slider-dot');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    // Auto-advance carrusel every 5 seconds
+    setInterval(nextSlide, 5000);
+
+    // Manual controls (dots)
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentSlide = index;
+            showSlide(currentSlide);
+        });
+    });
+
+    // 2. Dynamic Cart Logic
+    const inventoryPanel = document.getElementById('inventory-panel');
+    const closeCart = document.getElementById('close-cart');
+    const cartStatusGrid = document.getElementById('cart-status-grid');
+    const invItemsList = document.getElementById('inv-items');
+    const cartItemCount = document.getElementById('cart-item-count');
+    const checkoutForm = document.getElementById('checkout-form');
+    const confirmOrderBtn = document.querySelector('.confirm-order-btn');
+
+    let cart = [];
+
+    // Open/Close Cart
+    function toggleCart(show = true) {
+        if (show) {
+            inventoryPanel.classList.add('active');
+            cartStatusGrid.style.backgroundColor = 'gold';
+            renderCart();
+        } else {
+            inventoryPanel.classList.remove('active');
+            checkoutForm.style.display = 'none';
+        }
+    }
+
+    document.getElementById('cart-link').addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleCart(true);
+    });
+
+    closeCart.addEventListener('click', () => toggleCart(false));
+
+    // Render cart items
+    function renderCart() {
+        invItemsList.innerHTML = '';
+        if (cart.length === 0) {
+            invItemsList.innerHTML = '<p class="pixel-button" style="text-align: center; border: none; background: transparent;">Tu inventario está vacío...</p>';
+            cartItemCount.innerText = '0';
+        } else {
+            cartItemCount.innerText = cart.length;
+            cart.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'inv-item';
+                itemDiv.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}" class="inv-item-img">
+                    <div class="inv-item-details">
+                        <h4>${item.name}</h4>
+                        <p>${item.price}</p>
+                    </div>
+                `;
+                invItemsList.appendChild(itemDiv);
+            });
+        }
+    }
+
+    // Add to Cart from product cards
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productCard = e.target.closest('.product-card');
+            const productImgSrc = productCard.querySelector('.product-card-img').src;
+            const productName = e.target.getAttribute('data-name');
+            const productPrice = e.target.getAttribute('data-price');
+
+            const item = {
+                name: productName,
+                price: productPrice,
+                img: productImgSrc
+            };
+
+            cart.push(item);
+            toggleCart(true);
+            
+            // Visual feedback - item added animation
+            const itemPreview = document.createElement('img');
+            itemPreview.src = productImgSrc;
+            itemPreview.style.position = 'absolute';
+            itemPreview.style.width = '100px';
+            itemPreview.style.height = '100px';
+            itemPreview.style.top = `${productCard.offsetTop + 100}px`;
+            itemPreview.style.left = `${productCard.offsetLeft + 100}px`;
+            itemPreview.style.zIndex = '2000';
+            itemPreview.style.transition = 'all 1s ease';
+            document.body.appendChild(itemPreview);
+            
+            setTimeout(() => {
+                itemPreview.style.top = `${document.getElementById('quick-cart').offsetTop}px`;
+                itemPreview.style.left = `${document.getElementById('quick-cart').offsetLeft}px`;
+                itemPreview.style.transform = 'scale(0.1)';
+                itemPreview.style.opacity = '0';
+            }, 100);
+            
+            setTimeout(() => {
+                document.body.removeChild(itemPreview);
+            }, 1100);
+        });
+    });
+
+    // 3. Checkout Logic
+    confirmOrderBtn.addEventListener('click', () => {
+        if (cart.length > 0) {
+            invItemsList.style.display = 'none';
+            checkoutForm.style.display = 'block';
+        }
+    });
+
+    document.querySelector('.process-checkout-btn').addEventListener('click', () => {
+        // Collect form data and cart data, send to server, etc.
+        const formData = {
+            nombre: document.getElementById('chk-nombre').value,
+            // ...collect other fields...
+            pago: document.getElementById('chk-pago').value
+        };
+
+        if(formData.nombre && formData.pago && cart.length > 0) {
+            // Success animation
+            invItemsList.style.display = 'block';
+            checkoutForm.style.display = 'none';
+            invItemsList.innerHTML = '<h3 style="color: gold; text-align: center; font-family: var(--pixel-font);">PEDIDO PROCESADO!</h3><p style="text-align: center;">¡Gracias por tu compra, rebelde!</p>';
+            cart = [];
+            toggleCart(false);
+            setTimeout(() => {
+                invItemsList.style.display = 'block';
+                invItemsList.innerHTML = '<p class="pixel-button" style="text-align: center; border: none; background: transparent;">Tu inventario está vacío...</p>';
+                cartItemCount.innerText = '0';
+            }, 2000);
+        } else {
+             invItemsList.innerHTML += '<p style="color: red; text-align: center;">Faltan datos o items...</p>';
+        }
+    });
+
+</script>
 
 </body>
 </html>
