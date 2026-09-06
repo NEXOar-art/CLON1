@@ -1,210 +1,182 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Módica Motos</title>
-  <meta name="description" content="Sitio web moderno con arquitectura visual interactiva." />
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#0f172a', // slate-900
-          }
-        }
-      }
-    }
-  </script>
-  
-  <!-- Lucide Icons via CDN -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  
-  <!-- Font Awesome for compatibility (original site uses it) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <style>
-    body {
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    }
-    .icon {
-      display: inline-block;
-      width: 1em;
-      height: 1em;
-      stroke-width: 0;
-      stroke: currentColor;
-      fill: currentColor;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROCK STYLE LIFE | E-Commerce de Remeras de Nicho</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Enlace a fuentes de Google (opcional, usar fuentes sans-serif similares) -->
 </head>
-<body class="bg-white text-gray-800">
+<body>
 
-  <!-- Header / Navigation -->
-  <header class="sticky top-0 z-50 bg-white shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <div class="flex-shrink-0 flex items-center">
-          <span class="text-xl font-bold text-primary">Módica Motos</span>
+    <!-- Header / Barra Superior con Estilo Pixel -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <!-- Reemplazar con imagen de logo RS skull original -->
+                <img src="path_to_rs_skull_logo.png" alt="RS Skull Logo" class="pixel-border">
+            </a>
+            <nav class="pixel-nav">
+                <a href="#">HOME</a>
+                <a href="#">BANDAS DE ROCK</a>
+                <a href="#" class="active">ANIME</a>
+                <a href="#">MANGA</a>
+                <a href="#">ROCKABILLY</a>
+                <div class="dropdown">
+                    <a href="#" class="nav-icon checkpoint-blue">NOVEDADES</a>
+                    <!-- El checkpoint azul es el ícono del dropdown -->
+                </div>
+            </nav>
+            <div class="header-tools">
+                <a href="#" class="search-icon">🔍</a>
+                <a href="#" class="cart-icon">🛒 <span class="cart-count">3</span></a>
+            </div>
         </div>
+    </header>
 
-        <!-- Desktop Navigation -->
-        <nav class="hidden md:flex space-x-8">
-          <a href="#postventa" class="font-medium hover:text-primary transition-colors">POSTVENTA</a>
-          <a href="#contacto" class="font-medium hover:text-primary transition-colors">CONTACTANOS</a>
-        </nav>
-
-        <!-- Mobile menu button -->
-        <button id="mobile-menu-button" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-primary focus:outline-none">
-          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile Menu (hidden by default) -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-      <div class="px-2 pt-2 pb-3 space-y-1">
-        <a href="#postventa" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100">POSTVENTA</a>
-        <a href="#contacto" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100">CONTACTANOS</a>
-      </div>
-    </div>
-  </header>
-
-  <main>
-
-    <!-- Hero Section -->
-    <section class="py-16 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-primary mb-6">CONSECIONARIO OFICIAL</h1>
-        <p class="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-          Encontrá tu próxima moto 0KM con el mejor precio, financiación garantizada y asesoramiento profesional.
-        </p>
-      </div>
+    <!-- Sección Hero / Carrusel Principal -->
+    <section class="hero-carousel">
+        <div class="carousel-container">
+            <button class="carousel-prev pixel-arrow"></button>
+            <div class="carousel-slide grunge-border">
+                <img src="path_to_model_acdc_graffiti.jpg" alt="Carrusel Principal: Remeras de Bandas">
+                <div class="carousel-caption">
+                    <h1>ROCK BAND T-SHIRTS - CLASSIC & RARE</h1>
+                </div>
+            </div>
+            <button class="carousel-next pixel-arrow"></button>
+            <div class="carousel-pagination">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
     </section>
 
-    <!-- Featured Bikes -->
-    <section class="py-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12">MOTOS DESTACADAS</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Bike Card 1 -->
-          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-            <div class="p-6">
-              <h3 class="text-xl font-semibold mb-2">CFMOTO | 450MT</h3>
-              <p class="text-gray-600 mb-4">Aventura lista para cualquier camino.</p>
-              <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
-                Ver más <i class="ml-1 fas fa-chevron-right text-xs"></i>
-              </a>
-            </div>
-          </div>
-          <!-- Bike Card 2 -->
-          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-            <div class="p-6">
-              <h3 class="text-xl font-semibold mb-2">HONDA | NAVI 110</h3>
-              <p class="text-gray-600 mb-4">Estilo urbano y tecnología integrada.</p>
-              <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
-                Ver más <i class="ml-1 fas fa-chevron-right text-xs"></i>
-              </a>
-            </div>
-          </div>
-          <!-- Bike Card 3 -->
-          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-            <div class="p-6">
-              <h3 class="text-xl font-semibold mb-2">BAJAJ | NS400Z</h3>
-              <p class="text-gray-600 mb-4">Rendimiento y diseño en cada curva.</p>
-              <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
-                Ver más <i class="ml-1 fas fa-chevron-right text-xs"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Branches Section -->
-    <section id="sucursales" class="py-16 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12">ENCONTRÁ TU SUCURSAL MAS CERCANA</h2>
+    <!-- Contenedor Principal (Rejilla de Productos y Panel Lateral) -->
+    <main class="main-content">
         
-        <div class="space-y-8">
-          <div class="bg-white p-6 rounded-lg shadow-sm">
-            <h3 class="text-xl font-semibold text-primary mb-2">CASA CENTRAL</h3>
-            <p class="text-gray-600">Bandera de los Andes 747, San José | Guaymallén</p>
-            <p class="text-gray-600">Tel: 261 653 7140</p>
-          </div>
+        <!-- Rejilla de Productos Destacados -->
+        <section class="featured-products">
+            <h2>REMERAS DESTACADAS</h2>
+            <div class="products-grid">
+                <!-- Replicar estas tarjetas para cada remera (Nirvana, Dragon Ball, Berserk, Misfits) -->
+                <article class="product-card">
+                    <img src="path_to_acdc_tshirt.jpg" alt="Remera AC/DC">
+                    <h3>ROCK BAND T-SHIRT (AC/DC)</h3>
+                    <p class="price">$14.99</p>
+                    <button class="pixel-btn">AÑADIR AL CARRITO</button>
+                </article>
+                <article class="product-card">
+                    <img src="path_to_dragonball_tshirt.jpg" alt="Remera Dragon Ball">
+                    <h3>ANIME T-SHIRT (DRAGON BALL)</h3>
+                    <p class="price">$20.99</p>
+                    <button class="pixel-btn">AÑADIR AL CARRITO</button>
+                </article>
+                <!-- ... más tarjetas de producto ... -->
+            </div>
+        </section>
 
-          <div class="bg-white p-6 rounded-lg shadow-sm">
-            <h3 class="text-xl font-semibold text-primary mb-2">EXCLUSIVO KAWASAKI</h3>
-            <p class="text-gray-600">Modelos: KLR 650, Versys 300, Ninja 500 SE</p>
-          </div>
+        <!-- Panel Lateral (Aside) -->
+        <aside class="sidebar-content">
+            <div class="goth-photo-container">
+                <img src="path_to_goth_model.jpg" alt="Estilo Goth">
+            </div>
+            <div class="accessories-panel grunge-border">
+                <h3>Accesories</h3>
+                <div class="accessories-grid">
+                    <article class="accessory-card">
+                        <img src="path_to_necklace1.jpg" alt="Collar Calavera">
+                        <button class="small-pixel-btn">SHOP NOW ></button>
+                    </article>
+                    <article class="accessory-card">
+                        <img src="path_to_necklace2.jpg" alt="Collar Calavera 2">
+                        <button class="small-pixel-btn">SHOP NOW ></button>
+                    </article>
+                    <!-- ... más accesorios ... -->
+                </div>
+            </div>
+        </aside>
+    </main>
 
-          <div class="bg-white p-6 rounded-lg shadow-sm">
-            <h3 class="text-xl font-semibold text-primary mb-2">EXCLUSIVO CFMOTO</h3>
-            <p class="text-gray-600">Modelos: 450MT, 650 MT, 300 SR</p>
-          </div>
-
-          <div class="bg-white p-6 rounded-lg shadow-sm">
-            <h3 class="text-xl font-semibold text-primary mb-2">EXCLUSIVO BAJAJ</h3>
-            <p class="text-gray-600">Modelos: Dominar 250, NS400Z, Rouser NS200</p>
-          </div>
-
-          <div class="bg-white p-6 rounded-lg shadow-sm">
-            <h3 class="text-xl font-semibold text-primary mb-2">MÓDICA MOTOS CENTRO</h3>
-            <p class="text-gray-600">Av. Rawson 62 Norte – San Juan</p>
-          </div>
-
-          <div class="bg-white p-6 rounded-lg shadow-sm">
-            <h3 class="text-xl font-semibold text-primary mb-2">MÓDICA MOTOS LUJÁN</h3>
-            <p class="text-gray-600">Servicio técnico y venta integral.</p>
-          </div>
+    <!-- Sección de Comunidad / Galería #ROCKSTYLELIFE -->
+    <section class="community-gallery">
+        <h3>#ROCKSTYLELIFE</h3>
+        <div class="gallery-row">
+            <!-- Replicar estas para las 6 fotos pequeñas -->
+            <img src="path_to_gallery_photo1.jpg" alt="Community Photo 1">
+            <img src="path_to_gallery_photo2.jpg" alt="Community Photo 2">
+            <!-- ... más fotos ... -->
         </div>
-      </div>
     </section>
 
-    <!-- Postventa -->
-    <section id="postventa" class="py-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold mb-6">SERVICIO TÉCNICO OFICIAL</h2>
-        <p class="text-gray-600 max-w-2xl mx-auto mb-4">
-          Horario de atención: Lunes a viernes de 9 a 18 hs. Sábados de 9 a 13:30 hs.
-        </p>
-        <p class="text-gray-600">postventa@modicamotos.com.ar | WhatsApp: 261 572 6168</p>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contacto" class="py-16 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold mb-6">CONTACTANOS</h2>
-        <p class="text-gray-600 mb-2">info@modicamotos.com.ar</p>
-        <p class="text-gray-600">+54 261 230-7833</p>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <p class="mb-2">© 2026 Módica Motos | Todos los derechos reservados.</p>
-      <p class="text-gray-400 text-sm">Clon 1:1 para fines educativos y de referencia técnica.</p>
+    <!-- Sidebar del Carrito (Desplegable) -->
+    <div class="cart-sidebar">
+        <h4>Carrito Rápido (3 artículos)</h4>
+        <div class="cart-items">
+            <!-- Ejemplo de un artículo en el carrito -->
+            <article class="cart-item">
+                <img src="path_to_acdc_tshirt.jpg" alt="T-shirt en carrito">
+                <div class="item-details">
+                    <p>Rock Band T-Shirt (AC/DC)</p>
+                    <p>$14.99</p>
+                </div>
+                <button class="remove-item">X</button>
+            </article>
+            <!-- ... más artículos ... -->
+        </div>
+        <div class="cart-summary">
+            <p>Subtotal: <span>$14.99</span></p>
+            <p>Total: <span>$14.99</span></p>
+        </div>
+        <button class="pixel-btn checkout-btn">AÑADIR AL CARRITO</button>
+        <!-- Nota: He mantenido el texto "Añadir al carrito" en el botón de checkout como en el diseño de referencia, aunque funcionalmente suele ser "Pagar" o "Checkout". -->
     </div>
-  </footer>
 
-  <!-- Mobile Menu JS -->
-  <script>
-    document.getElementById('mobile-menu-button').addEventListener('click', () => {
-      const menu = document.getElementById('mobile-menu');
-      menu.classList.toggle('hidden');
-    });
-    
-    // Initialize Lucide icons
-    lucide.createIcons();
-  </script>
+    <!-- Icono de Chat Flotante -->
+    <a href="#" class="floating-chat">
+        💬
+    </a>
+
+    <!-- Pie de Página (Footer) -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h5>HELP & INFO</h5>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>SHIPPING</h5>
+                <ul>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Customs Accesories</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>POLICIES</h5>
+                <ul>
+                    <li><a href="#">Shipping & Payments</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <a href="#">F</a>
+                <a href="#">X</a>
+                <a href="#">I</a>
+                <a href="#">Y</a>
+            </div>
+            <p class="copyright">© Copyright 2024 Rock Style Life. All rights reserved.</p>
+        </div>
+    </footer>
 
 </body>
 </html>
