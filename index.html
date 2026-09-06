@@ -3,772 +3,896 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SS - Smoke Sale E-Commerce</title>
-<link rel="stylesheet" href="style.css">
-<script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>```html
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smoke Sale E-Commerce - Rock &amp; Geek Tees</title>
-<link href="[https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;display=swap](https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;display=swap)" rel="stylesheet">
+<title>SS SMOKE SALE — Remeras Rock, Anime, Manga & Rockabilly | Game Store</title>
+<meta name="description" content="¿Cómo puede el ROCK ser un sentimiento? SMOKE SALE (SS): tienda de remeras de bandas de rock, anime, manga y rockabilly con experiencia de videojuego.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%B8%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Chakra+Petch:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<!-- ============================================================
+  SS SMOKE SALE · E-COMMERCE GAMIFICADO (single-file)
+  · Assets vectoriales incrustados (data-URI) => 100% offline.
+  · ¿Quieres usar fotos externas? Reemplaza los valores del objeto
+    IMG dentro del <script> por tus URLs y todo se re-renderiza.
+  · Lógica: carrito persistente, buscador avanzado, admin CRUD,
+    pedidos, XP/nivel/monedas, logros, audio retro WebAudio.
+============================================================ -->
 <style>
-    /* CSS Styles based on the image_0.png layout and game theme */
-    :root {
-        --bg-dark: #1a1a1a;
-        --accent-color: #8a2be2; /* Violet from image_0.png */
-        --panel-bg: rgba(0, 0, 0, 0.7);
-        --glow-color: rgba(138, 43, 226, 0.5);
-        --text-base: #eee;
-        --pixel-font: 'Press Start 2P', cursive;
-        --terminal-font: 'VT323', monospace;
-    }
+:root{
+  --bg:#0a0a0d; --bg2:#121218; --panel:#17171f; --line:#2a2a35;
+  --txt:#e8e8f0; --dim:#9a9aa8;
+  --red:#e23b3b; --red2:#ff5c5c; --purple:#7b5cff; --cyan:#27d8ff;
+  --gold:#ffc93c; --green:#3ddc7a; --pink:#ff4fd8;
+  --fh:'Oswald',sans-serif; --fp:'Press Start 2P',monospace; --fu:'Chakra Petch',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--fu);overflow:hidden}
+body.on{overflow:auto}
+::selection{background:var(--purple);color:#fff}
+img{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:var(--fu);color:var(--txt)}
+h1,h2,h3{font-family:var(--fh);letter-spacing:.5px}
+.pix{font-family:var(--fp)}
 
-    body {
-        background-color: var(--bg-dark);
-        background-image: url('data:image/png;base64,...(pixel pattern data)...'), url('path/to/brick_texture.jpg');
-        background-blend-mode: color-burn, normal;
-        color: var(--text-base);
-        font-family: var(--terminal-font);
-        margin: 0;
-        overflow-x: hidden;
-    }
+/* ---------- CRT / scanlines ambiente ---------- */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2000;
+  background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,.09) 3px 4px);
+  mix-blend-mode:overlay}
+#cursor{position:fixed;width:26px;height:26px;border-radius:50%;pointer-events:none;z-index:2001;
+  background:radial-gradient(circle,rgba(123,92,255,.5),transparent 70%);
+  transform:translate(-50%,-50%);mix-blend-mode:screen;left:-100px;top:-100px}
+@media (hover:none){#cursor{display:none}}
 
-    /* Game-like UI elements */
-    .game-panel {
-        background-color: var(--panel-bg);
-        border: 4px solid var(--accent-color);
-        border-image: linear-gradient(to right, violet, indigo, blue) 1;
-        box-shadow: 0 0 10px var(--glow-color);
-        border-radius: 8px;
-        padding: 10px;
-    }
+/* ---------- BOOT SCREEN ---------- */
+#boot{position:fixed;inset:0;z-index:3000;background:
+  radial-gradient(800px 500px at 50% 30%,#1c1030,#050508 75%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+  transition:opacity .7s,visibility .7s}
+#boot.off{opacity:0;visibility:hidden}
+#boot .blogo{font-family:var(--fh);font-weight:700;font-size:clamp(60px,12vw,120px);color:#f5f5f5;
+  -webkit-text-stroke:3px var(--red);text-shadow:0 0 40px #e23b3b66,6px 6px 0 #000;letter-spacing:4px}
+#boot .bsub{font-family:var(--fp);font-size:11px;color:var(--cyan);letter-spacing:2px}
+#bootStart{font-family:var(--fp);font-size:14px;color:#000;background:var(--gold);
+  border:3px solid #000;box-shadow:0 6px 0 #8a6a10,inset 0 3px 0 #fff7;padding:16px 30px;
+  animation:blink 1.2s steps(2) infinite;transition:transform .15s}
+#bootStart:hover{transform:scale(1.06);animation-play-state:paused}
+@keyframes blink{50%{opacity:.55}}
+#boot .hint{font-size:11px;color:var(--dim)}
 
-    .pixel-button {
-        font-family: var(--pixel-font);
-        background-color: transparent;
-        border: 2px solid var(--accent-color);
-        color: var(--accent-color);
-        text-transform: uppercase;
-        padding: 5px 15px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        image-rendering: pixelated;
-    }
+/* ---------- HUD / HEADER ---------- */
+#hud{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;
+  background:rgba(10,10,14,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:12px;padding:0 16px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:#fff}
+.logo svg{width:56px;height:40px}
+.logo b{font-family:var(--fh);font-size:17px;letter-spacing:2px;line-height:1}
+.logo small{display:block;font-family:var(--fp);font-size:7px;color:var(--red2);letter-spacing:2px}
+#navMain{display:flex;gap:4px;margin:0 auto}
+.nav-btn{background:none;border:none;color:var(--dim);font-family:var(--fu);font-weight:600;
+  font-size:12.5px;letter-spacing:1.2px;text-transform:uppercase;padding:10px 12px;position:relative;
+  transition:color .2s,transform .15s;white-space:nowrap}
+.nav-btn i{font-style:normal;margin-right:5px;filter:grayscale(.4)}
+.nav-btn:hover{color:#fff;transform:translateY(-1px)}
+.nav-btn::after{content:"";position:absolute;left:10px;right:10px;bottom:2px;height:3px;
+  background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:2px;
+  transform:scaleX(0);transition:transform .25s;box-shadow:0 0 12px var(--purple)}
+.nav-btn.active{color:#fff;text-shadow:0 0 12px #7b5cff88}
+.nav-btn.active::after{transform:scaleX(1)}
+.searchbox{position:relative;flex:0 1 260px;min-width:170px}
+.searchbox input{width:100%;background:#0e0e14;border:2px solid var(--line);border-radius:8px;
+  padding:8px 12px 8px 32px;font-size:13px;outline:none;transition:border-color .2s,box-shadow .2s}
+.searchbox input:focus{border-color:var(--cyan);box-shadow:0 0 14px #27d8ff44}
+.searchbox::before{content:"🔍";position:absolute;left:9px;top:7px;font-size:13px}
+#searchDrop{position:absolute;top:calc(100% + 8px);left:0;right:0;background:#12121af7;
+  border:2px solid var(--purple);border-radius:10px;overflow:hidden;display:none;z-index:150;
+  box-shadow:0 20px 50px #000d,0 0 24px #7b5cff33}
+#searchDrop.on{display:block;animation:dropIn .25s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes dropIn{from{opacity:0;transform:translateY(-8px) scale(.97)}}
+#searchDrop .sd-h{font-family:var(--fp);font-size:7px;color:var(--dim);padding:8px 10px;border-bottom:1px solid var(--line)}
+.sd-item{display:flex;gap:10px;align-items:center;padding:8px 10px;cursor:pointer;transition:background .15s}
+.sd-item:hover{background:#7b5cff22}
+.sd-item img{width:40px;height:40px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
+.sd-item b{font-size:12.5px;display:block}
+.sd-item small{color:var(--dim);font-size:10.5px}
+.sd-item .pr{margin-left:auto;color:var(--gold);font-family:var(--fh);font-weight:600}
+.hud-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.hud-chip{display:flex;align-items:center;gap:6px;background:#0e0e14;border:1px solid var(--line);
+  border-radius:8px;padding:6px 9px;font-family:var(--fp);font-size:9px}
+.coin{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a3,var(--gold) 60%,#a97b12);border:2px solid #6b4d0c;display:inline-block}
+#xpWrap{width:86px;height:8px;background:#000;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+#xpFill{height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .6s;box-shadow:0 0 10px var(--purple)}
+.icon-btn{position:relative;background:#0e0e14;border:1px solid var(--line);border-radius:8px;
+  width:38px;height:38px;font-size:16px;display:grid;place-items:center;transition:all .2s}
+.icon-btn:hover{border-color:var(--purple);box-shadow:0 0 14px #7b5cff55;transform:translateY(-2px)}
+#cartCount{position:absolute;top:-7px;right:-7px;background:var(--red);color:#fff;border:2px solid #000;
+  border-radius:6px;font-family:var(--fp);font-size:8px;padding:3px 5px;min-width:20px;text-align:center}
+#cartCount.pop{animation:pop .35s}
+@keyframes pop{40%{transform:scale(1.5) rotate(8deg)}}
+#burger{display:none}
+@media(max-width:1080px){#navMain{display:none}#burger{display:grid}}
+@media(max-width:900px){.hud-chip.xp{display:none}}
+@media(max-width:640px){.searchbox{order:9;flex:1 1 100%}#hud{height:auto;padding:8px 12px;row-gap:8px}}
+#mNav{position:fixed;top:0;left:0;bottom:0;width:min(300px,84vw);background:#101016f8;z-index:130;
+  transform:translateX(-105%);transition:transform .4s cubic-bezier(.2,.8,.2,1);padding:80px 18px 20px;
+  border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+#mNav.on{transform:none}
+#mNav .nav-btn{font-size:14px;padding:12px;border:1px solid transparent;border-radius:10px;text-align:left}
+#mNav .nav-btn.active{border-color:var(--purple);background:#7b5cff18}
 
-    .pixel-button:hover {
-        background-color: var(--accent-color);
-        color: #fff;
-        box-shadow: 0 0 8px #fff;
-    }
+/* ---------- HERO CARRUSEL ---------- */
+#hero{position:relative;height:clamp(560px,calc(100vh - 64px),840px);margin-top:64px;overflow:hidden;background:#000}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .9s ease,visibility .9s}
+.slide.on{opacity:1;visibility:visible}
+.slide .bg{position:absolute;inset:0;transform:scale(1.02)}
+.slide.on .bg{animation:kb 7s ease-out forwards}
+@keyframes kb{from{transform:scale(1.12)}to{transform:scale(1.02)}}
+.bg-rock{background:
+  radial-gradient(300px 220px at 12% 28%,#ff4fd82e,transparent 70%),
+  radial-gradient(260px 220px at 28% 72%,#27d8ff2e,transparent 70%),
+  radial-gradient(280px 200px at 62% 16%,#ffc93c26,transparent 70%),
+  repeating-linear-gradient(0deg,#191920 0 34px,#101014 34px 38px),
+  repeating-linear-gradient(90deg,transparent 0 72px,#00000070 72px 76px)}
+.bg-anime{background:
+  repeating-conic-gradient(from 0deg at 62% 52%,#ffffff12 0 5deg,transparent 5deg 11deg),
+  radial-gradient(circle at 62% 52%,#ffd75e4d 0 16%,#ff8c0030 34%,transparent 62%),#0e0e16}
+.bg-manga{background:
+  radial-gradient(#00000080 1.2px,transparent 1.4px) 0 0/14px 14px,
+  repeating-linear-gradient(0deg,#e23b3b1f 0 70px,#27d8ff1f 70px 140px,#ffc93c1f 140px 210px),#14141b}
+.bg-rb{background:linear-gradient(#08080c 0 46%,#1a1024 46%);position:relative}
+.bg-rb .neon{position:absolute;top:12%;left:6%;font-family:var(--fh);font-weight:700;font-size:clamp(26px,5vw,58px);
+  color:#fff;letter-spacing:6px;text-shadow:0 0 6px #fff,0 0 18px var(--pink),0 0 42px var(--pink)}
+.bg-gothic{background:
+  radial-gradient(420px 300px at 26% 40%,#7b5cff30,transparent 70%),
+  radial-gradient(520px 340px at 72% 62%,#401a6650,transparent 72%),#0c0a12}
+.bg-street{background:
+  radial-gradient(340px 260px at 70% 30%,#ff4fd826,transparent 70%),
+  repeating-linear-gradient(0deg,#1a1a21 0 34px,#111116 34px 38px),
+  repeating-linear-gradient(90deg,transparent 0 72px,#00000070 72px 76px)}
+.bg-street .graf{position:absolute;top:8%;right:8%;font-family:var(--fh);font-weight:700;font-size:clamp(70px,14vw,170px);
+  color:transparent;-webkit-text-stroke:3px var(--pink);filter:drop-shadow(0 0 18px #ff4fd866);transform:rotate(-6deg)}
+.slide .float{position:absolute;right:7%;top:50%;width:min(330px,34vw);transform:translateY(-50%) rotate(-4deg);
+  filter:drop-shadow(0 24px 44px #000d) drop-shadow(0 0 34px #7b5cff4d);border-radius:14px}
+.slide.on .float{animation:floaty 6s ease-in-out infinite}
+@keyframes floaty{50%{transform:translateY(calc(-50% - 16px)) rotate(-1deg)}}
+.slide .copy{position:absolute;left:6%;top:50%;transform:translateY(-50%);max-width:600px;z-index:2}
+.chip{display:inline-block;font-family:var(--fp);font-size:8px;letter-spacing:2px;color:#000;
+  background:var(--cyan);border:2px solid #000;padding:5px 8px;border-radius:4px;margin-bottom:14px;box-shadow:3px 3px 0 #000}
+.slide .banner{display:inline-block;background:#f2f2f2;color:#101010;font-family:var(--fh);font-weight:700;
+  font-size:clamp(20px,3.4vw,40px);letter-spacing:1px;padding:10px 22px;box-shadow:8px 8px 0 #00000099;margin-bottom:14px}
+.slide .sub{color:#d8d8e2;font-size:15px;margin-bottom:20px;text-shadow:0 2px 6px #000}
+.btn-game{display:inline-flex;align-items:center;gap:8px;font-family:var(--fh);font-weight:600;letter-spacing:1.5px;
+  font-size:14px;color:#fff;background:linear-gradient(#ff6a6a,var(--red));border:2px solid #000;padding:11px 20px;
+  box-shadow:0 5px 0 #7a1010,inset 0 2px 0 #ffffff55;text-shadow:0 2px 0 #0007;transition:transform .12s,box-shadow .12s;white-space:nowrap}
+.btn-game:active{transform:translateY(3px);box-shadow:0 2px 0 #7a1010}
+.btn-game.ghost{background:transparent;border-color:#ffffff66;box-shadow:none;text-shadow:none}
+.btn-game.ghost:hover{border-color:#fff;background:#ffffff14}
+.pb{width:20px;height:20px;border-radius:50%;display:inline-grid;place-items:center;font-family:var(--fp);
+  font-size:9px;color:#fff;border:2px solid #000;flex:none}
+.pb.x{background:#4f7cff}.pb.t{background:var(--green)}.pb.o{background:var(--red2)}.pb.s{background:var(--pink)}
+.pArrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;background:none;border:none;
+  transition:transform .2s,filter .2s;image-rendering:pixelated}
+.pArrow:hover{transform:translateY(-50%) scale(1.2);filter:drop-shadow(0 0 12px var(--cyan))}
+.pArrow.l{left:14px}.pArrow.r{right:14px;transform:translateY(-50%) scaleX(-1)}
+.pArrow.r:hover{transform:translateY(-50%) scaleX(-1) scale(1.2)}
+#dots{position:absolute;bottom:44px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:5}
+#dots button{width:12px;height:12px;background:#fff;border:2px solid #000;opacity:.9;transition:all .2s}
+#dots button.on{background:var(--red);transform:scale(1.25);box-shadow:0 0 10px var(--red)}
+#heroBar{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:min(420px,60%);height:6px;
+  background:#000a;border:1px solid #ffffff33;border-radius:3px;overflow:hidden;z-index:5}
+#heroBarFill{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--purple))}
 
-    /* --- Upper Navigation --- */
-    #main-nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 5%;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        background-color: rgba(0, 0, 0, 0.9);
-        border-bottom: 2px solid var(--accent-color);
-    }
+/* ---------- SECCIONES ---------- */
+section{position:relative;padding:64px 5vw}
+.sec-t{font-size:clamp(24px,3.4vw,40px);font-weight:700;text-transform:uppercase;margin-bottom:8px;position:relative;display:inline-block}
+.sec-t::after{content:"";display:block;height:4px;background:linear-gradient(90deg,var(--red),transparent);margin-top:6px}
+.sec-s{color:var(--dim);margin-bottom:30px;font-size:14px}
+.rv{opacity:0;transform:translateY(46px) scale(.98);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
 
-    #logo {
-        color: #fff;
-        text-shadow: 0 0 10px violet;
-        transform: rotate(-15deg);
-    }
+/* ---------- TILES (menú tipo PS5) ---------- */
+#tiles{display:flex;gap:16px;overflow-x:auto;padding:26px 6px 14px;scroll-snap-type:x proximity}
+.tile{flex:none;width:150px;scroll-snap-align:start;background:var(--panel);border:2px solid var(--line);
+  border-radius:14px;overflow:hidden;position:relative;transition:transform .25s,box-shadow .25s,border-color .25s;text-align:center}
+.tile img{width:100%;aspect-ratio:1;object-fit:cover;transition:transform .4s}
+.tile:hover,.tile:focus-visible{transform:translateY(-10px) scale(1.05);border-color:#fff;
+  box-shadow:0 0 0 4px #7b5cff55,0 18px 34px #000c,0 0 30px #7b5cff66;z-index:2}
+.tile:hover img{transform:scale(1.1)}
+.tile .tl{position:absolute;left:0;right:0;bottom:0;padding:22px 6px 8px;font-family:var(--fp);font-size:8px;
+  letter-spacing:1px;color:#fff;background:linear-gradient(transparent,#000e 40%);opacity:0;transition:opacity .25s}
+.tile:hover .tl,.tile.sel .tl{opacity:1}
+.tile.sel{border-color:var(--cyan);box-shadow:0 0 0 3px #27d8ff44,0 0 22px #27d8ff55}
+.tile .tl-ico{font-size:34px;display:grid;place-items:center;aspect-ratio:1;background:
+  radial-gradient(circle at 50% 35%,#232331,#101016)}
 
-    #logo h1 {
-        font-family: var(--pixel-font);
-        font-size: 2em;
-        margin: 0;
-    }
+/* ---------- PRODUCT GRID (tarjetas juego) ---------- */
+#grid,#offerGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+.p-card{background:var(--panel);border:2px solid var(--line);border-radius:14px;overflow:hidden;position:relative;
+  transition:transform .25s,border-color .25s,box-shadow .25s;animation:cardIn .5s backwards}
+@keyframes cardIn{from{opacity:0;transform:translateY(30px) scale(.95)}}
+.p-card::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,#ffffff1f 50%,transparent 70%);
+  transform:translateX(-130%);transition:transform .7s;pointer-events:none}
+.p-card:hover{transform:translateY(-8px);border-color:var(--purple);
+  box-shadow:0 16px 34px #000c,0 0 0 3px #7b5cff44,0 0 26px #7b5cff55}
+.p-card:hover::after{transform:translateX(130%)}
+.p-card .imw{position:relative;aspect-ratio:4/3;overflow:hidden;background:#0d0d12}
+.p-card .imw img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.p-card:hover .imw img{transform:scale(1.08)}
+.badge{position:absolute;font-family:var(--fp);font-size:7px;letter-spacing:1px;padding:5px 7px;border:2px solid #000;border-radius:4px;color:#000}
+.b-cat{top:10px;left:10px}
+.b-off{top:10px;right:10px;background:var(--red);color:#fff}
+.b-low{bottom:10px;left:10px;background:var(--gold)}
+.b-out{position:absolute;inset:0;display:grid;place-items:center;background:#000000b8;font-family:var(--fp);font-size:12px;color:var(--red2);letter-spacing:2px}
+.p-card .bd{padding:14px}
+.p-card .code{font-family:var(--fp);font-size:7px;color:var(--dim);letter-spacing:1px}
+.p-card h3{font-size:16px;font-weight:600;margin:6px 0 8px;min-height:2.4em}
+.p-card .pr{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.p-card .pr b{font-family:var(--fh);font-size:20px;color:var(--gold)}
+.p-card .pr s{color:var(--dim);font-size:13px}
+.p-card .acts{display:flex;gap:8px}
+.btn-mini{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;font-family:var(--fu);
+  font-weight:700;font-size:11px;letter-spacing:1px;padding:9px 6px;border:2px solid #000;border-radius:8px;
+  color:#fff;background:#232331;box-shadow:0 3px 0 #000;transition:all .15s;white-space:nowrap}
+.btn-mini:hover{background:#2d2d3d;transform:translateY(-1px)}
+.btn-mini:active{transform:translateY(2px);box-shadow:none}
+.btn-mini.add{background:linear-gradient(#ff6a6a,var(--red))}
+.btn-mini.add:hover{box-shadow:0 3px 0 #000,0 0 16px #e23b3b88}
+.btn-mini[disabled]{opacity:.4;pointer-events:none}
+.cat-color-rock{background:var(--red2);color:#fff}.cat-color-anime{background:var(--cyan)}
+.cat-color-manga{background:var(--gold)}.cat-color-rockabilly{background:var(--pink)}
 
-    #logo-rs {
-        display: none;
-    }
+/* ---------- BANNER PARALLAX GOTHIC ---------- */
+#gothic{padding:0;height:440px;overflow:hidden;display:grid;place-items:center;text-align:center}
+#gothic .plx-bg{position:absolute;inset:-22%;background:
+  radial-gradient(46% 60% at 30% 40%,#7b5cff38,transparent 70%),
+  radial-gradient(50% 66% at 72% 60%,#401a6670,transparent 72%),
+  repeating-linear-gradient(90deg,transparent 0 110px,#00000066 110px 114px),#0c0a12;will-change:transform}
+#gothic .spikes{position:absolute;left:0;right:0;bottom:0;height:26px;background:
+  conic-gradient(from 150deg at 50% 0,#c9c9d6 60deg,transparent 61deg) 0 0/26px 26px repeat-x;opacity:.7}
+#gothic h2{font-size:clamp(30px,5vw,58px);-webkit-text-stroke:2px var(--purple);color:transparent;
+  text-shadow:0 0 34px #7b5cff66;letter-spacing:4px}
+#gothic p{color:#cfcfe0;margin:10px 0 22px}
+#gothic .inner{position:relative;z-index:2}
 
-    #logo-ss {
-        display: block;
-    }
+/* ---------- OFERTAS ---------- */
+#ofertas{background:linear-gradient(#160a0d,#0d0709);border-top:2px solid #e23b3b55;border-bottom:2px solid #e23b3b55}
+#cd{display:flex;gap:10px;align-items:center;margin:14px 0 30px}
+#cd .box{background:#000;border:3px solid var(--gold);border-radius:8px;padding:12px 14px;
+  font-family:var(--fp);font-size:clamp(14px,2.4vw,24px);color:var(--gold);box-shadow:0 0 18px #ffc93c33,inset 0 0 12px #ffc93c22}
+#cd small{font-family:var(--fp);font-size:8px;color:var(--dim)}
+.ev-chip{font-family:var(--fp);font-size:9px;color:#000;background:var(--red2);border:2px solid #000;padding:6px 9px;border-radius:4px;box-shadow:3px 3px 0 #000}
 
-    #menu-links ul {
-        list-style: none;
-        display: flex;
-        gap: 30px;
-        margin: 0;
-        padding: 0;
-    }
+/* ---------- GALERÍA ---------- */
+.g-head{display:flex;align-items:end;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.g-nav{display:flex;gap:8px}
+#gStrip{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:24px 4px 12px;scrollbar-width:thin;scrollbar-color:var(--purple) #101016}
+.g-card{flex:none;min-width:280px;aspect-ratio:16/10;border-radius:12px;overflow:hidden;position:relative;
+  border:2px solid var(--line);scroll-snap-align:start;transition:all .25s;background:var(--panel)}
+.g-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.g-card:hover{border-color:var(--cyan);box-shadow:0 0 0 3px #27d8ff44,0 0 24px #27d8ff44;transform:translateY(-6px)}
+.g-card:hover img{transform:scale(1.07)}
+.g-card figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;font-family:var(--fp);
+  font-size:8px;letter-spacing:1px;color:#fff;background:linear-gradient(transparent,#000e 55%)}
+.g-card .g-x{position:absolute;top:8px;right:8px}
 
-    #menu-links a {
-        text-decoration: none;
-        color: inherit;
-        font-family: var(--pixel-font);
-        font-size: 0.8em;
-        transition: color 0.2s;
-    }
+/* ---------- CONTACTO ---------- */
+#contacto .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:start}
+@media(max-width:860px){#contacto .wrap{grid-template-columns:1fr}}
+.field{margin-bottom:14px}
+.field label{display:block;font-family:var(--fp);font-size:8px;letter-spacing:1px;color:var(--dim);margin-bottom:6px}
+.field input,.field select{width:100%;background:#0e0e14;border:2px solid var(--line);border-radius:8px;
+  padding:11px 12px;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s}
+.field input:focus,.field select:focus{border-color:var(--purple);box-shadow:0 0 12px #7b5cff44}
+.field .err{border-color:var(--red)!important;animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.panel-box{background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:24px}
 
-    #menu-links a:hover {
-        color: #fff;
-        text-shadow: 0 0 10px #fff;
-    }
+/* ---------- FOOTER ---------- */
+footer{background:#0b0b10;border-top:1px solid var(--line);padding:44px 5vw 26px}
+.f-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:26px;margin-bottom:30px}
+.f-grid h4{font-family:var(--fp);font-size:9px;letter-spacing:1px;color:#fff;margin-bottom:14px}
+.f-grid a{display:block;color:var(--dim);text-decoration:none;font-size:13px;margin-bottom:8px;transition:color .2s,transform .2s}
+.f-grid a:hover{color:var(--cyan);transform:translateX(4px)}
+.socials{display:flex;gap:10px}
+.socials a{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;
+  color:var(--dim);text-decoration:none;font-size:13px;transition:all .2s}
+.socials a:hover{border-color:var(--red);color:#fff;box-shadow:0 0 14px #e23b3b66;transform:translateY(-3px)}
+.f-bot{border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--dim);font-size:12px}
 
-    #search-bar {
-        position: relative;
-        display: flex;
-        align-items: center;
-    }
+/* ---------- CARRITO / INVENTARIO ---------- */
+#overlay{position:fixed;inset:0;background:#000000b0;backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .35s;z-index:110}
+#overlay.on{opacity:1;pointer-events:auto}
+#cartDrawer{position:fixed;top:0;right:0;bottom:0;width:min(430px,100%);background:#101016fa;z-index:120;
+  border-left:2px solid var(--purple);box-shadow:-20px 0 60px #000d,0 0 30px #7b5cff22;
+  transform:translateX(105%);transition:transform .45s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column}
+#cartDrawer.on{transform:none}
+.cd-h{padding:16px 18px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:10px}
+.cd-h h3{font-family:var(--fp);font-size:11px;letter-spacing:1px;color:var(--cyan)}
+.cd-h .cnt{background:var(--purple);color:#fff;border:2px solid #000;border-radius:6px;font-family:var(--fp);font-size:8px;padding:4px 7px}
+.cd-h button{margin-left:auto}
+#cartItems{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin}
+.ci{display:flex;gap:12px;align-items:center;background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:10px;animation:cardIn .4s}
+.ci img{width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.ci b{font-size:13px;display:block}
+.ci small{color:var(--dim);font-family:var(--fp);font-size:7px}
+.ci .q{display:flex;align-items:center;gap:8px;margin-top:6px}
+.ci .q button{width:22px;height:22px;border:2px solid #000;border-radius:6px;background:#232331;color:#fff;font-weight:700;box-shadow:0 2px 0 #000}
+.ci .q button:active{transform:translateY(2px);box-shadow:none}
+.ci .pr{margin-left:auto;text-align:right}
+.ci .pr b{color:var(--gold);font-family:var(--fh);font-size:15px}
+.ci .rm{background:none;border:none;color:var(--dim);font-size:14px}
+.ci .rm:hover{color:var(--red2)}
+.cd-empty{text-align:center;color:var(--dim);padding:40px 10px;font-family:var(--fp);font-size:9px;line-height:2}
+.cd-f{border-top:2px solid var(--line);padding:16px 18px;max-height:52%;overflow-y:auto}
+.tot{display:flex;justify-content:space-between;font-family:var(--fh);font-size:18px;margin-bottom:14px}
+.tot b{color:var(--gold)}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#btnConfirm{width:100%;justify-content:center;margin-top:6px}
 
-    #search-input {
-        background-color: transparent;
-        border: 2px solid violet;
-        color: violet;
-        font-family: var(--terminal-font);
-        padding: 5px 10px;
-        border-radius: 4px;
-        width: 200px;
-    }
+/* ---------- MODAL PRODUCTO ---------- */
+#pModal{position:fixed;inset:0;z-index:125;display:none;place-items:center;padding:18px}
+#pModal.on{display:grid}
+.pm-box{width:min(760px,100%);max-height:92vh;overflow-y:auto;background:#12121a;border:2px solid var(--purple);
+  border-radius:16px;box-shadow:0 30px 80px #000e,0 0 40px #7b5cff33;display:grid;grid-template-columns:1fr 1fr;animation:dropIn .3s}
+@media(max-width:700px){.pm-box{grid-template-columns:1fr}}
+.pm-box .im{background:#0d0d12;min-height:300px}
+.pm-box .im img{width:100%;height:100%;object-fit:cover}
+.pm-box .in{padding:24px;position:relative}
+.pm-x{position:absolute;top:12px;right:12px}
 
-    #search-scanline {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(to bottom, rgba(138, 43, 226, 0.1) 50%, rgba(0,0,0,0) 50%);
-        background-size: 100% 4px;
-        opacity: 0.2;
-    }
+/* ---------- ADMIN ---------- */
+#admin{position:fixed;inset:0;z-index:140;background:#0d0d12f8;overflow-y:auto;display:none;padding:26px 4vw}
+#admin.on{display:block}
+.ad-box{max-width:1100px;margin:0 auto}
+.ad-h{display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+.ad-h h2{font-family:var(--fp);font-size:13px;color:var(--green);letter-spacing:1px}
+.ad-tabs{display:flex;gap:8px}
+.ad-tab{font-family:var(--fp);font-size:9px;padding:10px 14px;border:2px solid var(--line);background:#14141c;color:var(--dim);border-radius:8px}
+.ad-tab.on{border-color:var(--green);color:#000;background:var(--green);box-shadow:0 0 16px #3ddc7a55}
+.ad-stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.ad-stat{background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:12px 18px;font-family:var(--fp);font-size:9px;color:var(--dim)}
+.ad-stat b{display:block;font-size:15px;color:var(--gold);margin-top:6px}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:2px solid var(--line);border-radius:12px;overflow:hidden}
+th{font-family:var(--fp);font-size:8px;letter-spacing:1px;color:var(--dim);text-align:left;padding:12px 10px;border-bottom:2px solid var(--line)}
+td{padding:10px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:middle}
+td img{width:44px;height:44px;object-fit:cover;border-radius:6px}
+td input{width:80px;background:#0e0e14;border:1px solid var(--line);border-radius:6px;padding:6px;color:var(--txt)}
+.st{font-family:var(--fp);font-size:7px;padding:5px 8px;border-radius:4px;border:2px solid #000}
+.st.p{background:var(--gold)}.st.e{background:var(--green)}
+.ad-add{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
 
-    #quick-cart {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        position: relative;
-    }
-
-    #cart-status-grid {
-        position: absolute;
-        top: -10px;
-        right: 40px;
-        background-color: gold;
-        width: 15px;
-        height: 15px;
-        border-radius: 50%;
-        box-shadow: 0 0 10px gold;
-    }
-
-    #cart-link {
-        color: #fff;
-        font-size: 1.5em;
-        text-shadow: 0 0 10px #fff;
-    }
-
-    /* --- Hero Slider (Carrusel) --- */
-    #hero-slider {
-        position: relative;
-        width: 100vw;
-        height: 80vh;
-        margin-top: -80px; /* Overlap with nav for immersive effect */
-        overflow: hidden;
-    }
-
-    .slide {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        transition: opacity 1s ease-in-out;
-        background-size: cover;
-        background-position: center;
-    }
-
-    .slide.active {
-        opacity: 1;
-    }
-
-    .hero-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        padding: 20px;
-    }
-
-    .slide h2 {
-        font-family: var(--pixel-font);
-        color: violet;
-        text-shadow: 0 0 15px violet;
-        font-size: 2.5em;
-        margin-bottom: 20px;
-    }
-
-    .hero-cta {
-        display: inline-block;
-    }
-
-    #slider-controls {
-        position: absolute;
-        bottom: 20px;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .slider-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.3);
-        cursor: pointer;
-    }
-
-    .slider-dot.active {
-        background-color: #fff;
-    }
-
-    /* --- Dynamic Cart Sidebar --- */
-    #inventory-panel {
-        position: fixed;
-        right: -400px;
-        top: 80px;
-        width: 380px;
-        height: calc(100vh - 120px);
-        transition: right 0.5s ease;
-        z-index: 1001;
-        overflow-y: auto;
-    }
-
-    #inventory-panel.active {
-        right: 10px;
-    }
-
-    #inv-title {
-        color: gold;
-        font-family: var(--pixel-font);
-        text-align: center;
-    }
-
-    #inv-items {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .inv-item {
-        display: flex;
-        gap: 10px;
-        border-bottom: 1px solid var(--accent-color);
-        padding-bottom: 5px;
-    }
-
-    .inv-item-img {
-        width: 60px;
-        height: 60px;
-        border: 1px solid #fff;
-    }
-
-    .inv-item-details h4 {
-        font-family: var(--pixel-font);
-        font-size: 0.8em;
-        margin: 0;
-    }
-
-    .inv-item-details p {
-        margin: 0;
-        font-family: var(--pixel-font);
-        font-size: 0.7em;
-    }
-
-    .confirm-order-btn {
-        width: 100%;
-        margin-top: 20px;
-    }
-
-    #checkout-form {
-        display: none;
-        margin-top: 20px;
-    }
-
-    #checkout-form input, #checkout-form select {
-        width: calc(100% - 20px);
-        margin-bottom: 10px;
-        padding: 8px;
-        background-color: transparent;
-        border: 2px solid violet;
-        color: violet;
-        font-family: var(--terminal-font);
-    }
-
-    #close-cart {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        cursor: pointer;
-    }
-
-    /* --- Main Section --- */
-    #main-content {
-        margin-top: 80px;
-        padding: 50px 5%;
-    }
-
-    #gallery-title {
-        color: violet;
-        font-family: var(--pixel-font);
-        text-align: center;
-        text-transform: uppercase;
-        margin-bottom: 50px;
-        text-shadow: 0 0 10px violet;
-    }
-
-    /* Featured Products Gallery */
-    #product-gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 30px;
-    }
-
-    .product-card {
-        border: 4px solid var(--accent-color);
-        border-image: linear-gradient(to right, violet, indigo, blue) 1;
-        transition: transform 0.3s ease;
-    }
-
-    .product-card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 15px var(--accent-color);
-    }
-
-    .product-card-img {
-        width: 100%;
-        image-rendering: pixelated;
-    }
-
-    .product-card-info {
-        padding: 10px;
-        text-align: center;
-    }
-
-    .product-card-info h3 {
-        font-family: var(--pixel-font);
-        font-size: 1em;
-        margin: 0;
-    }
-
-    .product-card-info p {
-        font-family: var(--pixel-font);
-        font-size: 0.9em;
-        margin: 5px 0 10px;
-    }
-
-    /* --- Footer --- */
-    #main-footer {
-        background-color: rgba(0, 0, 0, 0.9);
-        border-top: 2px solid var(--accent-color);
-        padding: 30px 5%;
-        margin-top: 50px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-    }
-
-    #main-footer h4 {
-        color: #fff;
-        font-family: var(--pixel-font);
-        font-size: 0.9em;
-        margin-bottom: 15px;
-    }
-
-    #main-footer ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    #main-footer a {
-        color: inherit;
-        text-decoration: none;
-        transition: color 0.2s;
-        font-size: 1.1em;
-    }
-
-    #main-footer a:hover {
-        color: violet;
-    }
-
-    #social-links {
-        font-size: 1.5em;
-        display: flex;
-        gap: 15px;
-        margin-top: 15px;
-    }
-
-    #copyright {
-        grid-column: 1 / -1;
-        text-align: center;
-        margin-top: 20px;
-        font-size: 0.8em;
-        opacity: 0.7;
-    }
-
-    /* --- Responsive adjustments --- */
-    @media (max-width: 768px) {
-        #menu-links {
-            display: none;
-        }
-
-        #hero-slider h2 {
-            font-size: 1.8em;
-        }
-
-        #product-gallery {
-            grid-template-columns: 1fr;
-        }
-
-        #inventory-panel {
-            width: 90vw;
-            right: -100vw;
-        }
-
-        #inventory-panel.active {
-            right: 5vw;
-        }
-    }
+/* ---------- TOASTS / SUCCESS ---------- */
+#toasts{position:fixed;top:76px;right:16px;z-index:300;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.toast{background:#14141cf2;border:2px solid var(--line);border-left-width:5px;border-radius:10px;
+  padding:12px 16px;font-size:13px;display:flex;gap:10px;align-items:center;min-width:240px;
+  animation:tIn .35s cubic-bezier(.2,.9,.3,1.3);box-shadow:0 12px 30px #000c}
+.toast.out{animation:tOut .3s forwards}
+@keyframes tIn{from{opacity:0;transform:translateX(60px)}}
+@keyframes tOut{to{opacity:0;transform:translateX(60px)}}
+.toast.xp{border-left-color:var(--cyan)}.toast.cart{border-left-color:var(--purple)}
+.toast.ok{border-left-color:var(--green)}.toast.err{border-left-color:var(--red)}.toast.ach{border-left-color:var(--gold);box-shadow:0 0 24px #ffc93c44}
+#successOv{position:fixed;inset:0;z-index:400;display:none;place-items:center;background:#000000c9}
+#successOv.on{display:grid}
+#successOv .bx{text-align:center;animation:win .5s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes win{from{transform:scale(.4);opacity:0}}
+#successTitle{font-family:var(--fp);font-size:clamp(16px,4vw,30px);color:var(--green);text-shadow:0 0 30px #3ddc7a88;letter-spacing:2px}
+#successSub{font-family:var(--fp);font-size:10px;color:var(--gold);margin-top:14px}
 </style>
 </head>
 <body>
 
-<!-- Upper Navigation -->
-<nav id="main-nav">
-    <div id="logo">
-        <h1 id="logo-ss">SS</h1>
-        <h1 id="logo-rs">RS</h1>
-    </div>
-    <div id="menu-links">
-        <ul>
-            <li><a href="#">INICIO</a></li>
-            <li><a href="#">BANDAS</a></li>
-            <li><a href="#">ANIME</a></li>
-            <li><a href="#">MANGA</a></li>
-            <li><a href="#">ROCKABILLY</a></li>
-            <li><a href="#">OFERTAS</a></li>
-            <li><a href="#">CONTACTO</a></li>
-        </ul>
-    </div>
-    <div id="quick-cart">
-        <div id="search-bar">
-            <input type="text" id="search-input" placeholder="BUSCAR POR NOMBRE, CÓDIGO...">
-            <div id="search-scanline"></div>
-        </div>
-        <div id="cart-status-grid"></div>
-        <a href="#" id="cart-link"><i class="fas fa-shopping-cart"></i></a>
-    </div>
-</nav>
+<!-- ══════════ BOOT / PRESS START ══════════ -->
+<div id="boot">
+  <div class="blogo">SS</div>
+  <div class="bsub">SMOKE SALE · GAME STORE EDITION</div>
+  <button id="bootStart">▶ PRESS START</button>
+  <div class="hint">Remeras de bandas · Anime · Manga · Rockabilly — experiencia de compra nivel videojuego</div>
+</div>
 
-<!-- Hero Carrusel (5 Slides for example) -->
-<header id="hero-slider">
-    <div class="slide active" style="background-image: url('data:image/png;base64,...(acdc_slide_data)...')">
-        <div class="hero-content">
-            <h2>NEW ROCK ARRIVALS</h2>
-            <button class="pixel-button hero-cta">VER COLECCIÓN</button>
-        </div>
-    </div>
-    <div class="slide" style="background-image: url('data:image/png;base64,...(anime_slide_data)...')">
-        <div class="hero-content">
-            <h2>LEGENDARY ANIME GEAR</h2>
-            <button class="pixel-button hero-cta">COMPRAR AHORA</button>
-        </div>
-    </div>
-    <div class="slide" style="background-image: url('data:image/png;base64,...(manga_slide_data)...')">
-        <div class="hero-content">
-            <h2>RARE MANGA RELEASES</h2>
-            <button class="pixel-button hero-cta">EXPLORAR</button>
-        </div>
-    </div>
-    <div class="slide" style="background-image: url('data:image/png;base64,...(rockabilly_slide_data)...')">
-        <div class="hero-content">
-            <h2>REBEL ROCKABILLY STYLE</h2>
-            <button class="pixel-button hero-cta">REBEL STYLE</button>
-        </div>
-    </div>
-    <div class="slide" style="background-image: url('data:image/png;base64,...(casual_slide_data)...')">
-        <div class="hero-content">
-            <h2>DAILY STREET GEAR</h2>
-            <button class="pixel-button hero-cta">GET READY</button>
-        </div>
-    </div>
-    <div id="slider-controls">
-        <div class="slider-dot active"></div>
-        <div class="slider-dot"></div>
-        <div class="slider-dot"></div>
-        <div class="slider-dot"></div>
-        <div class="slider-dot"></div>
-    </div>
+<!-- ══════════ HUD SUPERIOR ══════════ -->
+<header id="hud">
+  <button class="icon-btn" id="burger" aria-label="Menú">☰</button>
+  <a class="logo" href="#" data-go="all">
+    <svg viewBox="0 0 90 60" aria-hidden="true">
+      <g stroke="#e23b3b" stroke-width="4" fill="none"><path d="M20 8 L64 52"/><path d="M70 8 L26 52"/></g>
+      <circle cx="20" cy="8" r="5" fill="#e8e8e8"/><circle cx="70" cy="8" r="5" fill="#e8e8e8"/>
+      <circle cx="64" cy="52" r="7" fill="#22222a" stroke="#e23b3b" stroke-width="2"/>
+      <circle cx="26" cy="52" r="7" fill="#22222a" stroke="#e23b3b" stroke-width="2"/>
+      <g fill="#e8e8e8"><circle cx="8" cy="28" r="6"/><rect x="4" y="32" width="8" height="5" rx="1"/>
+        <circle cx="6" cy="27" r="1.7" fill="#111"/><circle cx="10" cy="27" r="1.7" fill="#111"/>
+        <circle cx="82" cy="28" r="6"/><rect x="78" y="32" width="8" height="5" rx="1"/>
+        <circle cx="80" cy="27" r="1.7" fill="#111"/><circle cx="84" cy="27" r="1.7" fill="#111"/></g>
+      <text x="45" y="41" text-anchor="middle" font-family="Oswald,sans-serif" font-size="30" font-weight="700" fill="#f5f5f5" stroke="#e23b3b" stroke-width="1.6">SS</text>
+    </svg>
+    <span><b>SMOKE SALE</b><small>GAME STORE</small></span>
+  </a>
+  <nav id="navMain" aria-label="principal"></nav>
+  <div class="searchbox">
+    <input id="searchInput" type="text" placeholder="Buscar nombre, código, tag, categoría…" autocomplete="off">
+    <div id="searchDrop"><div class="sd-h">BUSCADOR AVANZADO · NOMBRE / CÓDIGO / PALABRAS CLAVE / DESCRIPCIÓN / CATEGORÍA</div><div id="sdList"></div></div>
+  </div>
+  <div class="hud-right">
+    <div class="hud-chip" title="SS Coins"><span class="coin"></span><span id="coins">0</span></div>
+    <div class="hud-chip xp" title="Experiencia"><span id="xpLevel">NV 1</span><div id="xpWrap"><div id="xpFill"></div></div></div>
+    <button class="icon-btn" id="btnSound" title="Sonido">🔊</button>
+    <button class="icon-btn" id="btnAdmin" title="Dashboard Admin">⚙️</button>
+    <button class="icon-btn" id="btnCart" title="Inventario">🛒<span id="cartCount">0</span></button>
+  </div>
 </header>
+<nav id="mNav" aria-label="móvil"></nav>
 
-<!-- Dynamic Cart Sidebar -->
-<aside id="inventory-panel" class="game-panel">
-    <div id="close-cart"><i class="fas fa-times"></i></div>
-    <h3 id="inv-title">INVENTARIO: <span id="cart-item-count">0</span> ITEMS</h3>
-    <div id="inv-items">
-        <!-- Cart items will be added here dynamically -->
-    </div>
-    <button class="pixel-button confirm-order-btn">CONFIRMAR PEDIDO</button>
-    <div id="checkout-form">
-        <input type="text" id="chk-nombre" placeholder="Nombre">
-        <input type="text" id="chk-apellido" placeholder="Apellido">
-        <input type="text" id="chk-ciudad" placeholder="Ciudad">
-        <input type="text" id="chk-direccion" placeholder="Dirección">
-        <input type="email" id="chk-email" placeholder="Correo electrónico">
-        <select id="chk-pago">
-            <option value="">Método de Pago</option>
-            <option value="transferencia">Transferencia Bancaria</option>
-            <option value="tarjeta">Tarjeta de Crédito/Débito</option>
-            <option value="otros">Otros Métodos</option>
-        </select>
-        <button class="pixel-button process-checkout-btn">PROCESAR PEDIDO</button>
-    </div>
-</aside>
+<main>
+  <!-- ══════════ CARRUSEL HERO ══════════ -->
+  <section id="hero" style="padding:0">
+    <div id="slides"></div>
+    <button class="pArrow l" id="heroPrev" aria-label="Anterior">
+      <svg width="46" height="46" viewBox="0 0 8 8" shape-rendering="crispEdges"><g fill="#4f7cff" stroke="#000" stroke-width=".18"><rect x="4" y="0" width="1" height="1"/><rect x="3" y="1" width="2" height="1"/><rect x="2" y="2" width="5" height="1"/><rect x="1" y="3" width="6" height="1"/><rect x="2" y="4" width="5" height="1"/><rect x="3" y="5" width="2" height="1"/><rect x="4" y="6" width="1" height="1"/></g></svg>
+    </button>
+    <button class="pArrow r" id="heroNext" aria-label="Siguiente">
+      <svg width="46" height="46" viewBox="0 0 8 8" shape-rendering="crispEdges"><g fill="#4f7cff" stroke="#000" stroke-width=".18"><rect x="4" y="0" width="1" height="1"/><rect x="3" y="1" width="2" height="1"/><rect x="2" y="2" width="5" height="1"/><rect x="1" y="3" width="6" height="1"/><rect x="2" y="4" width="5" height="1"/><rect x="3" y="5" width="2" height="1"/><rect x="4" y="6" width="1" height="1"/></g></svg>
+    </button>
+    <div id="dots"></div>
+    <div id="heroBar"><div id="heroBarFill"></div></div>
+  </section>
 
-<!-- Featured Gallery / Products -->
-<main id="main-content">
-    <h2 id="gallery-title">REMERAS DESTACADAS</h2>
-    <div id="product-gallery">
-        <!-- 4 Cards from image_0.png as example -->
-        <article class="product-card">
-            <img src="data:image/png;base64,...(acdc_shirt_data)..." alt="AC/DC Shirt" class="product-card-img">
-            <div class="product-card-info">
-                <h3>AC/DC LEGENDARY</h3>
-                <p>$34.99</p>
-                <button class="pixel-button add-to-cart" data-name="AC/DC Legendary" data-price="34.99">ELEGIR ITEM</button>
-            </div>
-        </article>
-        <article class="product-card">
-            <img src="data:image/png;base64,...(dbz_shirt_data)..." alt="Dragon Ball Z Shirt" class="product-card-img">
-            <div class="product-card-info">
-                <h3>DRAGON BALL Z</h3>
-                <p>$39.99</p>
-                <button class="pixel-button add-to-cart" data-name="Dragon Ball Z" data-price="39.99">ELEGIR ITEM</button>
-            </div>
-        </article>
-        <article class="product-card">
-            <img src="data:image/png;base64,...(manga_shirt_data)..." alt="Manga Shirt" class="product-card-img">
-            <div class="product-card-info">
-                <h3>MANGA LIMITED</h3>
-                <p>$29.99</p>
-                <button class="pixel-button add-to-cart" data-name="Manga Limited" data-price="29.99">ELEGIR ITEM</button>
-            </div>
-        </article>
-        <article class="product-card">
-            <img src="data:image/png;base64,...(rockabilly_shirt_data)..." alt="Rockabilly Shirt" class="product-card-img">
-            <div class="product-card-info">
-                <h3>ROCKABILLY REBEL</h3>
-                <p>$39.99</p>
-                <button class="pixel-button add-to-cart" data-name="Rockabilly Rebel" data-price="39.99">ELEGIR ITEM</button>
-            </div>
-        </article>
+  <!-- ══════════ TILES CATEGORÍAS (estilo PS5) ══════════ -->
+  <section id="categorias">
+    <h2 class="sec-t rv">Selecciona tu categoría</h2>
+    <p class="sec-s rv">Elige tu clase de jugador: cada tile es un mundo. ✕ para entrar.</p>
+    <div id="tiles" class="rv"></div>
+  </section>
+
+  <!-- ══════════ TIENDA ══════════ -->
+  <section id="tienda">
+    <h2 class="sec-t rv">Remeras destacadas</h2>
+    <p class="sec-s rv" id="gridSub">Inventario completo · pasa el cursor para sentir el glow de selección.</p>
+    <div id="grid" class="rv"></div>
+  </section>
+
+  <!-- ══════════ BANNER PARALLAX ══════════ -->
+  <section id="gothic">
+    <div class="plx-bg" data-plx="0.18"></div>
+    <div class="spikes"></div>
+    <div class="inner rv">
+      <h2>ACCESORIOS GOTHIC</h2>
+      <p>Calaveras, rosas y tachas — el lado oscuro del armario.</p>
+      <button class="btn-game" data-go="rock"><span class="pb x">✕</span> EXPLORAR LO OSCURO</button>
     </div>
+  </section>
+
+  <!-- ══════════ OFERTAS / EVENTO ══════════ -->
+  <section id="ofertas">
+    <span class="ev-chip rv">⚡ EVENTO ESPECIAL · REBAJAS RELÁMPAGO</span>
+    <h2 class="sec-t rv" style="margin-top:12px">Ofertas activas</h2>
+    <div id="cd" class="rv">
+      <div class="box" id="cdH">00</div><small>HRS</small>
+      <div class="box" id="cdM">00</div><small>MIN</small>
+      <div class="box" id="cdS">00</div><small>SEG</small>
+    </div>
+    <div id="offerGrid" class="rv"></div>
+  </section>
+
+  <!-- ══════════ GALERÍA ══════════ -->
+  <section id="galeria">
+    <div class="g-head">
+      <div><h2 class="sec-t rv">#RockStyleLife</h2>
+      <p class="sec-s rv">Galería de la comunidad — scroll con snap, como pantallas de un juego.</p></div>
+      <div class="g-nav rv">
+        <button class="icon-btn" id="gPrev" aria-label="←">◀</button>
+        <button class="icon-btn" id="gNext" aria-label="→">▶</button>
+      </div>
+    </div>
+    <div id="gStrip" class="rv"></div>
+  </section>
+
+  <!-- ══════════ CONTACTO ══════════ -->
+  <section id="contacto">
+    <h2 class="sec-t rv">Contacto &amp; Newsletter</h2>
+    <p class="sec-s rv">Únete al clan y recibe +10 XP y códigos de descuento.</p>
+    <div class="wrap">
+      <div class="panel-box rv">
+        <h3 style="margin-bottom:14px">📡 Canal directo</h3>
+        <p style="color:var(--dim);font-size:14px;line-height:1.7;margin-bottom:16px">
+          ¿Dudas con tu pedido, tallas o envíos? Escríbenos y respondemos en menos de 24&nbsp;h.
+          También por DM en redes: <b style="color:var(--cyan)">@smokesale.ss</b></p>
+        <p style="font-size:14px;margin-bottom:6px">✉️ hola@smokesale.gg</p>
+        <p style="font-size:14px;margin-bottom:20px">📍 Calle del Riff 66, Ciudad Rock</p>
+        <div class="socials">
+          <a href="#" aria-label="Facebook">f</a><a href="#" aria-label="X"></a>
+          <a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <form class="panel-box rv" id="newsForm" novalidate>
+        <h3 style="margin-bottom:14px">🎮 Suscríbete</h3>
+        <div class="field"><label for="newsEmail">CORREO ELECTRÓNICO</label>
+          <input id="newsEmail" type="email" placeholder="tu@email.com"></div>
+        <button class="btn-game" type="submit"><span class="pb t">△</span> SUBSCRIBE</button>
+      </form>
+    </div>
+  </section>
 </main>
 
-<!-- Footer -->
-<footer id="main-footer">
-    <div class="footer-column">
-        <h4>HELP &amp; INFO</h4>
-        <ul>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Shipping</a></li>
-            <li><a href="#">Returns</a></li>
-        </ul>
-    </div>
-    <div class="footer-column">
-        <h4>CATEGORIES</h4>
-        <ul>
-            <li><a href="#">Rock Tees</a></li>
-            <li><a href="#">Anime Gear</a></li>
-            <li><a href="#">Manga Releases</a></li>
-        </ul>
-    </div>
-    <div class="footer-column">
-        <h4>FOLLOW US</h4>
-        <p>Stay up to date.</p>
-        <div id="social-links">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-        </div>
-    </div>
-    <div id="copyright">
-        © SS SMOKE SALE 2024. All rights reserved.
-    </div>
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="f-grid">
+    <div><h4>HELP &amp; INFO</h4><a href="#">Home</a><a href="#">About us</a><a href="#contacto">Contact us</a><a href="#" id="fAdmin">Acceso Admin</a></div>
+    <div><h4>SHIPPING</h4><a href="#">Envíos 24-72h</a><a href="#">Gothic Accessories</a><a href="#ofertas">Sale</a></div>
+    <div><h4>POLICIES</h4><a href="#">Devoluciones 30 días</a><a href="#">Privacidad</a><a href="#">Términos</a></div>
+    <div><h4>SS SMOKE SALE</h4><p style="color:var(--dim);font-size:13px;line-height:1.7">¿Cómo puede el ROCK ser un sentimiento? Es difícil de creer, pero lo es. Crea tu outfit y deja que tu apariencia combine con tu alma. 🤘</p></div>
+  </div>
+  <div class="f-bot"><span>© 2026 SMOKE SALE (SS) — Todos los derechos reservados.</span><span class="pix" style="font-size:8px">INSERT COIN TO CONTINUE…</span></div>
 </footer>
 
-<script src="[https://cdnjs.cloudflare.com/beat-player/beat-player.min.js](https://cdnjs.cloudflare.com/beat-player/beat-player.min.js)"></script> <!-- Optional music script, like from image_2.png -->
+<!-- ══════════ OVERLAY + CARRITO ══════════ -->
+<div id="overlay"></div>
+<aside id="cartDrawer" aria-label="Carrito">
+  <div class="cd-h"><h3>🎒 INVENTARIO</h3><span class="cnt" id="cartCount2">0 items</span>
+    <button class="icon-btn" id="cartClose" aria-label="Cerrar">✕</button></div>
+  <div id="cartItems"></div>
+  <div class="cd-f">
+    <div class="tot"><span>TOTAL</span><b id="cartTotal">$0.00</b></div>
+    <form id="checkoutForm" novalidate>
+      <div class="f-row">
+        <div class="field"><label for="fNombre">NOMBRE *</label><input id="fNombre"></div>
+        <div class="field"><label for="fApellido">APELLIDO *</label><input id="fApellido"></div>
+      </div>
+      <div class="f-row">
+        <div class="field"><label for="fCiudad">CIUDAD *</label><input id="fCiudad"></div>
+        <div class="field"><label for="fDir">DIRECCIÓN *</label><input id="fDir"></div>
+      </div>
+      <div class="field"><label for="fEmail">CORREO ELECTRÓNICO *</label><input id="fEmail" type="email"></div>
+      <div class="field"><label for="fPago">MÉTODO DE PAGO *</label>
+        <select id="fPago">
+          <option value="">— Selecciona —</option>
+          <option value="transferencia bancaria">Transferencia bancaria</option>
+          <option value="tarjeta">Tarjeta</option>
+          <option value="otros">Otros</option>
+        </select></div>
+      <button class="btn-game" id="btnConfirm" type="submit"><span class="pb o">◯</span> CONFIRMAR PEDIDO</button>
+    </form>
+  </div>
+</aside>
+
+<!-- ══════════ MODAL PRODUCTO ══════════ -->
+<div id="pModal"><div class="pm-box">
+  <div class="im"><img id="pmImg" alt=""></div>
+  <div class="in">
+    <button class="icon-btn pm-x" id="pmClose">✕</button>
+    <span class="badge b-cat" id="pmChip">ROCK</span>
+    <h3 id="pmName" style="font-size:24px;margin:26px 0 4px"></h3>
+    <div class="pix" id="pmCode" style="font-size:8px;color:var(--dim)"></div>
+    <p id="pmDesc" style="color:var(--dim);font-size:14px;line-height:1.7;margin:14px 0"></p>
+    <div class="pr" style="display:flex;gap:12px;align-items:baseline;margin-bottom:16px">
+      <b id="pmPrice" style="font-family:var(--fh);font-size:26px;color:var(--gold)"></b>
+      <s id="pmOld" style="color:var(--dim)"></s></div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <div class="ci q" style="border:none;background:none;padding:0"><button type="button" id="pmMinus">−</button><b id="pmQty" style="min-width:20px;text-align:center">1</b><button type="button" id="pmPlus">+</button></div>
+      <button class="btn-game" id="pmAdd"><span class="pb x">✕</span> AÑADIR AL CARRITO</button>
+    </div>
+  </div>
+</div></div>
+
+<!-- ══════════ ADMIN DASHBOARD ══════════ -->
+<div id="admin"><div class="ad-box">
+  <div class="ad-h">
+    <h2>🛠️ DASHBOARD ADMIN</h2>
+    <div class="ad-tabs">
+      <button class="ad-tab on" data-tab="prod">PRODUCTOS</button>
+      <button class="ad-tab" data-tab="ord">PEDIDOS</button>
+    </div>
+    <button class="icon-btn" id="adminClose" style="margin-left:auto">✕</button>
+  </div>
+  <div class="ad-stats" id="adStats"></div>
+  <div id="panProd">
+    <table><thead><tr><th></th><th>CÓDIGO</th><th>NOMBRE</th><th>CAT</th><th>PRECIO</th><th>STOCK</th><th></th></tr></thead>
+    <tbody id="prodBody"></tbody></table>
+    <h3 style="margin:26px 0 12px">➕ Nuevo producto</h3>
+    <form class="ad-add" id="apForm">
+      <div class="field"><label>NOMBRE</label><input id="apName" required></div>
+      <div class="field"><label>CATEGORÍA</label><select id="apCat"><option>rock</option><option>anime</option><option>manga</option><option>rockabilly</option></select></div>
+      <div class="field"><label>PRECIO</label><input id="apPrice" type="number" step="0.01" min="1" required></div>
+      <div class="field"><label>PRECIO ANT. (OPC.)</label><input id="apOld" type="number" step="0.01" min="0"></div>
+      <div class="field"><label>STOCK</label><input id="apStock" type="number" min="0" value="10" required></div>
+      <div class="field"><label>ARTE</label><select id="apImg"></select></div>
+      <div class="field"><label>DESCRIPCIÓN</label><input id="apDesc"></div>
+      <button class="btn-game" type="submit"><span class="pb t">△</span> CREAR</button>
+    </form>
+  </div>
+  <div id="panOrd" style="display:none">
+    <table><thead><tr><th>ID</th><th>FECHA</th><th>CLIENTE</th><th>CIUDAD</th><th>PAGO</th><th>ITEMS</th><th>TOTAL</th><th>ESTADO</th></tr></thead>
+    <tbody id="orderBody"></tbody></table>
+  </div>
+</div></div>
+
+<div id="toasts"></div>
+<div id="successOv"><div class="bx"><div id="successTitle">¡PEDIDO CONFIRMADO!</div><div id="successSub"></div></div></div>
+<div id="cursor"></div>
+
 <script>
-    // JavaScript Logic for features and animations
-    // Using simple JS, can be upgraded to GSAP if required.
+(function(){'use strict';
+/* ═══════════════ UTILS ═══════════════ */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const ls={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+          set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const money=n=>'$'+n.toFixed(2);
+const svgURI=s=>'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s);
 
-    // 1. Carrusel Logic
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.slider-dot');
-    let currentSlide = 0;
+/* ═══════════════ ARTE VECTORIAL (remeras) ═══════════════
+   Sustituye cualquier valor de IMG por una URL externa y todo se actualiza. */
+const TEE=print=>svgURI(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><radialGradient id="b" cx="50%" cy="38%" r="85%"><stop offset="0%" stop-color="#2b2b33"/><stop offset="100%" stop-color="#131318"/></radialGradient></defs><rect width="400" height="400" fill="url(#b)"/><circle cx="70" cy="60" r="3" fill="#3a3a44"/><circle cx="332" cy="92" r="2" fill="#3a3a44"/><circle cx="300" cy="344" r="3" fill="#3a3a44"/><circle cx="58" cy="322" r="2" fill="#3a3a44"/><path d="M142 66 L92 88 L58 148 L96 172 L118 146 L118 342 L282 342 L282 146 L304 172 L342 148 L308 88 L258 66 Q232 90 200 90 Q168 90 142 66 Z" fill="#191920" stroke="#000" stroke-width="4"/><path d="M142 66 Q168 90 200 90 Q232 90 258 66 L252 60 Q228 82 200 82 Q172 82 148 60 Z" fill="#0c0c10"/>${print}</svg>`);
+const F='font-family="Arial Black,Arial,sans-serif" text-anchor="middle"';
+const IMG={
+teeRock:TEE(`<text x="200" y="152" ${F} font-size="28" fill="#e23b3b" font-weight="900">HIGH</text><text x="200" y="182" ${F} font-size="28" fill="#e23b3b" font-weight="900">VOLTAGE</text><polygon points="207,196 176,248 196,248 185,296 226,234 204,234 217,196" fill="#ffc93c" stroke="#000" stroke-width="3"/>`),
+teeSkel:TEE(`<text x="200" y="150" ${F} font-size="22" fill="#e8e0c8" font-weight="900">SKULL BAND</text><g fill="#e8e0c8"><circle cx="152" cy="196" r="14"/><circle cx="200" cy="184" r="14"/><circle cx="248" cy="196" r="14"/></g><g fill="#191920"><circle cx="147" cy="194" r="4"/><circle cx="157" cy="194" r="4"/><circle cx="195" cy="182" r="4"/><circle cx="205" cy="182" r="4"/><circle cx="243" cy="194" r="4"/><circle cx="253" cy="194" r="4"/></g><g stroke="#e8e0c8" stroke-width="3"><line x1="152" y1="210" x2="152" y2="252"/><line x1="200" y1="198" x2="200" y2="252"/><line x1="248" y1="210" x2="248" y2="252"/><line x1="140" y1="222" x2="164" y2="222"/><line x1="188" y1="214" x2="212" y2="214"/><line x1="236" y1="222" x2="260" y2="222"/></g><circle cx="200" cy="278" r="24" fill="none" stroke="#e8e0c8" stroke-width="4"/>`),
+teeWolf:TEE(`<polygon points="200,300 152,244 140,190 162,206 170,168 186,200 200,162 214,200 230,168 238,206 260,190 248,244" fill="#cfd4dd" stroke="#000" stroke-width="3"/><circle cx="181" cy="226" r="7" fill="#ff2222"/><circle cx="219" cy="226" r="7" fill="#ff2222"/><polygon points="182,262 188,276 194,262" fill="#fff"/><polygon points="206,262 212,276 218,262" fill="#fff"/><text x="200" y="326" ${F} font-size="20" fill="#aab2c0" font-weight="900">METAL WOLF</text>`),
+teeAnime:TEE(`<circle cx="200" cy="212" r="66" fill="none" stroke="#27d8ff" stroke-width="6" opacity=".85"/><polygon points="176,176 184,150 192,172 200,144 208,172 216,150 224,176" fill="#27d8ff"/><circle cx="200" cy="186" r="14" fill="#f2c9a0"/><polygon points="178,204 222,204 214,258 186,258" fill="#e8722c"/><rect x="186" y="232" width="28" height="8" fill="#1d4ed8"/><text x="200" y="300" ${F} font-size="20" fill="#ffc93c" font-weight="900">SAIYAN POWER</text>`),
+teeNinja:TEE(`<circle cx="200" cy="212" r="60" fill="#c0392b"/><circle cx="200" cy="212" r="60" fill="none" stroke="#ff8a7a" stroke-width="3" opacity=".6"/><line x1="146" y1="164" x2="252" y2="150" stroke="#dfe6ee" stroke-width="5"/><circle cx="200" cy="196" r="13" fill="#14141c"/><rect x="186" y="206" width="28" height="46" rx="8" fill="#14141c"/><rect x="192" y="192" width="16" height="5" fill="#dfe6ee"/><text x="200" y="304" ${F} font-size="19" fill="#ff6a6a" font-weight="900">BLOOD MOON</text>`),
+teeManga:TEE(`<rect x="140" y="128" width="120" height="150" fill="#f5f5f5" stroke="#000" stroke-width="4"/><line x1="200" y1="128" x2="200" y2="212" stroke="#000" stroke-width="3"/><line x1="140" y1="212" x2="260" y2="212" stroke="#000" stroke-width="3"/><g stroke="#000" stroke-width="2"><line x1="146" y1="140" x2="170" y2="164"/><line x1="158" y1="136" x2="180" y2="158"/><line x1="210" y1="230" x2="236" y2="256"/></g><circle cx="176" cy="180" r="10" fill="none" stroke="#000" stroke-width="3"/><circle cx="228" cy="176" r="10" fill="none" stroke="#000" stroke-width="3"/><ellipse cx="200" cy="248" rx="34" ry="18" fill="#fff" stroke="#000" stroke-width="3"/><text x="200" y="255" ${F} font-size="16" fill="#000" font-weight="900">¡ZUN!</text>`),
+teeRB:TEE(`<text x="200" y="150" ${F} font-size="21" fill="#e8dcc0" font-weight="900">ROCKABILLY</text><circle cx="176" cy="182" r="12" fill="#e8c8a0"/><path d="M164 178 Q166 164 182 168 Q190 170 188 178 Z" fill="#3a2a1a"/><rect x="140" y="216" width="120" height="30" rx="10" fill="#d33a2f" stroke="#000" stroke-width="3"/><rect x="168" y="200" width="52" height="20" rx="6" fill="#d33a2f" stroke="#000" stroke-width="3"/><rect x="174" y="204" width="40" height="12" rx="4" fill="#bcd8e6"/><circle cx="164" cy="250" r="14" fill="#111" stroke="#e8dcc0" stroke-width="4"/><circle cx="236" cy="250" r="14" fill="#111" stroke="#e8dcc0" stroke-width="4"/><text x="200" y="296" ${F} font-size="14" fill="#d33a2f" font-weight="900">HOT ROD · 50s</text>`),
+teeGothic:TEE(`<circle cx="200" cy="210" r="62" fill="none" stroke="#9aa0ad" stroke-width="9" stroke-dasharray="2 14"/><circle cx="200" cy="204" r="32" fill="#e8e8e8"/><rect x="186" y="228" width="28" height="14" rx="4" fill="#e8e8e8"/><circle cx="188" cy="200" r="8" fill="#191920"/><circle cx="212" cy="200" r="8" fill="#191920"/><polygon points="200,212 195,222 205,222" fill="#191920"/><g fill="#c0182b"><circle cx="150" cy="176" r="12"/><circle cx="250" cy="176" r="12"/><circle cx="146" cy="240" r="12"/><circle cx="254" cy="240" r="12"/></g><g fill="none" stroke="#7a0f1c" stroke-width="3"><circle cx="150" cy="176" r="6"/><circle cx="250" cy="176" r="6"/><circle cx="146" cy="240" r="6"/><circle cx="254" cy="240" r="6"/></g>`)
+};
 
-    function showSlide(index) {
-        slides.forEach(slide => slide.classList.remove('active'));
-        dots.forEach(dot => dot.classList.remove('active'));
-        slides[index].classList.add('active');
-        dots[index].classList.add('active');
-    }
+/* ═══════════════ DATOS ═══════════════ */
+const DEF=[
+ {id:'SS-001',code:'RK-001',name:'Remera High Voltage Rock',cat:'rock',price:14.99,old:19.99,stock:12,imgKey:'teeRock',desc:'Remera de banda de rock clásica con rayo dorado. Algodón 100% peinado 180g, serigrafía de alta duración. Para los que tienen alma de rock.',tags:['rock','banda','rayo','clasica','vintage']},
+ {id:'SS-002',code:'RK-002',name:'Remera Skeleton Band',cat:'rock',price:23.99,old:null,stock:9,imgKey:'teeSkel',desc:'La banda de esqueletos que nunca deja de tocar. Estampado crema estilo póster de concierto vintage.',tags:['rock','esqueleto','banda','concierto']},
+ {id:'SS-003',code:'RK-003',name:'Remera Metal Wolf',cat:'rock',price:27.99,old:32.99,stock:7,imgKey:'teeWolf',desc:'Lobo demoníaco con ojos de fuego. Tinta plateada metálica sobre algodón negro. Heavy o nada.',tags:['metal','lobo','heavy','demonio']},
+ {id:'SS-004',code:'AN-001',name:'Remera Saiyan Power',cat:'anime',price:28.99,old:34.99,stock:10,imgKey:'teeAnime',desc:'Energía ki de otro nivel. Aura cian eléctrica y guerrero legendario. Sube tu poder de compra sobre 9000.',tags:['anime','saiyan','ki','dragon','poder']},
+ {id:'SS-005',code:'AN-002',name:'Remera Ninja Blood Moon',cat:'anime',price:25.99,old:null,stock:8,imgKey:'teeNinja',desc:'Ninja bajo la luna de sangre. Katana incluida (en el estampado). Edición sombra nocturna.',tags:['anime','ninja','katana','luna']},
+ {id:'SS-006',code:'MG-001',name:'Remera Manga Panels',cat:'manga',price:24.99,old:null,stock:11,imgKey:'teeManga',desc:'Viñetas clásicas en blanco y negro con onomatopeyas japonesas. Un capítulo entero en tu pecho.',tags:['manga','vinetas','comic','japon']},
+ {id:'SS-007',code:'RB-001',name:'Remera Rockabilly Hot Rod',cat:'rockabilly',price:29.99,old:36.99,stock:3,imgKey:'teeRB',desc:'Greaser, hot rod rojo y neón de diner. Tintas crema y rojo 50s. Puro rockabilly rebelde.',tags:['rockabilly','hotrod','50s','greaser','neon']},
+ {id:'SS-008',code:'GT-001',name:'Remera Gothic Skull Roses',cat:'rock',price:26.99,old:null,stock:6,imgKey:'teeGothic',desc:'Calavera entre rosas rojas y espinas. El clásico gótico que combina con tachas y cuero.',tags:['gothic','calavera','rosas','dark']}
+];
+let PRODUCTS=ls.get('ss_products',null)||DEF;
+let cart=ls.get('ss_cart',{}), orders=ls.get('ss_orders',[]);
+let xp=ls.get('ss_xp',0), coins=ls.get('ss_coins',250), muted=ls.get('ss_muted',false);
+let filter='all', slideI=0, slideT=null, hoverPause=false, pmId=null, pmQty=1;
 
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-    }
+const NAV=[{cat:'all',l:'INICIO',i:'🏠'},{cat:'rock',l:'BANDAS DE ROCK',i:'🎸'},{cat:'anime',l:'ANIME',i:'🐉'},{cat:'manga',l:'MANGA',i:'📖'},{cat:'rockabilly',l:'ROCKABILLY',i:'🎙️'},{cat:'ofertas',l:'OFERTAS',i:'🏷️'},{cat:'contacto',l:'CONTACTO',i:'✉️'}];
+const SLIDES=[
+ {art:'rock',chip:'BANDAS DE ROCK',t:'ROCK BAND T-SHIRTS — CLASSIC & RARE',s:'Para los que tienen alma de rock.',cat:'rock',img:'teeRock'},
+ {art:'anime',chip:'ANIME',t:'ANIME POWER — NIVEL SAIYAN',s:'Energía ki impresa en algodón premium.',cat:'anime',img:'teeAnime'},
+ {art:'manga',chip:'MANGA',t:'MANGA COLLECTION — PANELES CLÁSICOS',s:'Viñetas que cuentan tu historia.',cat:'manga',img:'teeManga'},
+ {art:'rb',chip:'ROCKABILLY',t:'ROCKABILLY REBEL — 50s STYLE',s:'Gasolina, neón y tupé.',cat:'rockabilly',img:'teeRB',neon:'DRIVE-IN DINER'},
+ {art:'gothic',chip:'GOTHIC',t:'GOTHIC ACCESSORIES — DARK SOUL',s:'Calaveras, rosas y tachas.',cat:'rock',img:'teeGothic'},
+ {art:'street',chip:'NEW RETRO',t:'URBAN STREET WEAR — NEW ARRIVALS',s:'Edición limitada estilo callejero.',cat:'all',img:'teeWolf',graf:'SS'}
+];
 
-    // Auto-advance carrusel every 5 seconds
-    setInterval(nextSlide, 5000);
+/* ═══════════════ AUDIO RETRO (WebAudio) ═══════════════ */
+let AC=null; const ac=()=>AC||(AC=new (window.AudioContext||window.webkitAudioContext)());
+function tone(f,d,type,g,when){ if(muted)return; try{ const c=ac(),o=c.createOscillator(),gn=c.createGain();
+ o.type=type||'square'; o.frequency.value=f; o.connect(gn); gn.connect(c.destination);
+ const t=c.currentTime+(when||0); gn.gain.setValueAtTime(g||.04,t); gn.gain.exponentialRampToValueAtTime(.0001,t+d); o.start(t); o.stop(t+d+.02);}catch(e){} }
+const sfx={hover:()=>tone(560,.05,'square',.015),click:()=>tone(340,.07,'square',.03),
+ add:()=>{tone(660,.09);tone(880,.09,'square',.04,.09);tone(1320,.14,'square',.04,.18)},
+ coin:()=>{tone(988,.08);tone(1319,.16,'square',.04,.08)},
+ err:()=>tone(130,.22,'sawtooth',.05),
+ start:()=>[262,392,523,784].forEach((f,i)=>tone(f,.14,'triangle',.05,i*.1)),
+ win:()=>[523,659,784,1047,1319].forEach((f,i)=>tone(f,.16,'triangle',.05,i*.09))};
 
-    // Manual controls (dots)
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            currentSlide = index;
-            showSlide(currentSlide);
-        });
-    });
+/* ═══════════════ TOASTS / LOGROS / XP ═══════════════ */
+function toast(msg,type,icon){ const t=document.createElement('div'); t.className='toast '+(type||'xp');
+ t.innerHTML='<span>'+(icon||'✦')+'</span><span>'+msg+'</span>'; $('#toasts').appendChild(t);
+ setTimeout(()=>{t.classList.add('out'); setTimeout(()=>t.remove(),300)},3000); }
+function hud(){ $('#coins').textContent=coins; const lv=Math.floor(xp/100)+1;
+ $('#xpLevel').textContent='NV '+lv; $('#xpFill').style.width=(xp%100)+'%'; }
+function addXp(n){ const b=Math.floor(xp/100); xp+=n; const a=Math.floor(xp/100);
+ if(a>b){ toast('🏆 LOGRO: ¡NIVEL '+ (a+1) +' ALCANZADO!','ach','🏆'); sfx.win(); }
+ ls.set('ss_xp',xp); hud(); }
 
-    // 2. Dynamic Cart Logic
-    const inventoryPanel = document.getElementById('inventory-panel');
-    const closeCart = document.getElementById('close-cart');
-    const cartStatusGrid = document.getElementById('cart-status-grid');
-    const invItemsList = document.getElementById('inv-items');
-    const cartItemCount = document.getElementById('cart-item-count');
-    const checkoutForm = document.getElementById('checkout-form');
-    const confirmOrderBtn = document.querySelector('.confirm-order-btn');
+/* ═══════════════ NAV / FILTROS ═══════════════ */
+function buildNav(){ const mk=(c)=>NAV.map(n=>'<button class="nav-btn'+(n.cat===c?' active':'')+'" data-cat="'+n.cat+'"><i>'+n.i+'</i>'+n.l+'</button>').join('');
+ $('#navMain').innerHTML=mk(filter); $('#mNav').innerHTML=mk(filter); }
+function goCat(cat){ if(cat==='contacto'){ $('#contacto').scrollIntoView({behavior:'smooth'}); }
+ else if(cat==='ofertas'){ $('#ofertas').scrollIntoView({behavior:'smooth'}); }
+ else { filter=cat; renderGrid(); renderTiles(); $('#tienda').scrollIntoView({behavior:'smooth'});
+   $('#gridSub').textContent = cat==='all' ? 'Inventario completo · pasa el cursor para sentir el glow de selección.' : 'Mostrando clase: '+cat.toUpperCase(); }
+ buildNav(); $('#mNav').classList.remove('on'); syncOverlay(); }
+document.addEventListener('click',e=>{ const g=e.target.closest('[data-go]'); if(g){e.preventDefault(); goCat(g.dataset.go);} 
+ const n=e.target.closest('.nav-btn'); if(n){ goCat(n.dataset.cat);} });
 
-    let cart = [];
+/* ═══════════════ RENDER TIENDA ═══════════════ */
+const catLabel=c=>({rock:'ROCK',anime:'ANIME',manga:'MANGA',rockabilly:'ROCKABILLY'})[c]||c.toUpperCase();
+function cardHTML(p,i){ const off=p.old?Math.round((1-p.price/p.old)*100):0;
+ return '<article class="p-card" style="animation-delay:'+(i*60)+'ms" data-id="'+p.id+'">'+
+ '<div class="imw"><img loading="lazy" src="'+IMG[p.imgKey]+'" alt="'+p.name+'">'+
+ '<span class="badge b-cat cat-color-'+p.cat+'">'+catLabel(p.cat)+'</span>'+
+ (off?'<span class="badge b-off">-'+off+'%</span>':'')+
+ (p.stock===0?'<div class="b-out">AGOTADO</div>':(p.stock<=3?'<span class="badge b-low">¡ÚLTIMAS '+p.stock+'!</span>':''))+
+ '</div><div class="bd"><div class="code">'+p.code+'</div><h3>'+p.name+'</h3>'+
+ '<div class="pr"><b>'+money(p.price)+'</b>'+(p.old?'<s>'+money(p.old)+'</s>':'')+'</div>'+
+ '<div class="acts"><button class="btn-mini add" data-add="'+p.id+'" '+(p.stock===0?'disabled':'')+'><span class="pb x">✕</span>AÑADIR</button>'+
+ '<button class="btn-mini" data-view="'+p.id+'"><span class="pb t">△</span>VER</button></div></div></article>'; }
+function renderGrid(){ const list=filter==='all'?PRODUCTS:PRODUCTS.filter(p=>p.cat===filter);
+ $('#grid').innerHTML=list.length?list.map(cardHTML).join(''):'<p class="pix" style="font-size:10px;color:var(--dim)">SIN RESULTADOS… PRUEBA OTRA CATEGORÍA</p>';
+ $('#offerGrid').innerHTML=PRODUCTS.filter(p=>p.old).map(cardHTML).join(''); }
+function renderTiles(){ const T=[{cat:'rock',img:'teeRock',l:'ROCK'},{cat:'anime',img:'teeAnime',l:'ANIME'},{cat:'manga',img:'teeManga',l:'MANGA'},{cat:'rockabilly',img:'teeRB',l:'ROCKABILLY'},{cat:'rock',img:'teeGothic',l:'GOTHIC'},{cat:'ofertas',ico:'🏷️',l:'OFERTAS'}];
+ $('#tiles').innerHTML=T.map(t=>'<button class="tile'+(filter===t.cat&&t.cat!=='ofertas'?' sel':'')+'" data-go="'+t.cat+'">'+
+ (t.ico?'<span class="tl-ico">'+t.ico+'</span>':'<img src="'+IMG[t.img]+'" alt="">')+'<span class="tl">✕ '+t.l+'</span></button>').join(''); }
 
-    // Open/Close Cart
-    function toggleCart(show = true) {
-        if (show) {
-            inventoryPanel.classList.add('active');
-            cartStatusGrid.style.backgroundColor = 'gold';
-            renderCart();
-        } else {
-            inventoryPanel.classList.remove('active');
-            checkoutForm.style.display = 'none';
-        }
-    }
+/* ═══════════════ CARRUSEL ═══════════════ */
+function buildSlides(){ $('#slides').innerHTML=SLIDES.map((s,i)=>'<div class="slide'+(i===0?' on':'')+'" data-i="'+i+'">'+
+ '<div class="bg bg-'+s.art+'">'+(s.neon?'<div class="neon">'+s.neon+'</div>':'')+(s.graf?'<div class="graf">'+s.graf+'</div>':'')+'</div>'+
+ '<img class="float" src="'+IMG[s.img]+'" alt="">'+
+ '<div class="copy"><span class="chip">'+s.chip+'</span><br><span class="banner">'+s.t+'</span>'+
+ '<p class="sub">'+s.s+'</p><button class="btn-game" data-go="'+s.cat+'"><span class="pb x">✕</span> COMPRAR AHORA</button>'+
+ '<button class="btn-game ghost" data-go="all" style="margin-left:10px">VER TODO</button></div></div>').join('');
+ $('#dots').innerHTML=SLIDES.map((s,i)=>'<button data-s="'+i+'" class="'+(i===0?'on':'')+'" aria-label="slide '+(i+1)+'"></button>').join(''); }
+function barRestart(){ const f=$('#heroBarFill'); f.style.transition='none'; f.style.width='0';
+ void f.offsetWidth; f.style.transition='width 5.2s linear'; f.style.width='100%'; }
+function goSlide(i){ slideI=(i+SLIDES.length)%SLIDES.length;
+ $$('#slides .slide').forEach(s=>s.classList.toggle('on',+s.dataset.i===slideI));
+ $$('#dots button').forEach(d=>d.classList.toggle('on',+d.dataset.s===slideI));
+ barRestart(); restartAuto(); }
+function restartAuto(){ clearInterval(slideT); slideT=setInterval(()=>{ if(!hoverPause) goSlide(slideI+1); },5200); }
+$('#heroPrev').onclick=()=>{sfx.click();goSlide(slideI-1)}; $('#heroNext').onclick=()=>{sfx.click();goSlide(slideI+1)};
+$('#dots').onclick=e=>{ const d=e.target.closest('[data-s]'); if(d){sfx.click();goSlide(+d.dataset.s);} };
+$('#hero').addEventListener('mouseenter',()=>hoverPause=true); $('#hero').addEventListener('mouseleave',()=>hoverPause=false);
 
-    document.getElementById('cart-link').addEventListener('click', (e) => {
-        e.preventDefault();
-        toggleCart(true);
-    });
+/* ═══════════════ CARRITO ═══════════════ */
+const cartQty=()=>Object.values(cart).reduce((a,b)=>a+b,0);
+const cartTotal=()=>Object.entries(cart).reduce((a,[id,q])=>{const p=PRODUCTS.find(x=>x.id===id);return a+(p?p.price*q:0)},0);
+function badge(){ const c=$('#cartCount'); c.textContent=cartQty(); $('#cartCount2').textContent=cartQty()+' items';
+ c.classList.remove('pop'); void c.offsetWidth; c.classList.add('pop'); }
+function addToCart(id,qty){ const p=PRODUCTS.find(x=>x.id===id); if(!p||p.stock===0){sfx.err();toast('STOCK AGOTADO','err','⚠️');return;}
+ qty=qty||1; const cur=cart[id]||0;
+ if(cur+qty>p.stock){ sfx.err(); toast('STOCK MÁXIMO: '+p.stock,'err','⚠️'); qty=p.stock-cur; if(qty<=0)return; }
+ cart[id]=cur+qty; ls.set('ss_cart',cart); renderCart(); badge(); sfx.add();
+ toast(p.name+' → INVENTARIO  ·  +15 XP','cart','🎒'); addXp(15); openCart(); }
+function renderCart(){ const el=$('#cartItems');
+ if(!cartQty()){ el.innerHTML='<div class="cd-empty">— INVENTARIO VACÍO —<br>ELIGE TU EQUIPAMIENTO, JUGADOR</div>'; }
+ else el.innerHTML=Object.entries(cart).map(([id,q])=>{ const p=PRODUCTS.find(x=>x.id===id); if(!p)return'';
+  return '<div class="ci"><img src="'+IMG[p.imgKey]+'" alt=""><div><b>'+p.name+'</b><small>'+p.code+'</small>'+
+  '<div class="q"><button data-dec="'+id+'">−</button><span>'+q+'</span><button data-inc="'+id+'">+</button></div></div>'+
+  '<div class="pr"><b>'+money(p.price*q)+'</b></div><button class="rm" data-rm="'+id+'" title="Quitar">✕</button></div>'; }).join('');
+ $('#cartTotal').textContent=money(cartTotal()); }
+$('#cartItems').addEventListener('click',e=>{ const inc=e.target.closest('[data-inc]'),dec=e.target.closest('[data-dec]'),rm=e.target.closest('[data-rm]');
+ if(inc){cart[inc.dataset.inc]++;} if(dec){const id=dec.dataset.dec; cart[id]--; if(cart[id]<=0)delete cart[id];}
+ if(rm){delete cart[rm.dataset.rm]; sfx.click();}
+ if(inc||dec||rm){ls.set('ss_cart',cart);renderCart();badge();} });
+function openCart(){ $('#cartDrawer').classList.add('on'); syncOverlay(); }
+function closeCart(){ $('#cartDrawer').classList.remove('on'); syncOverlay(); }
+$('#btnCart').onclick=()=>{sfx.click();openCart();}; $('#cartClose').onclick=closeCart;
 
-    closeCart.addEventListener('click', () => toggleCart(false));
+/* ═══════════════ CHECKOUT ═══════════════ */
+function validField(el,ok){ el.classList.remove('err'); if(!ok){ void el.offsetWidth; el.classList.add('err'); } return ok; }
+$('#checkoutForm').addEventListener('submit',e=>{ e.preventDefault();
+ if(!cartQty()){ sfx.err(); toast('INVENTARIO VACÍO: añade items','err','⚠️'); return; }
+ const em=/^[^\s@]+@[^\s@]+\.[^\s@]+$/; let ok=true;
+ ok&=validField($('#fNombre'),$('#fNombre').value.trim().length>1);
+ ok&=validField($('#fApellido'),$('#fApellido').value.trim().length>1);
+ ok&=validField($('#fCiudad'),$('#fCiudad').value.trim().length>1);
+ ok&=validField($('#fDir'),$('#fDir').value.trim().length>4);
+ ok&=validField($('#fEmail'),em.test($('#fEmail').value));
+ ok&=validField($('#fPago'),!!$('#fPago').value);
+ if(!ok){ sfx.err(); toast('COMPLETA LOS CAMPOS DEL JUGADOR','err','⚠️'); return; }
+ const total=cartTotal();
+ const order={id:'SS-'+Date.now().toString(36).toUpperCase(),date:new Date().toLocaleString(),
+  name:$('#fNombre').value+' '+$('#fApellido').value,city:$('#fCiudad').value,email:$('#fEmail').value,
+  pay:$('#fPago').value,items:cartQty(),total:+total.toFixed(2),status:'PENDIENTE'};
+ Object.entries(cart).forEach(([id,q])=>{const p=PRODUCTS.find(x=>x.id===id); if(p)p.stock=Math.max(0,p.stock-q);});
+ orders.unshift(order); ls.set('ss_orders',orders); ls.set('ss_products',PRODUCTS);
+ cart={}; ls.set('ss_cart',cart); renderCart(); badge(); renderGrid(); closeCart();
+ coins+=Math.floor(total); ls.set('ss_coins',coins); hud(); sfx.coin();
+ $('#successTitle').textContent='¡PEDIDO CONFIRMADO!'; $('#successSub').textContent='+100 XP · '+order.id+' · +'+Math.floor(total)+' COINS';
+ $('#successOv').classList.add('on'); sfx.win(); addXp(100);
+ setTimeout(()=>$('#successOv').classList.remove('on'),2400);
+ e.target.reset(); });
 
-    // Render cart items
-    function renderCart() {
-        invItemsList.innerHTML = '';
-        if (cart.length === 0) {
-            invItemsList.innerHTML = '<p class="pixel-button" style="text-align: center; border: none; background: transparent;">Tu inventario está vacío...</p>';
-            cartItemCount.innerText = '0';
-        } else {
-            cartItemCount.innerText = cart.length;
-            cart.forEach((item, index) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'inv-item';
-                itemDiv.innerHTML = `
-                    <img src="${item.img}" alt="${item.name}" class="inv-item-img">
-                    <div class="inv-item-details">
-                        <h4>${item.name}</h4>
-                        <p>${item.price}</p>
-                    </div>
-                `;
-                invItemsList.appendChild(itemDiv);
-            });
-        }
-    }
+/* ═══════════════ MODAL PRODUCTO ═══════════════ */
+function openModal(id){ const p=PRODUCTS.find(x=>x.id===id); if(!p)return; pmId=id; pmQty=1;
+ $('#pmImg').src=IMG[p.imgKey]; $('#pmName').textContent=p.name; $('#pmCode').textContent=p.code+' · CAT: '+catLabel(p.cat);
+ $('#pmDesc').textContent=p.desc; $('#pmPrice').textContent=money(p.price); $('#pmOld').textContent=p.old?money(p.old):'';
+ $('#pmChip').textContent=catLabel(p.cat); $('#pmChip').className='badge b-cat cat-color-'+p.cat; $('#pmQty').textContent=1;
+ $('#pModal').classList.add('on'); syncOverlay(); }
+$('#pmMinus').onclick=()=>{pmQty=Math.max(1,pmQty-1);$('#pmQty').textContent=pmQty;sfx.click();};
+$('#pmPlus').onclick=()=>{pmQty=Math.min(9,pmQty+1);$('#pmQty').textContent=pmQty;sfx.click();};
+$('#pmAdd').onclick=()=>{addToCart(pmId,pmQty);$('#pModal').classList.remove('on');syncOverlay();};
+$('#pmClose').onclick=()=>{$('#pModal').classList.remove('on');syncOverlay();};
+$('#pModal').addEventListener('click',e=>{if(e.target.id==='pModal'){$('#pModal').classList.remove('on');syncOverlay();}});
 
-    // Add to Cart from product cards
-    document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const productCard = e.target.closest('.product-card');
-            const productImgSrc = productCard.querySelector('.product-card-img').src;
-            const productName = e.target.getAttribute('data-name');
-            const productPrice = e.target.getAttribute('data-price');
+/* ═══════════════ CLICK DELEGADO TIENDA ═══════════════ */
+document.addEventListener('click',e=>{ const a=e.target.closest('[data-add]'); if(a){addToCart(a.dataset.add,1);return;}
+ const v=e.target.closest('[data-view]'); if(v){sfx.click();openModal(v.dataset.view);} });
 
-            const item = {
-                name: productName,
-                price: productPrice,
-                img: productImgSrc
-            };
+/* ═══════════════ BUSCADOR AVANZADO ═══════════════ */
+const sIn=$('#searchInput'), sDrop=$('#searchDrop');
+sIn.addEventListener('input',()=>{ const q=sIn.value.trim().toLowerCase();
+ if(q.length<2){sDrop.classList.remove('on');return;}
+ const res=PRODUCTS.filter(p=>[p.name,p.code,p.desc,p.cat,(p.tags||[]).join(' ')].join(' ').toLowerCase().includes(q)).slice(0,6);
+ $('#sdList').innerHTML=res.length?res.map(p=>'<div class="sd-item" data-sd="'+p.id+'"><img src="'+IMG[p.imgKey]+'"><div><b>'+p.name+'</b><small>'+p.code+' · '+catLabel(p.cat)+'</small></div><span class="pr">'+money(p.price)+'</span></div>').join('')
+  :'<div class="cd-empty">0 RESULTADOS…</div>';
+ sDrop.classList.add('on'); });
+sIn.addEventListener('keydown',e=>{ if(e.key==='Enter'){ const f=$('#sdList .sd-item'); if(f){openModal(f.dataset.sd);sDrop.classList.remove('on');sIn.blur();} }
+ if(e.key==='Escape'){sDrop.classList.remove('on');} });
+sDrop.addEventListener('click',e=>{ const it=e.target.closest('[data-sd]'); if(it){openModal(it.dataset.sd);sDrop.classList.remove('on');} });
 
-            cart.push(item);
-            toggleCart(true);
-            
-            // Visual feedback - item added animation
-            const itemPreview = document.createElement('img');
-            itemPreview.src = productImgSrc;
-            itemPreview.style.position = 'absolute';
-            itemPreview.style.width = '100px';
-            itemPreview.style.height = '100px';
-            itemPreview.style.top = `${productCard.offsetTop + 100}px`;
-            itemPreview.style.left = `${productCard.offsetLeft + 100}px`;
-            itemPreview.style.zIndex = '2000';
-            itemPreview.style.transition = 'all 1s ease';
-            document.body.appendChild(itemPreview);
-            
-            setTimeout(() => {
-                itemPreview.style.top = `${document.getElementById('quick-cart').offsetTop}px`;
-                itemPreview.style.left = `${document.getElementById('quick-cart').offsetLeft}px`;
-                itemPreview.style.transform = 'scale(0.1)';
-                itemPreview.style.opacity = '0';
-            }, 100);
-            
-            setTimeout(() => {
-                document.body.removeChild(itemPreview);
-            }, 1100);
-        });
-    });
+/* ═══════════════ GALERÍA ═══════════════ */
+function buildGallery(){ const G=[['teeRock','#HighVoltage'],['teeAnime','#SaiyanPower'],['teeGothic','#DarkSoul'],['teeRB','#Rockabilly50s'],['teeManga','#MangaPanels'],['teeWolf','#MetalWolf'],['teeNinja','#BloodMoon'],['teeSkel','#SkullBand']];
+ $('#gStrip').innerHTML=G.map(g=>'<figure class="g-card"><img loading="lazy" src="'+IMG[g[0]]+'" alt=""><span class="badge b-off g-x">★</span><figcaption>'+g[1]+' · @smokesale.ss</figcaption></figure>').join(''); }
+$('#gPrev').onclick=()=>{sfx.click();$('#gStrip').scrollBy({left:-320,behavior:'smooth'})};
+$('#gNext').onclick=()=>{sfx.click();$('#gStrip').scrollBy({left:320,behavior:'smooth'})};
 
-    // 3. Checkout Logic
-    confirmOrderBtn.addEventListener('click', () => {
-        if (cart.length > 0) {
-            invItemsList.style.display = 'none';
-            checkoutForm.style.display = 'block';
-        }
-    });
+/* ═══════════════ COUNTDOWN OFERTAS ═══════════════ */
+setInterval(()=>{ const n=new Date(),e=new Date(); e.setHours(24,0,0,0); let d=Math.max(0,(e-n)/1000|0);
+ const h=d/3600|0,m=(d%3600)/60|0,s=d%60; const z=x=>String(x).padStart(2,'0');
+ $('#cdH').textContent=z(h); $('#cdM').textContent=z(m); $('#cdS').textContent=z(s); },1000);
 
-    document.querySelector('.process-checkout-btn').addEventListener('click', () => {
-        // Collect form data and cart data, send to server, etc.
-        const formData = {
-            nombre: document.getElementById('chk-nombre').value,
-            // ...collect other fields...
-            pago: document.getElementById('chk-pago').value
-        };
+/* ═══════════════ SCROLL CINEMÁTICO ═══════════════ */
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}}),{threshold:.12});
+function watch(){ $$('.rv:not(.in)').forEach(el=>io.observe(el)); }
+let tick=false;
+window.addEventListener('scroll',()=>{ if(tick)return; tick=true;
+ requestAnimationFrame(()=>{ $$('.plx-bg[data-plx]').forEach(el=>{ const r=el.parentElement.getBoundingClientRect();
+  el.style.transform='translateY('+((r.top+r.height/2-innerHeight/2)*+el.dataset.plx)+'px)'; }); tick=false; }); },{passive:true});
 
-        if(formData.nombre && formData.pago && cart.length > 0) {
-            // Success animation
-            invItemsList.style.display = 'block';
-            checkoutForm.style.display = 'none';
-            invItemsList.innerHTML = '<h3 style="color: gold; text-align: center; font-family: var(--pixel-font);">PEDIDO PROCESADO!</h3><p style="text-align: center;">¡Gracias por tu compra, rebelde!</p>';
-            cart = [];
-            toggleCart(false);
-            setTimeout(() => {
-                invItemsList.style.display = 'block';
-                invItemsList.innerHTML = '<p class="pixel-button" style="text-align: center; border: none; background: transparent;">Tu inventario está vacío...</p>';
-                cartItemCount.innerText = '0';
-            }, 2000);
-        } else {
-             invItemsList.innerHTML += '<p style="color: red; text-align: center;">Faltan datos o items...</p>';
-        }
-    });
+/* ═══════════════ ADMIN ═══════════════ */
+function openAdmin(){ $('#admin').classList.add('on'); renderAdmin(); }
+$('#btnAdmin').onclick=()=>{sfx.click();openAdmin();}; $('#fAdmin').onclick=e=>{e.preventDefault();openAdmin();};
+$('#adminClose').onclick=()=>$('#admin').classList.remove('on');
+$$('.ad-tab').forEach(t=>t.onclick=()=>{ sfx.click(); $$('.ad-tab').forEach(x=>x.classList.remove('on')); t.classList.add('on');
+ $('#panProd').style.display=t.dataset.tab==='prod'?'':'none'; $('#panOrd').style.display=t.dataset.tab==='ord'?'':'none'; });
+function renderAdmin(){ const rev=orders.reduce((a,o)=>a+o.total,0);
+ $('#adStats').innerHTML='<div class="ad-stat">PRODUCTOS<b>'+PRODUCTS.length+'</b></div><div class="ad-stat">PEDIDOS<b>'+orders.length+'</b></div><div class="ad-stat">INGRESOS<b>'+money(rev)+'</b></div><div class="ad-stat">STOCK TOTAL<b>'+PRODUCTS.reduce((a,p)=>a+p.stock,0)+'</b></div>';
+ $('#prodBody').innerHTML=PRODUCTS.map(p=>'<tr><td><img src="'+IMG[p.imgKey]+'"></td><td class="pix" style="font-size:8px">'+p.code+'</td><td>'+p.name+'</td><td>'+catLabel(p.cat)+'</td>'+
+ '<td><input type="number" step="0.01" data-pr="'+p.id+'" value="'+p.price+'"></td>'+
+ '<td><input type="number" min="0" data-st="'+p.id+'" value="'+p.stock+'"></td>'+
+ '<td><button class="btn-mini" data-del="'+p.id+'" style="flex:none">🗑</button></td></tr>').join('');
+ $('#orderBody').innerHTML=orders.length?orders.map(o=>'<tr><td class="pix" style="font-size:8px">'+o.id+'</td><td>'+o.date+'</td><td>'+o.name+'</td><td>'+o.city+'</td><td>'+o.pay+'</td><td>'+o.items+'</td><td style="color:var(--gold)">'+money(o.total)+'</td>'+
+ '<td><button class="st '+(o.status==='PENDIENTE'?'p':'e')+'" data-ost="'+o.id+'">'+o.status+'</button></td></tr>').join('')
+ :'<tr><td colspan="8" style="text-align:center;color:var(--dim)">Aún no hay pedidos…</td></tr>'; }
+$('#prodBody').addEventListener('change',e=>{ const pr=e.target.closest('[data-pr]'),st=e.target.closest('[data-st]');
+ if(pr){const p=PRODUCTS.find(x=>x.id===pr.dataset.pr); p.price=Math.max(.5,+pr.value||p.price);}
+ if(st){const p=PRODUCTS.find(x=>x.id===st.dataset.st); p.stock=Math.max(0,+st.value||0);}
+ ls.set('ss_products',PRODUCTS); renderGrid(); renderAdmin(); toast('PRODUCTO ACTUALIZADO','ok','🛠'); });
+$('#prodBody').addEventListener('click',e=>{ const d=e.target.closest('[data-del]'); if(!d)return;
+ PRODUCTS=PRODUCTS.filter(p=>p.id!==d.dataset.del); delete cart[d.dataset.del];
+ ls.set('ss_products',PRODUCTS); ls.set('ss_cart',cart); renderGrid(); renderCart(); badge(); renderAdmin(); toast('PRODUCTO ELIMINADO','err','🗑'); });
+$('#orderBody').addEventListener('click',e=>{ const b=e.target.closest('[data-ost]'); if(!b)return;
+ const o=orders.find(x=>x.id===b.dataset.ost); o.status=o.status==='PENDIENTE'?'ENVIADO':'PENDIENTE';
+ ls.set('ss_orders',orders); renderAdmin(); sfx.click(); });
+$('#apImg').innerHTML=Object.keys(IMG).map(k=>'<option value="'+k+'">'+k+'</option>').join('');
+$('#apForm').addEventListener('submit',e=>{ e.preventDefault();
+ const name=$('#apName').value.trim(); if(name.length<3){sfx.err();return;}
+ const cat=$('#apCat').value, pre={rock:'RK',anime:'AN',manga:'MG',rockabilly:'RB'}[cat];
+ PRODUCTS.push({id:'SS-'+Date.now().toString(36).toUpperCase(),code:pre+'-0'+(PRODUCTS.length+1),name,cat,
+  price:+$('#apPrice').value||9.99,old:+$('#apOld').value||null,stock:+$('#apStock').value||10,
+  imgKey:$('#apImg').value,desc:$('#apDesc').value||'Nueva incorporación al arsenal SS.',tags:[cat,name.toLowerCase()]});
+ ls.set('ss_products',PRODUCTS); renderGrid(); renderAdmin(); addXp(20);
+ toast('PRODUCTO CREADO · +20 XP','ok','➕'); e.target.reset(); });
 
+/* ═══════════════ OVERLAY / MENÚ MÓVIL / TECLAS ═══════════════ */
+function syncOverlay(){ const on=$('#cartDrawer').classList.contains('on')||$('#pModal').classList.contains('on')||$('#mNav').classList.contains('on');
+ $('#overlay').classList.toggle('on',on); }
+$('#overlay').onclick=()=>{ closeCart(); $('#pModal').classList.remove('on'); $('#mNav').classList.remove('on'); syncOverlay(); };
+$('#burger').onclick=()=>{sfx.click();$('#mNav').classList.toggle('on');syncOverlay();};
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ $('#admin').classList.remove('on'); $('#pModal').classList.remove('on'); closeCart(); $('#mNav').classList.remove('on'); sDrop.classList.remove('on'); syncOverlay(); } });
+
+/* ═══════════════ NEWSLETTER ═══════════════ */
+$('#newsForm').addEventListener('submit',e=>{ e.preventDefault(); const el=$('#newsEmail');
+ const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+ if(!ok){ validField(el,false); sfx.err(); toast('EMAIL NO VÁLIDO','err','⚠️'); return; }
+ validField(el,true); sfx.win(); toast('¡SUSCRITO AL CLAN SS! · +10 XP','ok','📬'); addXp(10); el.value=''; });
+
+/* ═══════════════ MICRO-FX GLOBALES ═══════════════ */
+let hT=0; document.addEventListener('mouseover',e=>{ const t=e.target.closest('.p-card,.tile,.nav-btn,.btn-game,.btn-mini,.icon-btn');
+ if(t&&Date.now()-hT>90){hT=Date.now();sfx.hover();} });
+document.addEventListener('click',e=>{ if(e.target.closest('button,a'))sfx.click(); });
+const cur=$('#cursor'); let cx=0,cy=0,tx=0,ty=0;
+document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;});
+(function loop(){ cx+=(tx-cx)*.2; cy+=(ty-cy)*.2; cur.style.left=cx+'px'; cur.style.top=cy+'px'; requestAnimationFrame(loop); })();
+$('#btnSound').onclick=()=>{ muted=!muted; ls.set('ss_muted',muted); $('#btnSound').textContent=muted?'🔇':'🔊'; if(!muted)sfx.click(); };
+
+/* ═══════════════ BOOT ═══════════════ */
+function start(){ ac&&ac(); sfx.start(); $('#boot').classList.add('off'); document.body.classList.add('on');
+ setTimeout(()=>toast('BIENVENIDO, JUGADOR · +0 XP · INSERT COIN','xp','🕹'),900); }
+$('#bootStart').onclick=start;
+document.addEventListener('keydown',function once(e){ if(e.key==='Enter'&&!$('#boot').classList.contains('off')){start();document.removeEventListener('keydown',once);} });
+
+/* ═══════════════ INIT ═══════════════ */
+$('#btnSound').textContent=muted?'🔇':'🔊';
+buildNav(); buildSlides(); renderTiles(); renderGrid(); buildGallery(); renderCart(); badge(); hud(); barRestart(); restartAuto(); watch();
+})();
 </script>
-
 </body>
 </html>
