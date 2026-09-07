@@ -10,9 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Chakra+Petch:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
 <!-- ============================================================
   SS SMOKE SALE · E-COMMERCE GAMIFICADO (single-file)
+  · INTRO CINEMÁTICO: reproduce "VIDEO SS.mp4" (colócalo junto a
+    este index.html). Si no existe o tarda >6s, salta al PRESS START.
   · Assets vectoriales incrustados (data-URI) => 100% offline.
-  · ¿Quieres usar fotos externas? Reemplaza los valores del objeto
-    IMG dentro del <script> por tus URLs y todo se re-renderiza.
   · Lógica: carrito persistente, buscador avanzado, admin CRUD,
     pedidos, XP/nivel/monedas, logros, audio retro WebAudio.
 ============================================================ -->
@@ -43,6 +43,25 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2000;
   background:radial-gradient(circle,rgba(123,92,255,.5),transparent 70%);
   transform:translate(-50%,-50%);mix-blend-mode:screen;left:-100px;top:-100px}
 @media (hover:none){#cursor{display:none}}
+
+/* ---------- INTRO VIDEO (VIDEO SS.mp4) ---------- */
+#videoIntro{position:fixed;inset:0;z-index:5000;background:#000;display:flex;align-items:center;justify-content:center;
+  transition:opacity .9s ease,visibility .9s}
+#videoIntro.off{opacity:0;visibility:hidden;pointer-events:none}
+#videoIntro video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+#videoIntro .vi-vig{position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:radial-gradient(120% 92% at 50% 50%,transparent 58%,#000000cc 100%)}
+#videoIntro.tap::before{content:"▶ TOCA PARA REPRODUCIR LA INTRO";position:absolute;top:24px;left:50%;transform:translateX(-50%);
+  z-index:6;font-family:var(--fp);font-size:10px;color:var(--gold);letter-spacing:2px;animation:blink 1.2s steps(2) infinite;
+  text-shadow:0 0 14px #ffc93c88}
+.vi-ui{position:absolute;left:0;right:0;bottom:0;z-index:6;display:flex;justify-content:space-between;align-items:flex-end;
+  gap:12px;padding:22px 26px}
+.vi-ui .pix{font-size:8px;color:var(--dim);letter-spacing:2px;text-shadow:0 2px 4px #000}
+.vi-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.vi-b{background:#000000b8;border:2px solid var(--gold);color:var(--gold);font-family:var(--fp);font-size:9px;
+  letter-spacing:1px;padding:11px 14px;transition:all .2s;text-shadow:0 2px 3px #000}
+.vi-b:hover{background:var(--gold);color:#000;box-shadow:0 0 22px #ffc93c88;animation-play-state:paused}
+#viSkip{animation:blink 1.6s steps(2) infinite}
 
 /* ---------- BOOT SCREEN ---------- */
 #boot{position:fixed;inset:0;z-index:3000;background:
@@ -381,6 +400,21 @@ td input{width:80px;background:#0e0e14;border:1px solid var(--line);border-radiu
 </head>
 <body>
 
+<!-- ══════════ INTRO CINEMÁTICO · VIDEO SS.mp4 ══════════
+     Coloca el archivo "VIDEO SS.mp4" en la misma carpeta que index.html.
+     Si no existe o tarda >6s en cargar, salta automáticamente al PRESS START. -->
+<div id="videoIntro">
+  <video id="introVid" src="VIDEO SS.mp4" muted autoplay playsinline preload="auto"></video>
+  <div class="vi-vig"></div>
+  <div class="vi-ui">
+    <span id="viLoad" class="pix">CARGANDO INTRO…</span>
+    <div class="vi-btns">
+      <button id="viSound" class="vi-b" type="button">🔇 INTRO SONIDO: OFF</button>
+      <button id="viSkip" class="vi-b" type="button">SALTAR INTRO ▶▶</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══════════ BOOT / PRESS START ══════════ -->
 <div id="boot">
   <div class="blogo">SS</div>
@@ -498,7 +532,7 @@ td input{width:80px;background:#0e0e14;border:1px solid var(--line);border-radiu
         <p style="font-size:14px;margin-bottom:6px">✉️ hola@smokesale.gg</p>
         <p style="font-size:14px;margin-bottom:20px">📍 Calle del Riff 66, Ciudad Rock</p>
         <div class="socials">
-          <a href="#" aria-label="Facebook">f</a><a href="#" aria-label="X"></a>
+          <a href="#" aria-label="Facebook">f</a><a href="#" aria-label="X">𝕏</a>
           <a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="YouTube">▶</a>
         </div>
       </div>
@@ -882,6 +916,29 @@ const cur=$('#cursor'); let cx=0,cy=0,tx=0,ty=0;
 document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;});
 (function loop(){ cx+=(tx-cx)*.2; cy+=(ty-cy)*.2; cur.style.left=cx+'px'; cur.style.top=cy+'px'; requestAnimationFrame(loop); })();
 $('#btnSound').onclick=()=>{ muted=!muted; ls.set('ss_muted',muted); $('#btnSound').textContent=muted?'🔇':'🔊'; if(!muted)sfx.click(); };
+
+/* ═══════════════ INTRO CINEMÁTICO · VIDEO SS.mp4 ═══════════════ */
+const viWrap=$('#videoIntro'), vi=$('#introVid'); let viDone=false;
+function endIntro(){ if(viDone)return; viDone=true;
+  try{vi.pause();}catch(e){}
+  viWrap.classList.add('off');
+  setTimeout(()=>{ if(viWrap.parentNode) viWrap.parentNode.removeChild(viWrap); },950); }
+$('#viSkip').addEventListener('click',endIntro);
+vi.addEventListener('ended',endIntro);          /* fin natural del video → PRESS START */
+vi.addEventListener('error',endIntro);          /* sin archivo / codec → salta seguro   */
+vi.addEventListener('loadeddata',()=>{ const l=$('#viLoad'); if(l) l.style.display='none'; });
+/* sonido opcional del intro (requiere gesto del usuario) */
+$('#viSound').addEventListener('click',function(){ vi.muted=!vi.muted;
+  this.textContent=vi.muted?'🔇 INTRO SONIDO: OFF':'🔊 INTRO SONIDO: ON';
+  if(!vi.muted){ vi.play().catch(()=>{}); } });
+/* autoplay muteado; si el navegador lo bloquea → tap para reproducir */
+try{ const pr=vi.play(); if(pr&&pr.catch){ pr.catch(()=>{ viWrap.classList.add('tap');
+  viWrap.addEventListener('click',function once(){ vi.play().catch(()=>endIntro()); viWrap.removeEventListener('click',once); }); }); } }catch(e){}
+/* red lenta o archivo ausente: a los 6s pasa al PRESS START */
+setTimeout(()=>{ if(!viDone && vi.readyState===0) endIntro(); },6000);
+/* Enter / Espacio / Esc saltan el intro SIN disparar el boot detrás */
+window.addEventListener('keydown',function(e){
+  if(!viDone && (e.key==='Enter'||e.key===' '||e.key==='Escape')){ endIntro(); e.stopPropagation(); } },true);
 
 /* ═══════════════ BOOT ═══════════════ */
 function start(){ ac&&ac(); sfx.start(); $('#boot').classList.add('off'); document.body.classList.add('on');
