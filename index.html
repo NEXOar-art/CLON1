@@ -1,125 +1,78 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>SMOKE SALE — Remeras</title>
-<style>
-:root{--bg:#fff;--ink:#141416;--muted:#71717a;--line:#e9e9ec;--panel:#fcfcfd;--green:#16a34a;--green-d:#128a43;--orange:#e4573d;--transfer:#a74436;--r:14px;--sh:0 12px 30px rgba(0,0,0,.08)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
-.page{max-width:1180px;margin:auto;padding:0 20px}
-/* ===== HEADER STICKY + LOGO ===== */
-.header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.header-in{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 0}
-.brand{display:flex;align-items:center;gap:16px}
-.logo{height:76px;width:auto;display:block}
-.brand p{font-size:10px;color:var(--muted);margin:0;max-width:250px;line-height:1.45}
-.topbar{display:flex;align-items:center;gap:10px}
-.topbar label{font-size:11px;color:var(--muted)}
-select{border:1px solid var(--line);border-radius:8px;background:#fff;padding:8px 10px;font-size:12px;color:var(--ink)}
-/* ===== LAYOUT ===== */
-.layout{display:grid;grid-template-columns:210px 1fr;gap:30px;padding:26px 0 70px}
-.filters h2{font-size:15px;font-weight:700;margin:0 0 16px}
-.filter-group{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:16px}
-.filter-group h3{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
-.check{display:flex;align-items:center;gap:8px;margin:7px 0;font-size:12px;color:#3f3f46;cursor:pointer}
-.check input{appearance:none;width:15px;height:15px;border:1px solid #c9c9cf;border-radius:4px;margin:0;cursor:pointer;transition:.15s}
-.check input:checked{background:var(--ink);border-color:var(--ink);box-shadow:inset 0 0 0 3px #fff}
-.dot{width:8px;height:8px;border-radius:50%}
-.more{font-size:11px;text-decoration:underline;color:var(--muted);cursor:pointer}
-.price{display:grid;grid-template-columns:1fr 1fr 34px;gap:6px}
-.price label{font-size:9px;color:var(--muted)}
-.price input{width:100%;height:36px;border:1px solid var(--line);border-radius:8px;padding:0 9px;font-size:12px}
-.price button{height:36px;border:0;border-radius:8px;background:var(--ink);color:#fff;font-size:16px;cursor:pointer}
-.drawer{display:none;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 14px;font-size:12px;margin:16px 0 0;cursor:pointer}
-.catalog-head{display:flex;justify-content:space-between;align-items:center;margin:0 0 16px}
-.count{font-size:12px;color:var(--muted)}
-/* ===== TARJETAS LIMPIAS ===== */
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
-.card{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;display:flex;flex-direction:column}
-.card:hover{transform:translateY(-4px);box-shadow:var(--sh);border-color:#dcdce0}
-.photo{position:relative;aspect-ratio:1/1;background:var(--panel);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.photo img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
-.card:hover .photo img{transform:scale(1.06)}
-.badge{position:absolute;top:10px;left:10px;background:#c83a2d;color:#fff;border-radius:6px;font-size:9px;font-weight:800;letter-spacing:.05em;padding:4px 8px;text-transform:uppercase}
-.badge.flash{background:var(--orange)}
-.zoomtag{position:absolute;right:10px;bottom:10px;background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:10px;font-weight:700;opacity:0;transform:translateY(4px);transition:.2s;pointer-events:none}
-.card:hover .zoomtag{opacity:1;transform:none}
-.card-body{padding:14px 14px 16px;display:flex;flex-direction:column;gap:5px;flex:1}
-.name{font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;line-height:1.35}
-.name .desc{display:block;color:var(--muted);font-weight:500;font-size:10px;text-transform:none;margin-top:2px}
-.old{font-size:11px;color:#a1a1aa;text-decoration:line-through}
-.price-line{font-size:16px;font-weight:800}
-.discount{font-size:11px;color:var(--orange);font-weight:700;margin-left:6px}
-.installments{font-size:11px;color:var(--muted)}
-.transfer{font-size:11.5px;color:var(--transfer);font-weight:700}
-.qty-row{margin-top:auto;display:flex;gap:8px;padding-top:12px}
-.qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:9px;overflow:hidden}
-.qty button{width:30px;height:38px;border:0;background:#f4f4f5;cursor:pointer;font-size:15px;color:var(--ink)}
-.qty button:hover{background:#e8e8ea}
-.qty .q{min-width:32px;text-align:center;font-size:13px;font-weight:600}
-.buy{flex:1;background:var(--green);color:#fff;border:0;border-radius:9px;font-weight:800;font-size:11.5px;letter-spacing:.05em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:.2s}
-.buy:hover{background:var(--green-d)}
-.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:60px 0;border:1px dashed var(--line);border-radius:var(--r)}
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>SMOKE SALE — Remeras</title><style>
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#202020;font-family:Arial,Helvetica,sans-serif;font-size:13px}
+.page{max-width:1060px;margin:auto;padding:0 18px}.topbar{height:30px;display:flex;justify-content:flex-end;align-items:center}
+.topbar select,.catalog-head select{border:1px solid #d7d7d7;border-radius:3px;background:#fff;padding:6px 9px;font-size:9px}
+.header{padding:0 0 18px}.brand h1{font-size:20px;font-weight:500;margin:0 0 3px}.brand p{font-size:9px;color:#555;margin:0}
+.logo{display:block;height:90px;width:auto;margin:0 0 12px}
+.layout{display:grid;grid-template-columns:190px 1fr;gap:30px}.filters h2{font-size:14px;font-weight:400;margin:0 0 18px}
+.filter-group{border-bottom:1px solid #e9e9e9;padding-bottom:18px;margin-bottom:18px}.filter-group h3{font-size:10px;font-weight:400;text-transform:uppercase;margin:0 0 9px}
+.check{display:flex;align-items:center;gap:7px;margin:8px 0;font-size:10px;color:#555;cursor:pointer}.check input{appearance:none;width:12px;height:12px;border:1px solid #777;border-radius:2px;margin:0}
+.check input:checked{background:#111;box-shadow:inset 0 0 0 3px white}.dot{width:7px;height:7px;border-radius:50%}.more{font-size:9px;text-decoration:underline}
+.price{display:grid;grid-template-columns:1fr 1fr 32px}.price label{font-size:8px;color:#555}.price input{width:100%;height:32px;border:1px solid #ddd;padding:0 7px;color:#aaa;font-size:9px}.price button{height:32px;border:1px solid #ddd;background:#fff;font-size:17px;color:#777}
+.catalog-head{height:25px;display:flex;justify-content:flex-end}
+/* ===== TARJETAS ESTILO CAPTURA ===== */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{min-width:0;background:#fff;border:1px solid #d9d9d9;display:flex;flex-direction:column;position:relative;cursor:pointer;transition:box-shadow .2s}
+.card:hover{box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.photo{position:relative;background:#f4f4f4;height:210px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover}
+.tag{position:absolute;top:0;right:0;background:#29c5e6;color:#fff;font-size:10px;font-weight:bold;letter-spacing:.08em;padding:6px 14px}
+.card-body{padding:16px 16px 12px;display:flex;flex-direction:column;flex:1}
+.name{font-size:13px;font-weight:bold;color:#2b2b2b;text-transform:uppercase;line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:57px}
+.code{color:#9b9b9b;font-size:11px;margin:6px 0 10px}
+.price-line{font-size:19px;font-weight:bold;color:#2b2b2b;margin:auto 0 14px}
+.stepper{display:flex;gap:7px;margin-bottom:12px}
+.qty{min-width:46px;height:36px;background:#e8e8e8;color:#8a8a8a;font-size:12px;display:flex;align-items:center;justify-content:center}
+.stepper button{width:40px;height:36px;background:#0a0a0a;color:#fff;border:0;font-size:11px;cursor:pointer}
+.stepper button:hover{background:#222}
+.comprar{display:flex;align-items:center;gap:9px;background:#2dbb5e;color:#fff;border:0;font-size:12px;font-weight:bold;letter-spacing:.08em;padding:11px 26px;cursor:pointer;margin:0 auto 10px}
+.comprar:hover{background:#25a24f}.comprar svg{width:16px;height:16px;fill:#fff}
+.iva{align-self:flex-end;color:#a0a0a0;font-size:9px}
 /* ===== WHATSAPP ===== */
-.whatsapp{position:fixed;right:22px;bottom:22px;background:#1fbd63;color:#fff;border-radius:999px;padding:13px 18px;box-shadow:0 10px 30px rgba(31,189,99,.35);display:flex;align-items:center;gap:9px;font-weight:700;font-size:13px;z-index:60;text-decoration:none}
-.wa-icon{width:22px;height:22px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:11px}
-/* ===== MODAL ZOOM (estilo captura SMOKE) ===== */
-.zoom-overlay{position:fixed;inset:0;background:rgba(20,20,22,.45);backdrop-filter:blur(4px);z-index:80;display:none;overflow:auto;padding:28px 16px}
+.whatsapp{position:fixed;right:20px;bottom:20px;background:#1fbd63;color:#fff;border-radius:30px;padding:12px 16px;box-shadow:0 5px 20px #0002;display:flex;align-items:center;gap:8px;font-weight:bold;font-size:12px;z-index:20}.wa-icon{width:22px;height:22px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center}
+.drawer{display:none}
+/* ===== MODAL ZOOM ===== */
+.zoom-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:60;overflow:auto;padding:20px}
 .zoom-overlay.open{display:block}
-.zoom-modal{max-width:1120px;margin:auto;background:#fff;border-radius:16px;padding:26px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.25)}
-.zoom-close{position:absolute;top:12px;right:14px;border:0;background:#f4f4f5;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;z-index:2}
-.zoom-close:hover{background:#e8e8ea}
-.zoom-layout{display:grid;grid-template-columns:84px minmax(0,1fr) 380px;gap:26px}
-.thumbs{display:flex;flex-direction:column;gap:10px}
-.thumbs img{width:84px;height:84px;object-fit:cover;border:1px solid var(--line);border-radius:10px;cursor:pointer}
-.thumbs img.sel{border-color:#111;box-shadow:0 0 0 1px #111}
-.zmain{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);display:flex;align-items:center;justify-content:center;min-height:480px;cursor:zoom-in}
-.zmain.zoomed{cursor:zoom-out}
-.zmain img{max-width:100%;max-height:560px;transition:transform .18s ease}
-.zcount{position:absolute;top:10px;right:12px;font-size:11px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 9px}
-.zhint{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 10px}
-.crumb{font-size:11px;color:var(--muted)}
-.zbadge{display:inline-block;background:#c83a2d;color:#fff;border-radius:6px;font-size:9px;font-weight:800;padding:4px 8px;text-transform:uppercase;margin-top:10px}
-.zbadge.flash{background:var(--orange)}
-.ztitle{font-size:22px;font-weight:700;line-height:1.25;margin:10px 0 2px}
-.zsub{font-size:11px;color:var(--muted)}
-.zold{font-size:12px;color:#a1a1aa;text-decoration:line-through;margin-top:12px}
-.zpriceline{display:flex;align-items:baseline;gap:10px}
-.zprice{font-size:26px;font-weight:800}
-.zoff{color:var(--orange);font-weight:700;font-size:13px}
-.ztax{font-size:11px;color:var(--muted)}
-.ztransfer{color:var(--transfer);font-weight:800;font-size:16px;margin:8px 0 2px}
-.zdisc2{color:var(--orange);font-size:12px}
-.zinst{font-size:12px;color:var(--muted);margin-top:6px}
-.zlink{font-size:11px;text-decoration:underline;color:var(--muted);margin-top:6px}
-.zship{display:flex;gap:8px;font-size:12px;color:var(--muted);margin:12px 0}
-.opt-title{font-size:12px;margin:12px 0 6px;color:var(--ink)}
-.chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.chip{border:1px solid var(--line);border-radius:8px;padding:7px 13px;font-size:11px;cursor:pointer;background:#fff;transition:.15s}
-.chip:hover{border-color:#c9c9cf}
-.chip.sel{border-color:#111;box-shadow:0 0 0 1px #111;font-weight:700}
-.swatch{width:22px;height:22px;border-radius:6px;border:1px solid var(--line)}
-.zqty-row{display:flex;gap:12px;margin:18px 0 0}
-.zqty{display:flex;align-items:center;border:1px solid var(--line);border-radius:9px;overflow:hidden}
-.zqty button{width:34px;height:44px;border:0;background:#f4f4f5;cursor:pointer;font-size:16px}
-.zqty .q{min-width:38px;text-align:center;font-size:13px;font-weight:600}
-.zcart{flex:1;background:var(--ink);color:#fff;border:0;border-radius:10px;padding:14px;font-weight:800;font-size:13px;cursor:pointer;transition:.2s}
-.zcart:hover{background:#000}
-.zprotect{display:flex;gap:10px;font-size:12px;color:var(--muted);margin-top:14px;line-height:1.4}
-/* ===== RESPONSIVE ===== */
-@media(max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:900px){.zoom-layout{grid-template-columns:1fr}.thumbs{flex-direction:row}}
-@media(max-width:850px){.layout{grid-template-columns:1fr}.filters{display:none}.grid{grid-template-columns:repeat(2,1fr)}.drawer{display:flex}.brand p{display:none}}
-@media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}.logo{height:56px}.whatsapp{right:12px;bottom:12px}}
-</style></head>
-<body>
-<header class="header"><div class="page header-in">
-<div class="brand"><img class="logo" src="LOGO SMOKE5.jpg" alt="SMOKE SALE" onerror="this.style.display='none'"><p>Los mejores diseños de Remeras estilo Japanese Art, Anime, Art, estética urbana</p></div>
-<div class="topbar"><label for="sort">Ordenar:</label><select id="sort"><option value="new">Más nuevo al más viejo</option><option value="priceAsc">Precio: menor a mayor</option><option value="priceDesc">Precio: mayor a menor</option><option value="name">Nombre A-Z</option></select></div>
-</div></header>
+.zoom-modal{position:relative;max-width:1060px;margin:20px auto;background:#fff;padding:25px;border-radius:4px}
+.zoom-close{position:absolute;top:8px;right:12px;border:none;background:#fff;font-size:28px;cursor:pointer;line-height:1;z-index:2}
+.zoom-layout{display:grid;grid-template-columns:76px minmax(0,1fr) 380px;gap:25px}
+.zoom-thumbs{display:flex;flex-direction:column;gap:10px}
+.zoom-thumbs img{width:76px;height:76px;object-fit:cover;border:1px solid #ddd;border-radius:2px;cursor:pointer}
+.zoom-thumbs img.sel{border-color:#111}
+.zoom-main{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:440px;background:#fff;cursor:zoom-in}
+.zoom-main.zoomed{cursor:zoom-out}
+.zoom-main img{max-width:100%;max-height:560px;transition:transform .2s ease}
+.zoom-hint{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;color:#999;background:#fff;border:1px solid #eee;padding:3px 8px;border-radius:10px}
+.zoom-count{position:absolute;top:8px;left:10px;font-size:10px;color:#777}
+.zbadge{display:inline-block;background:#c83a2d;color:#fff;border-radius:2px;font-size:8px;font-weight:bold;padding:4px 6px;text-transform:uppercase}
+.ztitle{font-size:20px;font-weight:400;margin:10px 0 4px;line-height:1.3}
+.zsub{font-size:11px;color:#777}
+.zold{font-size:11px;color:#999;text-decoration:line-through;margin-top:10px}
+.zprice{font-size:24px;font-weight:bold;margin:2px 0}
+.zdisc{font-size:12px;color:#999;font-weight:normal;margin-left:6px}
+.ztransfer{font-size:15px;color:#a74436;font-weight:bold;margin:8px 0}
+.zinst{font-size:11px;color:#777;margin:4px 0}
+.zopt{font-size:11px;margin:12px 0 6px}
+.zbtn{display:inline-block;border:1px solid #ddd;border-radius:3px;padding:7px 13px;margin:0 6px 6px 0;font-size:10px;cursor:pointer;background:#fff}
+.zbtn.sel{border-color:#111;font-weight:bold}
+.zdot{display:inline-block;width:16px;height:16px;border:1px solid #111;border-radius:2px;vertical-align:middle}
+.zqty{display:inline-flex;align-items:center;border:1px solid #ddd;border-radius:3px}
+.zqty button{border:none;background:#fff;padding:8px 12px;cursor:pointer;font-size:13px}
+.zqty span{padding:0 12px;font-size:12px}
+.zcart{width:100%;background:#111;color:#fff;border:none;border-radius:3px;padding:13px;font-size:12px;font-weight:bold;cursor:pointer;margin-top:12px}
+.zprotect{display:flex;gap:10px;font-size:11px;color:#777;margin-top:12px;line-height:1.4}
+@media(max-width:850px){.page{padding:0 14px}.layout{grid-template-columns:1fr}.filters{display:none}.grid{grid-template-columns:repeat(2,1fr);gap:15px}.photo{height:240px}.drawer{display:block;border:1px solid #ddd;background:#fff;padding:9px 11px;margin-bottom:14px;font-size:11px}.zoom-layout{grid-template-columns:1fr}.zoom-thumbs{flex-direction:row}.zoom-main{min-height:320px}}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr)}.photo{height:190px}.name{font-size:10px}.whatsapp{right:12px;bottom:12px}}
+</style></head><body>
 <div class="page">
-<button class="drawer" id="filterBtn">☰ FILTRAR POR</button>
+<div class="topbar"><select id="sort"><option value="new">Más nuevo al más viejo</option><option value="priceAsc">Precio: menor a mayor</option><option value="priceDesc">Precio: mayor a menor</option><option value="name">Nombre A-Z</option></select></div>
+<header class="header"><div class="brand"><img class="logo" src="LOGO SMOKE5.jpg" alt="SMOKE SALE" onerror="this.style.display='none'"><h1>REMERAS</h1><p>Los mejores diseños de Remeras estilo Japanese Art, Anime, Art, estética urbana</p></div></header>
+<button class="drawer" id="filterBtn">☰ &nbsp; FILTRAR POR</button>
 <main class="layout">
 <aside class="filters" id="filters">
 <h2>Filtrar por</h2>
-<section class="filter-group" data-filter="color"><h3>Color</h3>
+<section class="filter-group" data-filter="color"><h3>COLOR</h3>
 <label class="check"><input type="checkbox" value="Negro"><span>Negro (287)</span><i class="dot" style="background:#111"></i></label>
 <label class="check"><input type="checkbox" value="Celeste"><span>Celeste (10)</span><i class="dot" style="background:#19b9df"></i></label>
 <label class="check"><input type="checkbox" value="Beige"><span>Beige (46)</span><i class="dot" style="background:#e2d0a8"></i></label>
@@ -128,42 +81,44 @@ select{border:1px solid var(--line);border-radius:8px;background:#fff;padding:8p
 <label class="check"><input type="checkbox" value="Marrón"><span>Marrón (12)</span><i class="dot" style="background:#9b6a39"></i></label>
 <label class="check"><input type="checkbox" value="Violeta"><span>Violeta (1)</span><i class="dot" style="background:#8b49bb"></i></label>
 <label class="check"><input type="checkbox" value="Fucsia"><span>Fucsia (1)</span><i class="dot" style="background:#e500a4"></i></label><span class="more">Ver más</span></section>
-<section class="filter-group" data-filter="size"><h3>Talle</h3>
+<section class="filter-group" data-filter="size"><h3>TALLE</h3>
 <label class="check"><input type="checkbox" value="XXXL"><span>XXXL (382)</span></label><label class="check"><input type="checkbox" value="S"><span>S (437)</span></label><label class="check"><input type="checkbox" value="M"><span>M (437)</span></label><label class="check"><input type="checkbox" value="L"><span>L (437)</span></label><label class="check"><input type="checkbox" value="XL"><span>XL (437)</span></label><label class="check"><input type="checkbox" value="XXL"><span>XXL (385)</span></label></section>
-<section class="filter-group" data-filter="cut"><h3>Corte</h3><label class="check"><input type="checkbox" value="Oversize"><span>Oversize (418)</span></label><label class="check"><input type="checkbox" value="Regular"><span>Regular (358)</span></label><label class="check"><input type="checkbox" value="Sin Mangas"><span>Sin Mangas Over (26)</span></label></section>
-<section class="filter-group" data-filter="print"><h3>Diseño impreso</h3><label class="check"><input type="checkbox" value="Verde"><span>Verde (1)</span></label></section>
-<section class="filter-group" data-filter="molding"><h3>Moldería</h3><label class="check"><input type="checkbox" value="Oversize"><span>Oversize (1)</span></label><label class="check"><input type="checkbox" value="Regular"><span>Regular (1)</span></label><label class="check"><input type="checkbox" value="Sin Mangas Over"><span>Sin Mangas Over (1)</span></label></section>
-<section class="filter-group"><h3>Precio</h3><div class="price"><div><label>Desde</label><input id="minPrice" type="number" placeholder="26000"></div><div><label>Hasta</label><input id="maxPrice" type="number" placeholder="440040"></div><button id="priceGo">›</button></div></section>
+<section class="filter-group" data-filter="cut"><h3>CORTE</h3><label class="check"><input type="checkbox" value="Oversize"><span>Oversize (418)</span></label><label class="check"><input type="checkbox" value="Regular"><span>Regular (358)</span></label><label class="check"><input type="checkbox" value="Sin Mangas"><span>Sin Mangas Over (26)</span></label></section>
+<section class="filter-group" data-filter="print"><h3>DISEÑO IMPRESO</h3><label class="check"><input type="checkbox" value="Verde"><span>Verde (1)</span></label></section>
+<section class="filter-group" data-filter="molding"><h3>MOLDERÍA</h3><label class="check"><input type="checkbox" value="Oversize"><span>Oversize (1)</span></label><label class="check"><input type="checkbox" value="Regular"><span>Regular (1)</span></label><label class="check"><input type="checkbox" value="Sin Mangas Over"><span>Sin Mangas Over (1)</span></label></section>
+<section class="filter-group"><h3>PRECIO</h3><div class="price"><div><label>Desde</label><input id="minPrice" type="number" placeholder="26000"></div><div><label>Hasta</label><input id="maxPrice" type="number" placeholder="440040"></div><button id="priceGo">›</button></div></section>
 </aside>
-<section><div class="catalog-head"><span class="count" id="count"></span></div><div class="grid" id="grid"></div></section>
-</main>
-</div>
+<section class="catalog"><div class="catalog-head"></div><div class="grid" id="grid"></div></section>
+</main></div>
 <a class="whatsapp" href="https://wa.me/543489690058" target="_blank" rel="noopener"><span class="wa-icon">☎</span> WhatsApp · 3489 690058</a>
-<!-- ===== MODAL ZOOM ===== -->
 <div class="zoom-overlay" id="zoomOverlay"><div class="zoom-modal">
-<button class="zoom-close" id="zoomClose" title="Cerrar">✕</button>
+<button class="zoom-close" id="zoomClose" title="Cerrar">×</button>
 <div class="zoom-layout">
-<div class="thumbs" id="zoomThumbs"></div>
-<div class="zmain" id="zmain"><span class="zcount">1 / 1</span><img id="zimg" src="" alt=""><span class="zhint">🔍 Pasá el cursor para hacer zoom</span></div>
-<div class="zinfo" id="zoomInfo"></div>
-</div>
-</div></div>
+<div class="zoom-thumbs" id="zoomThumbs"></div>
+<div class="zoom-main" id="zoomMain"><span class="zoom-count">1 / 1</span><img id="zoomImg" src="" alt=""><span class="zoom-hint">🔍 Pasá el cursor para hacer zoom</span></div>
+<div class="zoom-info" id="zoomInfo"></div>
+</div></div></div>
 <script>
 /* =====================================================================
-   ⬇️ ÚNICO PASO MANUAL: copiá de tu archivo ORIGINAL la línea completa
-   que empieza con  const PRODUCTS=[  y termina en  ];  y pegala acá,
-   reemplazando el array vacío. (Son tus 24 remeras con sus imágenes.)
+   ÚNICO PASO MANUAL: en tu línea gigante original cambiá solamente
+   "const PRODUCTS=["  por  "const PRODUCTS_BASE=["   (nada más).
+   Así las imágenes base64 quedan intactas y yo armo el array final.
    ===================================================================== */
-const PRODUCTS = [
-  /* PEGÁ AQUÍ TU ARRAY PRODUCTS ORIGINAL COMPLETO */
-];
-/* ===== FIN ZONA DE PEGADO ===== */
-const grid=document.getElementById('grid'),sort=document.getElementById('sort'),minPrice=document.getElementById('minPrice'),maxPrice=document.getElementById('maxPrice'),countEl=document.getElementById('count');
+/* ==== ARRAY DE PRODUCTOS (metadatos nuevos: código SKU + flag NUEVO) ==== */
+const PRODUCT_META=[
+{code:"SMK-001",nuevo:true},{code:"SMK-002",nuevo:true},{code:"SMK-003",nuevo:true},{code:"SMK-004",nuevo:true},
+{code:"SMK-005",nuevo:true},{code:"SMK-006",nuevo:true},{code:"SMK-007",nuevo:true},{code:"SMK-008",nuevo:true},
+{code:"SMK-009",nuevo:true},{code:"SMK-010",nuevo:true},{code:"SMK-011",nuevo:true},{code:"SMK-012",nuevo:true},
+{code:"SMK-013",nuevo:true},{code:"SMK-014",nuevo:true},{code:"SMK-015",nuevo:true},{code:"SMK-016",nuevo:true},
+{code:"SMK-017",nuevo:true},{code:"SMK-018",nuevo:true},{code:"SMK-019",nuevo:true},{code:"SMK-020",nuevo:true},
+{code:"SMK-021",nuevo:true},{code:"SMK-022",nuevo:true},{code:"SMK-023",nuevo:true},{code:"SMK-024",nuevo:true}];
+/* ==== ARRAY FINAL = imágenes originales + metadatos nuevos ==== */
+const PRODUCTS=(typeof PRODUCTS_BASE!=='undefined'?PRODUCTS_BASE:[]).map((p,i)=>Object.assign({},p,PRODUCT_META[i]||{code:'SMK-'+String(i+1).padStart(3,'0'),nuevo:true}));
+
+const grid=document.getElementById('grid'),sort=document.getElementById('sort'),minPrice=document.getElementById('minPrice'),maxPrice=document.getElementById('maxPrice');
 let currentList=[];
-const priceNumber=s=>Number(String(s).replace(/[^0-9]/g,''))||0;
-const money=n=>'$'+n.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});
-const colorHex=c=>({Negro:'#111',Celeste:'#19b9df',Beige:'#e2d0a8',Blanco:'#eee',Gris:'#888','Marrón':'#9b6a39',Violeta:'#8b49bb',Fucsia:'#e500a4'}[c]||'#ccc');
-const CART='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.6"/><circle cx="19" cy="21" r="1.6"/><path d="M2 3h3l2.6 12.5a2 2 0 0 0 2 1.5h8.9a2 2 0 0 0 2-1.6L22 7H6"/></svg>';
+function priceNumber(s){return Number(String(s).replace(/[^0-9]/g,''))||0}
+const CART_SVG='<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>';
 function render(){
 const groups={};
 document.querySelectorAll('.filter-group[data-filter] input:checked').forEach(c=>{const g=c.closest('.filter-group').dataset.filter;(groups[g]??=[]).push(c.value)});
@@ -174,77 +129,63 @@ const pr=priceNumber(p.price); if(minPrice.value&&pr<+minPrice.value)return fals
 if(sort.value==='priceAsc')list.sort((a,b)=>priceNumber(a.price)-priceNumber(b.price));
 if(sort.value==='priceDesc')list.sort((a,b)=>priceNumber(b.price)-priceNumber(a.price));
 if(sort.value==='name')list.sort((a,b)=>a.name.localeCompare(b.name));
-currentList=list;countEl.textContent=list.length+' productos';
-grid.innerHTML=list.length?list.map((p,i)=>`<article class="card" data-i="${i}">
-<div class="photo"><img src="${p.img}" alt="${p.name}" loading="lazy">
-<span class="badge ${p.badge.includes('RELÁMPAGO')?'flash':''}">${p.badge}</span><span class="zoomtag">🔍 Zoom</span></div>
+currentList=list;
+grid.innerHTML=list.map((p,i)=>`<article class="card" data-i="${i}">
+<div class="photo"><img src="${p.img}" alt="${p.name}" loading="lazy"><span class="tag">NUEVO</span></div>
 <div class="card-body">
-<div class="name">${p.name}<span class="desc">${p.desc}</span></div>
-<div class="old">$39.900</div>
-<div class="price-line">${p.price}<span class="discount">${p.badge.includes('RELÁMPAGO')?'25% OFF':'10% OFF'}</span></div>
-<div class="installments">6 x $5.985 sin interés</div>
-<div class="transfer">${p.price==='$29.925'?'$25.436,25':'$30.523,50'} con Transferencia</div>
-<div class="qty-row"><div class="qty"><button type="button" data-q="-1">−</button><span class="q">1</span><button type="button" data-q="1">+</button></div>
-<button type="button" class="buy">COMPRAR ${CART}</button></div>
-</div></article>`).join(''):'<div class="empty">No hay productos que coincidan con los filtros.</div>';
+<div class="name">${p.name} ${p.desc}</div>
+<div class="code">Código ${p.code}</div>
+<div class="price-line">$ ${p.price.replace('$','')}</div>
+<div class="stepper"><span class="q">1</span><button type="button" data-d="1" aria-label="Subir">▲</button><button type="button" data-d="-1" aria-label="Bajar">▼</button></div>
+<button type="button" class="comprar">COMPRAR ${CART_SVG}</button>
+<div class="iva">C/Iva</div>
+</div></article>`).join('');
 }
-function buy(i,qty){const p=currentList[i];if(!p)return;window.open('https://wa.me/543489686939?text='+encodeURIComponent('Hola SMOKE SALE, quiero comprar '+p.name+' x'+qty+'.'),'_blank')}
+function contact(name,qty,code){window.open('https://wa.me/543489686939?text='+encodeURIComponent('Hola SMOKE SALE, quiero comprar '+decodeURIComponent(name)+(code?' (Código '+code+')':'')+(qty>1?' x'+qty:'')+'.'),'_blank')}
+/* Click en tarjeta → zoom · stepper → cantidad · COMPRAR → WhatsApp */
 grid.addEventListener('click',e=>{
-const card=e.target.closest('.card');if(!card)return;const i=+card.dataset.i;
-const qb=e.target.closest('.qty button');
-if(qb){const q=card.querySelector('.q');q.textContent=Math.max(1,+q.textContent+ +qb.dataset.q);return}
-if(e.target.closest('.buy')){buy(i,+card.querySelector('.q').textContent);return}
+const card=e.target.closest('.card');if(!card)return;
+const i=+card.dataset.i,p=currentList[i];
+const sb=e.target.closest('.stepper button');
+if(sb){const q=card.querySelector('.q');q.textContent=Math.max(1,+q.textContent+ +sb.dataset.d);return}
+if(e.target.closest('.comprar')){contact(encodeURIComponent(p.name),+card.querySelector('.q').textContent,p.code);return}
 openZoom(i);
 });
 /* ===== ZOOM ===== */
-const overlay=document.getElementById('zoomOverlay'),zimg=document.getElementById('zimg'),zmain=document.getElementById('zmain'),zoomInfo=document.getElementById('zoomInfo'),zoomThumbs=document.getElementById('zoomThumbs');
+const overlay=document.getElementById('zoomOverlay'),zoomImg=document.getElementById('zoomImg'),zoomMain=document.getElementById('zoomMain'),zoomInfo=document.getElementById('zoomInfo'),zoomThumbs=document.getElementById('zoomThumbs');
 let zSel={size:'',cut:''};
+function colorHex(c){return{Negro:'#111',Celeste:'#19b9df',Beige:'#e2d0a8',Blanco:'#eee',Gris:'#888','Marrón':'#9b6a39',Violeta:'#8b49bb',Fucsia:'#e500a4'}[c]||'#ccc'}
 function openZoom(i){const p=currentList[i];if(!p)return;
 zSel={size:p.size,cut:p.cut};
-zimg.src=p.img;zimg.style.transform='scale(1)';
+zoomImg.src=p.img;zoomImg.style.transform='scale(1)';
 zoomThumbs.innerHTML=`<img class="sel" src="${p.img}" alt="${p.name}">`;
-const sizes=['S','M','L','XL','XXL','XXXL'],cuts=['Regular','Oversize','Sin Mangas'];
-zoomInfo.innerHTML=`
-<div class="crumb">Inicio › REMERAS › ${p.name}</div>
-<span class="zbadge ${p.badge.includes('RELÁMPAGO')?'flash':''}">${p.badge}</span>
-<h2 class="ztitle">${p.name}</h2><div class="zsub">${p.desc}</div>
+zoomInfo.innerHTML=`<span class="zbadge">${p.badge}</span>
+<div class="ztitle">${p.name}</div><div class="zsub">Código ${p.code} · ${p.desc}</div>
 <div class="zold">$39.900</div>
-<div class="zpriceline"><span class="zprice">${p.price}</span><span class="zoff">${p.badge.includes('RELÁMPAGO')?'25% OFF':'10% OFF'}</span></div>
-<div class="ztax">Precio sin impuestos ${money(priceNumber(p.price)/1.21)}</div>
+<div class="zprice">${p.price}<span class="zdisc">${p.badge.includes('RELÁMPAGO')?'25% OFF':'10% OFF'}</span></div>
 <div class="ztransfer">${p.price==='$29.925'?'$25.436,25':'$30.523,50'} con Transferencia</div>
-<div class="zdisc2">15% de descuento pagando con Transferencia</div>
 <div class="zinst">6 cuotas sin interés de $5.985</div>
-<div class="zlink">Ver más detalles</div>
-<div class="zship">🚚 <span><b>Envío gratis</b> superando los $150.000</span></div>
-<div class="opt-title">Corte: <b>${p.cut}</b></div>
-<div class="chips" data-type="cut">${cuts.map(c=>`<span class="chip${c===p.cut?' sel':''}">${c}</span>`).join('')}</div>
-<div class="opt-title">Talle: <b>${p.size}</b></div>
-<div class="chips" data-type="size">${sizes.map(s=>`<span class="chip${s===p.size?' sel':''}">${s}</span>`).join('')}</div>
-<div class="opt-title">Color: <b>${p.color}</b></div>
-<div class="chips" data-type="color"><span class="swatch" style="background:${colorHex(p.color)}"></span></div>
-<div class="zqty-row"><div class="zqty"><button type="button" data-q="-1">−</button><span class="q">1</span><button type="button" data-q="1">+</button></div>
-<button type="button" class="zcart" id="zcart">Agregar al carrito</button></div>
+<div class="zopt">Corte: <b>${p.cut}</b></div><div><span class="zbtn sel">${p.cut}</span></div>
+<div class="zopt">Talle: <b>${p.size}</b></div><div>${['S','M','L','XL','XXL','XXXL'].map(s=>`<span class="zbtn${s===p.size?' sel':''}">${s}</span>`).join('')}</div>
+<div class="zopt">Color: <b>${p.color}</b></div><div><span class="zdot" style="background:${colorHex(p.color)}"></span></div>
+<div class="zopt">Cantidad:</div>
+<div style="display:flex;align-items:center;gap:10px"><span class="zqty"><button type="button" data-d="-1">−</button><span class="q">1</span><button type="button" data-d="1">+</button></span></div>
+<button class="zcart" id="zcart">Agregar al carrito</button>
 <div class="zprotect">🛡️ <span><b>Compra protegida</b><br>Tus datos cuidados durante toda la compra.</span></div>`;
 overlay.classList.add('open');document.body.style.overflow='hidden';}
 zoomInfo.addEventListener('click',e=>{
-const chip=e.target.closest('.chip');
-if(chip){const g=chip.closest('.chips');g.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));chip.classList.add('sel');zSel[g.dataset.type]=chip.textContent;return}
 const qb=e.target.closest('.zqty button');
-if(qb){const q=zoomInfo.querySelector('.zqty .q');q.textContent=Math.max(1,+q.textContent+ +qb.dataset.q);return}
-if(e.target.id==='zcart'){const p=currentList.find(x=>zoomInfo.querySelector('.ztitle').textContent===x.name);const qty=zoomInfo.querySelector('.zqty .q').textContent;
-window.open('https://wa.me/543489686939?text='+encodeURIComponent('Hola SMOKE SALE, quiero comprar '+p.name+' — Talle '+zSel.size+', Corte '+zSel.cut+', Color '+p.color+' x'+qty+'.'),'_blank')}
-});
-zmain.addEventListener('mouseenter',()=>{zimg.style.transform='scale(2.2)';zmain.classList.add('zoomed')});
-zmain.addEventListener('mousemove',e=>{const r=zmain.getBoundingClientRect();zimg.style.transformOrigin=(((e.clientX-r.left)/r.width)*100)+'% '+(((e.clientY-r.top)/r.height)*100)+'%'});
-zmain.addEventListener('mouseleave',()=>{zimg.style.transform='scale(1)';zmain.classList.remove('zoomed')});
+if(qb){const q=zoomInfo.querySelector('.zqty .q');q.textContent=Math.max(1,+q.textContent+ +qb.dataset.d);return}
+if(e.target.id==='zcart'){const p=currentList.find(x=>zoomInfo.querySelector('.ztitle').textContent===x.name);contact(encodeURIComponent(p.name),+zoomInfo.querySelector('.zqty .q').textContent,p.code)}});
+zoomMain.addEventListener('mouseenter',()=>{zoomImg.style.transform='scale(2.4)';zoomMain.classList.add('zoomed')});
+zoomMain.addEventListener('mousemove',e=>{const r=zoomMain.getBoundingClientRect();zoomImg.style.transformOrigin=(((e.clientX-r.left)/r.width)*100)+'% '+(((e.clientY-r.top)/r.height)*100)+'%'});
+zoomMain.addEventListener('mouseleave',()=>{zoomImg.style.transform='scale(1)';zoomMain.classList.remove('zoomed')});
 const closeZoom=()=>{overlay.classList.remove('open');document.body.style.overflow=''};
 document.getElementById('zoomClose').addEventListener('click',closeZoom);
 overlay.addEventListener('click',e=>{if(e.target===overlay)closeZoom()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeZoom()});
-/* ===== FILTROS / ORDEN (intacto) ===== */
-document.querySelectorAll('.filters input').forEach(e=>e.addEventListener('change',render));
-sort.addEventListener('change',render);
-document.getElementById('priceGo').addEventListener('click',render);
+/* ===== FILTROS / ORDEN (intactos) ===== */
+document.querySelectorAll('.filters input').forEach(e=>e.addEventListener('change',render));sort.addEventListener('change',render);document.getElementById('priceGo').addEventListener('click',render);
 [minPrice,maxPrice].forEach(e=>e.addEventListener('keydown',x=>{if(x.key==='Enter')render()}));
 document.getElementById('filterBtn').addEventListener('click',()=>{const f=document.getElementById('filters');f.style.display=getComputedStyle(f).display==='none'?'block':'none'});
 render();
