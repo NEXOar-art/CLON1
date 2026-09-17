@@ -1,100 +1,252 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>SMOKE SALE — Remeras</title><style>*{box-sizing:border-box}body{margin:0;background:#fff;color:#202020;font-family:Arial,Helvetica,sans-serif;font-size:13px}.page{max-width:1060px;margin:auto;padding:0 18px}.topbar{height:30px;display:flex;justify-content:flex-end;align-items:center}.topbar select,.catalog-head select{border:1px solid #d7d7d7;border-radius:3px;background:#fff;padding:6px 9px;font-size:9px}
-.header{padding:0 0 18px}.brand h1{font-size:20px;font-weight:500;margin:0 0 3px}.brand p{font-size:9px;color:#555;margin:0}.layout{display:grid;grid-template-columns:190px 1fr;gap:30px}.filters h2{font-size:14px;font-weight:400;margin:0 0 18px}.filter-group{border-bottom:1px solid #e9e9e9;padding-bottom:18px;margin-bottom:18px}.filter-group h3{font-size:10px;font-weight:400;text-transform:uppercase;margin:0 0 9px}
-.check{display:flex;align-items:center;gap:7px;margin:8px 0;font-size:10px;color:#555;cursor:pointer}.check input{appearance:none;width:12px;height:12px;border:1px solid #777;border-radius:2px;margin:0}.check input:checked{background:#111;box-shadow:inset 0 0 0 3px white}.dot{width:7px;height:7px;border-radius:50%}.more{font-size:9px;text-decoration:underline}
-.price{display:grid;grid-template-columns:1fr 1fr 32px}.price label{font-size:8px;color:#555}.price input{width:100%;height:32px;border:1px solid #ddd;padding:0 7px;color:#aaa;font-size:9px}.price button{height:32px;border:1px solid #ddd;background:#fff;font-size:17px;color:#777}.catalog-head{height:25px;display:flex;justify-content:flex-end}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:38px 20px}.card{min-width:0;cursor:pointer}.photo{height:205px;display:flex;align-items:center;justify-content:center;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover}
-.badge{position:absolute;top:8px;left:8px;background:#c83a2d;color:#fff;border-radius:2px;font-size:8px;font-weight:bold;padding:4px 6px;text-transform:uppercase}.card{position:relative}.name{font-size:10px;margin:8px 0 4px;line-height:1.35}.old{font-size:9px;color:#999;text-decoration:line-through}.price-line{font-size:13px;font-weight:bold;margin:2px 0}.discount{font-size:9px;color:#999;font-weight:normal;margin-left:4px}.installments{font-size:9px;color:#555;margin:2px 0}.transfer{font-size:9px;color:#a74436;font-weight:bold;margin:2px 0}
-.whatsapp{position:fixed;right:22px;bottom:22px;width:52px;height:52px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.25);cursor:pointer;z-index:50}.whatsapp svg{width:28px;height:28px;fill:#fff}
-.drawer{display:none}
-.logo{display:block;height:90px;width:auto;margin:0 0 12px}
-.zoom-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:60;overflow:auto;padding:20px}
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>SMOKE SALE — Remeras</title>
+<style>
+:root{--bg:#fff;--ink:#141416;--muted:#71717a;--line:#e9e9ec;--panel:#fcfcfd;--green:#16a34a;--green-d:#128a43;--orange:#e4573d;--transfer:#a74436;--r:14px;--sh:0 12px 30px rgba(0,0,0,.08)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
+.page{max-width:1180px;margin:auto;padding:0 20px}
+/* ===== HEADER STICKY + LOGO ===== */
+.header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.header-in{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 0}
+.brand{display:flex;align-items:center;gap:16px}
+.logo{height:76px;width:auto;display:block}
+.brand p{font-size:10px;color:var(--muted);margin:0;max-width:250px;line-height:1.45}
+.topbar{display:flex;align-items:center;gap:10px}
+.topbar label{font-size:11px;color:var(--muted)}
+select{border:1px solid var(--line);border-radius:8px;background:#fff;padding:8px 10px;font-size:12px;color:var(--ink)}
+/* ===== LAYOUT ===== */
+.layout{display:grid;grid-template-columns:210px 1fr;gap:30px;padding:26px 0 70px}
+.filters h2{font-size:15px;font-weight:700;margin:0 0 16px}
+.filter-group{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:16px}
+.filter-group h3{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.check{display:flex;align-items:center;gap:8px;margin:7px 0;font-size:12px;color:#3f3f46;cursor:pointer}
+.check input{appearance:none;width:15px;height:15px;border:1px solid #c9c9cf;border-radius:4px;margin:0;cursor:pointer;transition:.15s}
+.check input:checked{background:var(--ink);border-color:var(--ink);box-shadow:inset 0 0 0 3px #fff}
+.dot{width:8px;height:8px;border-radius:50%}
+.more{font-size:11px;text-decoration:underline;color:var(--muted);cursor:pointer}
+.price{display:grid;grid-template-columns:1fr 1fr 34px;gap:6px}
+.price label{font-size:9px;color:var(--muted)}
+.price input{width:100%;height:36px;border:1px solid var(--line);border-radius:8px;padding:0 9px;font-size:12px}
+.price button{height:36px;border:0;border-radius:8px;background:var(--ink);color:#fff;font-size:16px;cursor:pointer}
+.drawer{display:none;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 14px;font-size:12px;margin:16px 0 0;cursor:pointer}
+.catalog-head{display:flex;justify-content:space-between;align-items:center;margin:0 0 16px}
+.count{font-size:12px;color:var(--muted)}
+/* ===== TARJETAS LIMPIAS ===== */
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.card{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px);box-shadow:var(--sh);border-color:#dcdce0}
+.photo{position:relative;aspect-ratio:1/1;background:var(--panel);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.card:hover .photo img{transform:scale(1.06)}
+.badge{position:absolute;top:10px;left:10px;background:#c83a2d;color:#fff;border-radius:6px;font-size:9px;font-weight:800;letter-spacing:.05em;padding:4px 8px;text-transform:uppercase}
+.badge.flash{background:var(--orange)}
+.zoomtag{position:absolute;right:10px;bottom:10px;background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:10px;font-weight:700;opacity:0;transform:translateY(4px);transition:.2s;pointer-events:none}
+.card:hover .zoomtag{opacity:1;transform:none}
+.card-body{padding:14px 14px 16px;display:flex;flex-direction:column;gap:5px;flex:1}
+.name{font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;line-height:1.35}
+.name .desc{display:block;color:var(--muted);font-weight:500;font-size:10px;text-transform:none;margin-top:2px}
+.old{font-size:11px;color:#a1a1aa;text-decoration:line-through}
+.price-line{font-size:16px;font-weight:800}
+.discount{font-size:11px;color:var(--orange);font-weight:700;margin-left:6px}
+.installments{font-size:11px;color:var(--muted)}
+.transfer{font-size:11.5px;color:var(--transfer);font-weight:700}
+.qty-row{margin-top:auto;display:flex;gap:8px;padding-top:12px}
+.qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.qty button{width:30px;height:38px;border:0;background:#f4f4f5;cursor:pointer;font-size:15px;color:var(--ink)}
+.qty button:hover{background:#e8e8ea}
+.qty .q{min-width:32px;text-align:center;font-size:13px;font-weight:600}
+.buy{flex:1;background:var(--green);color:#fff;border:0;border-radius:9px;font-weight:800;font-size:11.5px;letter-spacing:.05em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:.2s}
+.buy:hover{background:var(--green-d)}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:60px 0;border:1px dashed var(--line);border-radius:var(--r)}
+/* ===== WHATSAPP ===== */
+.whatsapp{position:fixed;right:22px;bottom:22px;background:#1fbd63;color:#fff;border-radius:999px;padding:13px 18px;box-shadow:0 10px 30px rgba(31,189,99,.35);display:flex;align-items:center;gap:9px;font-weight:700;font-size:13px;z-index:60;text-decoration:none}
+.wa-icon{width:22px;height:22px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:11px}
+/* ===== MODAL ZOOM (estilo captura SMOKE) ===== */
+.zoom-overlay{position:fixed;inset:0;background:rgba(20,20,22,.45);backdrop-filter:blur(4px);z-index:80;display:none;overflow:auto;padding:28px 16px}
 .zoom-overlay.open{display:block}
-.zoom-modal{position:relative;max-width:1060px;margin:20px auto;background:#fff;padding:25px;border-radius:4px}
-.zoom-close{position:absolute;top:8px;right:12px;border:none;background:#fff;font-size:28px;cursor:pointer;line-height:1;z-index:2}
-.zoom-layout{display:grid;grid-template-columns:76px 1fr 360px;gap:25px}
-.zoom-thumbs{display:flex;flex-direction:column;gap:10px}
-.zoom-thumbs img{width:76px;height:76px;object-fit:cover;border:1px solid #ddd;border-radius:2px;cursor:pointer}
-.zoom-thumbs img.sel{border-color:#111}
-.zoom-main{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:440px;background:#fff;cursor:zoom-in}
-.zoom-main.zoomed{cursor:zoom-out}
-.zoom-main img{max-width:100%;max-height:560px;transition:transform .2s ease}
-.zoom-hint{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;color:#999;background:#fff;border:1px solid #eee;padding:3px 8px;border-radius:10px}
-.zoom-count{position:absolute;top:8px;left:10px;font-size:10px;color:#777}
-.zbadge{display:inline-block;background:#c83a2d;color:#fff;border-radius:2px;font-size:8px;font-weight:bold;padding:4px 6px;text-transform:uppercase}
-.ztitle{font-size:20px;font-weight:400;margin:10px 0 14px;line-height:1.3}
-.zold{font-size:11px;color:#999;text-decoration:line-through}
-.zprice{font-size:24px;font-weight:bold;margin:2px 0}
-.zdisc{font-size:12px;color:#999;font-weight:normal;margin-left:6px}
-.ztransfer{font-size:15px;color:#a74436;font-weight:bold;margin:8px 0}
-.zinst{font-size:11px;color:#777;margin:4px 0}
-.zopt{font-size:11px;margin:12px 0 6px;color:#202020}
-.zbtn{display:inline-block;border:1px solid #ddd;background:#fff;border-radius:3px;padding:7px 14px;margin:0 6px 6px 0;font-size:10px;cursor:pointer}
-.zbtn.sel{border-color:#111}
-.zdot{display:inline-block;width:16px;height:16px;border:1px solid #111;border-radius:2px;vertical-align:middle}
-.zqty{display:inline-flex;align-items:center;border:1px solid #ddd;border-radius:3px}
-.zqty button{border:none;background:#fff;padding:8px 12px;cursor:pointer;font-size:13px}
-.zqty span{padding:0 12px;font-size:12px}
-.zcart{width:100%;background:#111;color:#fff;border:none;border-radius:3px;padding:13px;font-size:12px;font-weight:bold;cursor:pointer;margin-top:12px}
-@media(max-width:850px){.page{padding:0 14px}.layout{grid-template-columns:1fr}.filters{display:none}.grid{grid-template-columns:repeat(2,1fr);gap:28px 15px}.photo{height:240px}.drawer{display:block;border:1px solid #ddd;background:#fff;padding:9px 11px;margin-bottom:14px;font-size:11px}.zoom-layout{grid-template-columns:1fr}.zoom-thumbs{flex-direction:row}.zoom-main{min-height:320px}}@media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr)}.photo{height:190px}.name{font-size:9px}.whatsapp{right:12px;bottom:12px}}</style></head><body><div class="page">
-<div class="topbar"><select id="sort"><option value="new">Más nuevo al más viejo</option><option value="priceAsc">Precio: menor a mayor</option><option value="priceDesc">Precio: mayor a menor</option><option value="name">Nombre A-Z</option></select></div><header class="header"><div class="brand"><img class="logo" src="LOGO SMOKE5.jpg" alt="SMOKE SALE"><h1>REMERAS</h1><p>Los mejores diseños de Remeras estilo Japanese Art, Anime, Art, estética urbana</p></div></header><button class="drawer" id="filterBtn">☰ &nbsp; FILTRAR POR</button><main class="layout"><aside class="filters" id="filters"><h2>Filtrar por</h2>
-<section class="filter-group" data-filter="color"><h3>COLOR</h3><label class="check"><input type="checkbox" value="Negro"><span>Negro (287)</span><i class="dot" style="background:#111"></i></label><label class="check"><input type="checkbox" value="Celeste"><span>Celeste (10)</span><i class="dot" style="background:#19b9df"></i></label><label class="check"><input type="checkbox" value="Beige"><span>Beige (46)</span><i class="dot" style="background:#e2d0a8"></i></label><label class="check"><input type="checkbox" value="Blanco"><span>Blanco (96)</span><i class="dot" style="background:#eee;border:1px solid #bbb"></i></label><label class="check"><input type="checkbox" value="Gris"><span>Gris (14)</span><i class="dot" style="background:#888"></i></label><label class="check"><input type="checkbox" value="Marrón"><span>Marrón (12)</span><i class="dot" style="background:#9b6a39"></i></label><label class="check"><input type="checkbox" value="Violeta"><span>Violeta (1)</span><i class="dot" style="background:#8b49bb"></i></label><label class="check"><input type="checkbox" value="Fucsia"><span>Fucsia (1)</span><i class="dot" style="background:#e500a4"></i></label><span class="more">Ver más</span></section><section class="filter-group" data-filter="size"><h3>TALLE</h3>
+.zoom-modal{max-width:1120px;margin:auto;background:#fff;border-radius:16px;padding:26px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+.zoom-close{position:absolute;top:12px;right:14px;border:0;background:#f4f4f5;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;z-index:2}
+.zoom-close:hover{background:#e8e8ea}
+.zoom-layout{display:grid;grid-template-columns:84px minmax(0,1fr) 380px;gap:26px}
+.thumbs{display:flex;flex-direction:column;gap:10px}
+.thumbs img{width:84px;height:84px;object-fit:cover;border:1px solid var(--line);border-radius:10px;cursor:pointer}
+.thumbs img.sel{border-color:#111;box-shadow:0 0 0 1px #111}
+.zmain{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);display:flex;align-items:center;justify-content:center;min-height:480px;cursor:zoom-in}
+.zmain.zoomed{cursor:zoom-out}
+.zmain img{max-width:100%;max-height:560px;transition:transform .18s ease}
+.zcount{position:absolute;top:10px;right:12px;font-size:11px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+.zhint{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 10px}
+.crumb{font-size:11px;color:var(--muted)}
+.zbadge{display:inline-block;background:#c83a2d;color:#fff;border-radius:6px;font-size:9px;font-weight:800;padding:4px 8px;text-transform:uppercase;margin-top:10px}
+.zbadge.flash{background:var(--orange)}
+.ztitle{font-size:22px;font-weight:700;line-height:1.25;margin:10px 0 2px}
+.zsub{font-size:11px;color:var(--muted)}
+.zold{font-size:12px;color:#a1a1aa;text-decoration:line-through;margin-top:12px}
+.zpriceline{display:flex;align-items:baseline;gap:10px}
+.zprice{font-size:26px;font-weight:800}
+.zoff{color:var(--orange);font-weight:700;font-size:13px}
+.ztax{font-size:11px;color:var(--muted)}
+.ztransfer{color:var(--transfer);font-weight:800;font-size:16px;margin:8px 0 2px}
+.zdisc2{color:var(--orange);font-size:12px}
+.zinst{font-size:12px;color:var(--muted);margin-top:6px}
+.zlink{font-size:11px;text-decoration:underline;color:var(--muted);margin-top:6px}
+.zship{display:flex;gap:8px;font-size:12px;color:var(--muted);margin:12px 0}
+.opt-title{font-size:12px;margin:12px 0 6px;color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{border:1px solid var(--line);border-radius:8px;padding:7px 13px;font-size:11px;cursor:pointer;background:#fff;transition:.15s}
+.chip:hover{border-color:#c9c9cf}
+.chip.sel{border-color:#111;box-shadow:0 0 0 1px #111;font-weight:700}
+.swatch{width:22px;height:22px;border-radius:6px;border:1px solid var(--line)}
+.zqty-row{display:flex;gap:12px;margin:18px 0 0}
+.zqty{display:flex;align-items:center;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.zqty button{width:34px;height:44px;border:0;background:#f4f4f5;cursor:pointer;font-size:16px}
+.zqty .q{min-width:38px;text-align:center;font-size:13px;font-weight:600}
+.zcart{flex:1;background:var(--ink);color:#fff;border:0;border-radius:10px;padding:14px;font-weight:800;font-size:13px;cursor:pointer;transition:.2s}
+.zcart:hover{background:#000}
+.zprotect{display:flex;gap:10px;font-size:12px;color:var(--muted);margin-top:14px;line-height:1.4}
+/* ===== RESPONSIVE ===== */
+@media(max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.zoom-layout{grid-template-columns:1fr}.thumbs{flex-direction:row}}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.filters{display:none}.grid{grid-template-columns:repeat(2,1fr)}.drawer{display:flex}.brand p{display:none}}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}.logo{height:56px}.whatsapp{right:12px;bottom:12px}}
+</style></head>
+<body>
+<header class="header"><div class="page header-in">
+<div class="brand"><img class="logo" src="LOGO SMOKE5.jpg" alt="SMOKE SALE" onerror="this.style.display='none'"><p>Los mejores diseños de Remeras estilo Japanese Art, Anime, Art, estética urbana</p></div>
+<div class="topbar"><label for="sort">Ordenar:</label><select id="sort"><option value="new">Más nuevo al más viejo</option><option value="priceAsc">Precio: menor a mayor</option><option value="priceDesc">Precio: mayor a menor</option><option value="name">Nombre A-Z</option></select></div>
+</div></header>
+<div class="page">
+<button class="drawer" id="filterBtn">☰ FILTRAR POR</button>
+<main class="layout">
+<aside class="filters" id="filters">
+<h2>Filtrar por</h2>
+<section class="filter-group" data-filter="color"><h3>Color</h3>
+<label class="check"><input type="checkbox" value="Negro"><span>Negro (287)</span><i class="dot" style="background:#111"></i></label>
+<label class="check"><input type="checkbox" value="Celeste"><span>Celeste (10)</span><i class="dot" style="background:#19b9df"></i></label>
+<label class="check"><input type="checkbox" value="Beige"><span>Beige (46)</span><i class="dot" style="background:#e2d0a8"></i></label>
+<label class="check"><input type="checkbox" value="Blanco"><span>Blanco (96)</span><i class="dot" style="background:#eee;border:1px solid #bbb"></i></label>
+<label class="check"><input type="checkbox" value="Gris"><span>Gris (14)</span><i class="dot" style="background:#888"></i></label>
+<label class="check"><input type="checkbox" value="Marrón"><span>Marrón (12)</span><i class="dot" style="background:#9b6a39"></i></label>
+<label class="check"><input type="checkbox" value="Violeta"><span>Violeta (1)</span><i class="dot" style="background:#8b49bb"></i></label>
+<label class="check"><input type="checkbox" value="Fucsia"><span>Fucsia (1)</span><i class="dot" style="background:#e500a4"></i></label><span class="more">Ver más</span></section>
+<section class="filter-group" data-filter="size"><h3>Talle</h3>
 <label class="check"><input type="checkbox" value="XXXL"><span>XXXL (382)</span></label><label class="check"><input type="checkbox" value="S"><span>S (437)</span></label><label class="check"><input type="checkbox" value="M"><span>M (437)</span></label><label class="check"><input type="checkbox" value="L"><span>L (437)</span></label><label class="check"><input type="checkbox" value="XL"><span>XL (437)</span></label><label class="check"><input type="checkbox" value="XXL"><span>XXL (385)</span></label></section>
-<section class="filter-group" data-filter="cut"><h3>CORTE</h3><label class="check"><input type="checkbox" value="Oversize"><span>Oversize (418)</span></label><label class="check"><input type="checkbox" value="Regular"><span>Regular (358)</span></label><label class="check"><input type="checkbox" value="Sin Mangas"><span>Sin Mangas Over (26)</span></label></section><section class="filter-group" data-filter="print"><h3>DISEÑO IMPRESO</h3><label class="check"><input type="checkbox" value="Verde"><span>Verde (1)</span></label></section>
-<section class="filter-group"><h3>PRECIO</h3><div class="price"><div><label>MÍNIMO</label><input id="minPrice" placeholder="$ Min"></div><div><label>MÁXIMO</label><input id="maxPrice" placeholder="$ Max"></div><button id="priceGo">›</button></div></section>
-</aside><section><div class="catalog-head"></div><div class="grid" id="grid"></div></section></main></div>
-<div class="whatsapp" onclick="contact('')"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.6.8 5 2.3 7L4 29l7.2-2.3c1.9 1 4.1 1.6 6.8 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-2.2 0-4.3-.6-6.1-1.7l-.4-.2-4.3 1.4 1.4-4.1-.3-.4A9.8 9.8 0 0 1 6.2 15c0-5.4 4.4-9.8 9.8-9.8s9.8 4.4 9.8 9.8-4.4 9.8-9.8 9.8zm5.4-7.3c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg></div>
-<div class="zoom-overlay" id="zoomOverlay">
-<div class="zoom-modal">
-<button class="zoom-close" id="zoomClose" title="Cerrar">×</button>
+<section class="filter-group" data-filter="cut"><h3>Corte</h3><label class="check"><input type="checkbox" value="Oversize"><span>Oversize (418)</span></label><label class="check"><input type="checkbox" value="Regular"><span>Regular (358)</span></label><label class="check"><input type="checkbox" value="Sin Mangas"><span>Sin Mangas Over (26)</span></label></section>
+<section class="filter-group" data-filter="print"><h3>Diseño impreso</h3><label class="check"><input type="checkbox" value="Verde"><span>Verde (1)</span></label></section>
+<section class="filter-group" data-filter="molding"><h3>Moldería</h3><label class="check"><input type="checkbox" value="Oversize"><span>Oversize (1)</span></label><label class="check"><input type="checkbox" value="Regular"><span>Regular (1)</span></label><label class="check"><input type="checkbox" value="Sin Mangas Over"><span>Sin Mangas Over (1)</span></label></section>
+<section class="filter-group"><h3>Precio</h3><div class="price"><div><label>Desde</label><input id="minPrice" type="number" placeholder="26000"></div><div><label>Hasta</label><input id="maxPrice" type="number" placeholder="440040"></div><button id="priceGo">›</button></div></section>
+</aside>
+<section><div class="catalog-head"><span class="count" id="count"></span></div><div class="grid" id="grid"></div></section>
+</main>
+</div>
+<a class="whatsapp" href="https://wa.me/543489690058" target="_blank" rel="noopener"><span class="wa-icon">☎</span> WhatsApp · 3489 690058</a>
+<!-- ===== MODAL ZOOM ===== -->
+<div class="zoom-overlay" id="zoomOverlay"><div class="zoom-modal">
+<button class="zoom-close" id="zoomClose" title="Cerrar">✕</button>
 <div class="zoom-layout">
-<div class="zoom-thumbs" id="zoomThumbs"></div>
-<div class="zoom-main" id="zoomMain"><span class="zoom-count">1 / 1</span><img id="zoomImg" src="" alt=""><span class="zoom-hint">🔍 Pasá el cursor para hacer zoom</span></div>
-<div class="zoom-info" id="zoomInfo"></div>
+<div class="thumbs" id="zoomThumbs"></div>
+<div class="zmain" id="zmain"><span class="zcount">1 / 1</span><img id="zimg" src="" alt=""><span class="zhint">🔍 Pasá el cursor para hacer zoom</span></div>
+<div class="zinfo" id="zoomInfo"></div>
 </div>
-</div>
-</div>
+</div></div>
 <script>
-const PRODUCTS=[{"name": "REMERA SINNER", "desc": "Estilo ALTERNATIVE GRAFI ZONA®", "price": "$36.000", "badge": "10 OFF", "img": "data:image/jpeg;base64,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
-", "color": "Negro", "size": "S", "cut": "Oversize", "print": "Verde", "molding": "Oversize"}];
-const grid=document.getElementById('grid'),sort=document.getElementById('sort'),minPrice=document.getElementById('minPrice'),maxPrice=document.getElementById('maxPrice');
+/* =====================================================================
+   ⬇️ ÚNICO PASO MANUAL: copiá de tu archivo ORIGINAL la línea completa
+   que empieza con  const PRODUCTS=[  y termina en  ];  y pegala acá,
+   reemplazando el array vacío. (Son tus 24 remeras con sus imágenes.)
+   ===================================================================== */
+const PRODUCTS = [
+  /* PEGÁ AQUÍ TU ARRAY PRODUCTS ORIGINAL COMPLETO */
+];
+/* ===== FIN ZONA DE PEGADO ===== */
+const grid=document.getElementById('grid'),sort=document.getElementById('sort'),minPrice=document.getElementById('minPrice'),maxPrice=document.getElementById('maxPrice'),countEl=document.getElementById('count');
 let currentList=[];
-function priceNumber(s){return Number(String(s).replace(/[^0-9]/g,''))||0}
-function render(){const groups={};document.querySelectorAll('.filter-group[data-filter] input:checked').forEach(c=>{const g=c.closest('.filter-group').dataset.filter;(groups[g]??=[]).push(c.value)});let list=PRODUCTS.filter(p=>{
-for(const g in groups){if(g==='color'&&!groups[g].includes(p.color))return false;if(g==='size'&&!groups[g].includes(p.size))return false;if(g==='cut'&&!groups[g].includes(p.cut))return false;if(g==='print'&&!groups[g].includes(p.print))return false}
-const mn=priceNumber(minPrice.value),mx=priceNumber(maxPrice.value),pv=priceNumber(p.price);if(mn&&pv<mn)return false;if(mx&&pv>mx)return false;return true});
-const s=sort.value;if(s==='priceAsc')list.sort((a,b)=>priceNumber(a.price)-priceNumber(b.price));if(s==='priceDesc')list.sort((a,b)=>priceNumber(b.price)-priceNumber(a.price));if(s==='name')list.sort((a,b)=>a.name.localeCompare(b.name));
-currentList=list;
-grid.innerHTML=list.map((p,i)=>`<article class="card" onclick="openZoom(${i})"><div class="photo"><img src="${p.img}" alt="${p.name}" loading="lazy"></div><span class="badge">${p.badge}</span><div class="name">${p.name} ${p.desc}</div><div class="old">$39.900</div><div class="price-line">${p.price} <span class="discount">${p.badge.includes('RELÁMPAGO')?'25% OFF':'10% OFF'}</span></div><div class="installments">6 x $5.985 sin interés</div><div class="transfer">${p.price==='$29.925'?'$25.436,25':'$30.523,50'} con Transferencia</div></article>`).join('');}
-function contact(name){window.open('https://wa.me/543489686939?text='+encodeURIComponent('Hola SMOKE SALE, consulto por '+decodeURIComponent(name)+'.'),'_blank')}
-document.querySelectorAll('.filters input').forEach(e=>e.addEventListener('change',render));sort.addEventListener('change',render);document.getElementById('priceGo').addEventListener('click',render);[minPrice,maxPrice].forEach(e=>e.addEventListener('keydown',x=>{if(x.key==='Enter')render()}));
-document.getElementById('filterBtn').addEventListener('click',()=>{const f=document.getElementById('filters');f.style.display=getComputedStyle(f).display==='none'?'block':'none'});
-const overlay=document.getElementById('zoomOverlay'),zoomImg=document.getElementById('zoomImg'),zoomMain=document.getElementById('zoomMain'),zoomInfo=document.getElementById('zoomInfo'),zoomThumbs=document.getElementById('zoomThumbs');
-function colorHex(c){return{Negro:'#111',Celeste:'#19b9df',Beige:'#e2d0a8',Blanco:'#eee',Gris:'#888','Marrón':'#9b6a39',Violeta:'#8b49bb',Fucsia:'#e500a4'}[c]||'#ccc'}
-function chgQty(d){const el=document.getElementById('zqty');el.textContent=Math.max(1,(+el.textContent||1)+d)}
-function openZoom(i){
-const p=currentList[i];if(!p)return;
-zoomImg.src=p.img;zoomImg.alt=p.name;zoomImg.style.transform='scale(1)';
-zoomThumbs.innerHTML=`<img class="sel" src="${p.img}" alt="${p.name}">`;
-const disc=p.badge.includes('RELÁMPAGO')?'25% OFF':'10% OFF';
-const transfer=p.price==='$29.925'?'$25.436,25':'$30.523,50';
-zoomInfo.innerHTML=`<span class="zbadge">${p.badge}</span>
-<div class="ztitle">${p.name} ${p.desc}</div>
-<div class="zold">$39.900</div>
-<div class="zprice">${p.price} <span class="zdisc">${disc}</span></div>
-<div class="ztransfer">${transfer} con Transferencia</div>
-<div class="zinst">6 cuotas sin interés de $5.985</div>
-<div class="zopt">Corte: <b>${p.cut}</b></div><div><span class="zbtn sel">${p.cut}</span></div>
-<div class="zopt">Talle: <b>${p.size}</b></div><div>${['S','M','L','XL','XXL','XXXL'].map(s=>`<span class="zbtn${s===p.size?' sel':''}">${s}</span>`).join('')}</div>
-<div class="zopt">Color: <b>${p.color}</b></div><div><span class="zdot" style="background:${colorHex(p.color)}"></span></div>
-<div class="zopt">Cantidad:</div>
-<div style="display:flex;align-items:center"><span class="zqty"><button onclick="chgQty(-1)">−</button><span id="zqty">1</span><button onclick="chgQty(1)">+</button></span></div>
-<button class="zcart" onclick="contact('${encodeURIComponent(p.name)}')">Agregar al carrito</button>`;
-overlay.classList.add('open');document.body.style.overflow='hidden';
+const priceNumber=s=>Number(String(s).replace(/[^0-9]/g,''))||0;
+const money=n=>'$'+n.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const colorHex=c=>({Negro:'#111',Celeste:'#19b9df',Beige:'#e2d0a8',Blanco:'#eee',Gris:'#888','Marrón':'#9b6a39',Violeta:'#8b49bb',Fucsia:'#e500a4'}[c]||'#ccc');
+const CART='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.6"/><circle cx="19" cy="21" r="1.6"/><path d="M2 3h3l2.6 12.5a2 2 0 0 0 2 1.5h8.9a2 2 0 0 0 2-1.6L22 7H6"/></svg>';
+function render(){
+const groups={};
+document.querySelectorAll('.filter-group[data-filter] input:checked').forEach(c=>{const g=c.closest('.filter-group').dataset.filter;(groups[g]??=[]).push(c.value)});
+let list=PRODUCTS.filter(p=>{
+for(const [key,vals] of Object.entries(groups)) if(!vals.includes(p[key])) return false;
+const pr=priceNumber(p.price); if(minPrice.value&&pr<+minPrice.value)return false;if(maxPrice.value&&pr>+maxPrice.value)return false;return true;
+});
+if(sort.value==='priceAsc')list.sort((a,b)=>priceNumber(a.price)-priceNumber(b.price));
+if(sort.value==='priceDesc')list.sort((a,b)=>priceNumber(b.price)-priceNumber(a.price));
+if(sort.value==='name')list.sort((a,b)=>a.name.localeCompare(b.name));
+currentList=list;countEl.textContent=list.length+' productos';
+grid.innerHTML=list.length?list.map((p,i)=>`<article class="card" data-i="${i}">
+<div class="photo"><img src="${p.img}" alt="${p.name}" loading="lazy">
+<span class="badge ${p.badge.includes('RELÁMPAGO')?'flash':''}">${p.badge}</span><span class="zoomtag">🔍 Zoom</span></div>
+<div class="card-body">
+<div class="name">${p.name}<span class="desc">${p.desc}</span></div>
+<div class="old">$39.900</div>
+<div class="price-line">${p.price}<span class="discount">${p.badge.includes('RELÁMPAGO')?'25% OFF':'10% OFF'}</span></div>
+<div class="installments">6 x $5.985 sin interés</div>
+<div class="transfer">${p.price==='$29.925'?'$25.436,25':'$30.523,50'} con Transferencia</div>
+<div class="qty-row"><div class="qty"><button type="button" data-q="-1">−</button><span class="q">1</span><button type="button" data-q="1">+</button></div>
+<button type="button" class="buy">COMPRAR ${CART}</button></div>
+</div></article>`).join(''):'<div class="empty">No hay productos que coincidan con los filtros.</div>';
 }
-function closeZoom(){overlay.classList.remove('open');document.body.style.overflow=''}
+function buy(i,qty){const p=currentList[i];if(!p)return;window.open('https://wa.me/543489686939?text='+encodeURIComponent('Hola SMOKE SALE, quiero comprar '+p.name+' x'+qty+'.'),'_blank')}
+grid.addEventListener('click',e=>{
+const card=e.target.closest('.card');if(!card)return;const i=+card.dataset.i;
+const qb=e.target.closest('.qty button');
+if(qb){const q=card.querySelector('.q');q.textContent=Math.max(1,+q.textContent+ +qb.dataset.q);return}
+if(e.target.closest('.buy')){buy(i,+card.querySelector('.q').textContent);return}
+openZoom(i);
+});
+/* ===== ZOOM ===== */
+const overlay=document.getElementById('zoomOverlay'),zimg=document.getElementById('zimg'),zmain=document.getElementById('zmain'),zoomInfo=document.getElementById('zoomInfo'),zoomThumbs=document.getElementById('zoomThumbs');
+let zSel={size:'',cut:''};
+function openZoom(i){const p=currentList[i];if(!p)return;
+zSel={size:p.size,cut:p.cut};
+zimg.src=p.img;zimg.style.transform='scale(1)';
+zoomThumbs.innerHTML=`<img class="sel" src="${p.img}" alt="${p.name}">`;
+const sizes=['S','M','L','XL','XXL','XXXL'],cuts=['Regular','Oversize','Sin Mangas'];
+zoomInfo.innerHTML=`
+<div class="crumb">Inicio › REMERAS › ${p.name}</div>
+<span class="zbadge ${p.badge.includes('RELÁMPAGO')?'flash':''}">${p.badge}</span>
+<h2 class="ztitle">${p.name}</h2><div class="zsub">${p.desc}</div>
+<div class="zold">$39.900</div>
+<div class="zpriceline"><span class="zprice">${p.price}</span><span class="zoff">${p.badge.includes('RELÁMPAGO')?'25% OFF':'10% OFF'}</span></div>
+<div class="ztax">Precio sin impuestos ${money(priceNumber(p.price)/1.21)}</div>
+<div class="ztransfer">${p.price==='$29.925'?'$25.436,25':'$30.523,50'} con Transferencia</div>
+<div class="zdisc2">15% de descuento pagando con Transferencia</div>
+<div class="zinst">6 cuotas sin interés de $5.985</div>
+<div class="zlink">Ver más detalles</div>
+<div class="zship">🚚 <span><b>Envío gratis</b> superando los $150.000</span></div>
+<div class="opt-title">Corte: <b>${p.cut}</b></div>
+<div class="chips" data-type="cut">${cuts.map(c=>`<span class="chip${c===p.cut?' sel':''}">${c}</span>`).join('')}</div>
+<div class="opt-title">Talle: <b>${p.size}</b></div>
+<div class="chips" data-type="size">${sizes.map(s=>`<span class="chip${s===p.size?' sel':''}">${s}</span>`).join('')}</div>
+<div class="opt-title">Color: <b>${p.color}</b></div>
+<div class="chips" data-type="color"><span class="swatch" style="background:${colorHex(p.color)}"></span></div>
+<div class="zqty-row"><div class="zqty"><button type="button" data-q="-1">−</button><span class="q">1</span><button type="button" data-q="1">+</button></div>
+<button type="button" class="zcart" id="zcart">Agregar al carrito</button></div>
+<div class="zprotect">🛡️ <span><b>Compra protegida</b><br>Tus datos cuidados durante toda la compra.</span></div>`;
+overlay.classList.add('open');document.body.style.overflow='hidden';}
+zoomInfo.addEventListener('click',e=>{
+const chip=e.target.closest('.chip');
+if(chip){const g=chip.closest('.chips');g.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));chip.classList.add('sel');zSel[g.dataset.type]=chip.textContent;return}
+const qb=e.target.closest('.zqty button');
+if(qb){const q=zoomInfo.querySelector('.zqty .q');q.textContent=Math.max(1,+q.textContent+ +qb.dataset.q);return}
+if(e.target.id==='zcart'){const p=currentList.find(x=>zoomInfo.querySelector('.ztitle').textContent===x.name);const qty=zoomInfo.querySelector('.zqty .q').textContent;
+window.open('https://wa.me/543489686939?text='+encodeURIComponent('Hola SMOKE SALE, quiero comprar '+p.name+' — Talle '+zSel.size+', Corte '+zSel.cut+', Color '+p.color+' x'+qty+'.'),'_blank')}
+});
+zmain.addEventListener('mouseenter',()=>{zimg.style.transform='scale(2.2)';zmain.classList.add('zoomed')});
+zmain.addEventListener('mousemove',e=>{const r=zmain.getBoundingClientRect();zimg.style.transformOrigin=(((e.clientX-r.left)/r.width)*100)+'% '+(((e.clientY-r.top)/r.height)*100)+'%'});
+zmain.addEventListener('mouseleave',()=>{zimg.style.transform='scale(1)';zmain.classList.remove('zoomed')});
+const closeZoom=()=>{overlay.classList.remove('open');document.body.style.overflow=''};
 document.getElementById('zoomClose').addEventListener('click',closeZoom);
 overlay.addEventListener('click',e=>{if(e.target===overlay)closeZoom()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeZoom()});
-zoomMain.addEventListener('mouseenter',()=>{zoomImg.style.transform='scale(2.4)';zoomMain.classList.add('zoomed')});
-zoomMain.addEventListener('mousemove',e=>{const r=zoomMain.getBoundingClientRect();zoomImg.style.transformOrigin=(((e.clientX-r.left)/r.width)*100)+'% '+(((e.clientY-r.top)/r.height)*100)+'%'});
-zoomMain.addEventListener('mouseleave',()=>{zoomImg.style.transform='scale(1)';zoomMain.classList.remove('zoomed')});
-render();</script></body></html>
+/* ===== FILTROS / ORDEN (intacto) ===== */
+document.querySelectorAll('.filters input').forEach(e=>e.addEventListener('change',render));
+sort.addEventListener('change',render);
+document.getElementById('priceGo').addEventListener('click',render);
+[minPrice,maxPrice].forEach(e=>e.addEventListener('keydown',x=>{if(x.key==='Enter')render()}));
+document.getElementById('filterBtn').addEventListener('click',()=>{const f=document.getElementById('filters');f.style.display=getComputedStyle(f).display==='none'?'block':'none'});
+render();
+</script>
+</body></html>
