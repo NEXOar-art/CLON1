@@ -170,6 +170,20 @@ html,body{max-width:100%;overflow-x:hidden}img{max-width:100%;height:auto}
   .smoke-mute-btn{right:10px;bottom:9px;width:36px;height:36px;font-size:16px}
 }
 
+<style>
+.smoke-top-banner.video-banner{width:100%!important;margin:0!important;height:clamp(130px,16vw,220px)!important;padding:0!important;border:0!important;border-radius:0!important;background:#000!important;box-shadow:none!important;display:grid!important;grid-template-columns:minmax(100px,20%) minmax(0,60%) minmax(100px,20%);align-items:stretch;overflow:hidden!important}
+.smoke-video-center,.smoke-side-carousel{min-width:0;height:100%;background:#000!important;overflow:hidden}
+.smoke-video-center{position:relative;display:flex;align-items:center;justify-content:center}
+.smoke-hero-video{display:block;width:100%;height:100%;object-fit:contain;background:#000!important;border:0!important;outline:0!important;box-shadow:none!important}
+.smoke-side-track{display:flex;height:100%;width:1000%;gap:3px;will-change:transform}
+.smoke-side-item{flex:0 0 10%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000}
+.smoke-side-item img{width:100%;height:100%;object-fit:cover;border:0;display:block}
+.smoke-side-left .smoke-side-track{animation:smokeLeft 25s linear infinite}
+.smoke-side-right .smoke-side-track{animation:smokeRight 25s linear infinite}
+@keyframes smokeLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes smokeRight{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media(max-width:700px){.smoke-top-banner.video-banner{grid-template-columns:16% 68% 16%;height:120px!important}}
+</style>
 </style>
 </style>
 <style id="smoke-grafizona-layout">
@@ -199,10 +213,12 @@ html,body{max-width:100%;overflow-x:hidden}img{max-width:100%;height:auto}
   <header class="header">
     
 <div class="smoke-top-banner video-banner" aria-label="Video principal SMOKE SALE">
-  <video id="smokeHeroVideo" class="smoke-hero-video" autoplay muted playsinline loop preload="auto">
-    <source src="ALZAR LA VOZ.mp4" type="video/mp4">
-  </video>
-  <button id="smokeMuteBtn" class="smoke-mute-btn" type="button" aria-label="Activar sonido" title="Activar sonido">🔇</button>
+  <div class="smoke-side-carousel smoke-side-left"><div class="smoke-side-track" id="smokeSideLeft"></div></div>
+  <div class="smoke-video-center">
+    <video id="smokeHeroVideo" class="smoke-hero-video" autoplay muted playsinline loop preload="auto"><source src="ALZAR LA VOZ.mp4" type="video/mp4"></video>
+    <button id="smokeMuteBtn" class="smoke-mute-btn" type="button" aria-label="Activar sonido" title="Activar sonido">🔇</button>
+  </div>
+  <div class="smoke-side-carousel smoke-side-right"><div class="smoke-side-track" id="smokeSideRight"></div></div>
 </div>
 
     <div class="store-head-row">
@@ -609,4 +625,15 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
+<script>
+(function(){
+const imgs=["SMOKE LOBO.png","ROTING.jpg","VEJE.jpg","MUJER1.jpg","MUJER2.jpg"];
+function build(id,reverse){
+ const el=document.getElementById(id); if(!el)return;
+ const a=reverse?imgs.slice().reverse():imgs.slice();
+ el.innerHTML=a.concat(a).map(s=>'<div class="smoke-side-item"><img src="'+s.replace(/"/g,"&quot;")+'" alt="" draggable="false"></div>').join("");
+}
+build("smokeSideLeft",false);build("smokeSideRight",true);
+})();
+</script>
 </body></html>
