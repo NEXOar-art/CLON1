@@ -123,7 +123,7 @@ html,body{max-width:100%;overflow-x:hidden}img{max-width:100%;height:auto}
 .vertical-scroll-wrap{position:relative;width:100%}.vertical-scroll-track{overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth;scrollbar-width:none}.vertical-scroll-track::-webkit-scrollbar{display:none}.vertical-arrow{position:absolute;right:8px;z-index:20;width:38px;height:38px;border:0;border-radius:50%;background:#111;color:#fff;box-shadow:0 3px 12px #0005;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px}.vertical-arrow.up{top:8px}.vertical-arrow.down{bottom:8px}
 @media(max-width:600px){.slider-arrow{width:36px;height:36px;font-size:21px}.vertical-arrow{width:34px;height:34px;font-size:19px}}
 <style>
-.smoke-top-banner{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);height:clamp(120px,22vw,250px);overflow:hidden;border:0!important;border-radius:0!important;padding:0!important;display:flex;align-items:center;justify-content:center;background:#000}.smoke-top-banner img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;border:0!important;border-radius:0!important}@media(max-width:600px){.smoke-top-banner{height:clamp(105px,30vw,170px)}}
+.smoke-top-banner{width:100%;margin-left:0;margin-right:0;height:clamp(100px,13vw,205px);overflow:hidden;border:0!important;border-radius:0!important;padding:0!important;display:flex;align-items:center;justify-content:center;background:#fff!important;box-shadow:none!important}.smoke-top-banner img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;border:0!important;border-radius:0!important}@media(max-width:600px){.smoke-top-banner{height:clamp(105px,30vw,170px)}}
 .smoke-payment-methods{width:100%;margin:38px auto 0;padding:28px 16px;text-align:center;box-sizing:border-box}.smoke-payment-methods h2{margin:0 0 18px;font-size:20px;letter-spacing:2px}.payment-logos{display:flex;justify-content:center;align-items:stretch;gap:14px;flex-wrap:wrap}.payment-item{min-width:150px;min-height:64px;padding:10px 15px;box-sizing:border-box;border:1px solid #ddd;border-radius:12px;background:#fff;color:#222;display:flex;align-items:center;justify-content:center;gap:10px;text-align:left;box-shadow:0 3px 12px #0001}.payment-icon{font-size:27px;line-height:1}.payment-mark{width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:17px}.payment-item.mp .payment-mark{background:#dff3ff;color:#0878b9}.payment-item.uala .payment-mark{background:#111;color:#fff}.payment-item.naranja .payment-mark{background:#ff7900;color:#fff}@media(max-width:600px){.smoke-payment-methods{padding:24px 10px}.payment-logos{gap:9px}.payment-item{min-width:140px;flex:1 1 140px}}
 /* === VIDEO HERO: reemplaza únicamente el banner superior === */
 .smoke-top-banner.video-banner{
@@ -142,17 +142,7 @@ html,body{max-width:100%;overflow-x:hidden}img{max-width:100%;height:auto}
   justify-content:center;
   box-shadow:none!important;
 }
-.smoke-hero-video{
-  display:block;
-  width:100%;
-  height:100%;
-  max-width:none;
-  object-fit:contain;
-  object-position:center;
-  background:#fff;
-  border:0!important;
-  outline:0!important;
-}
+.smoke-hero-video{display:block;width:100%;height:100%;max-width:none;object-fit:contain;object-position:center;background:#fff;border:0!important;outline:0!important;box-shadow:none!important}
 .smoke-mute-btn{
   position:absolute;
   right:18px;
@@ -191,7 +181,7 @@ html,body{max-width:100%;overflow-x:hidden}img{max-width:100%;height:auto}
 .store-actions{grid-template-columns:minmax(260px,1fr) auto!important}
 .payment-logos-top .payment-item{gap:7px}
 .payment-real-logo{display:block;width:auto;height:34px;max-width:112px;object-fit:contain;object-position:center;image-rendering:auto}
-.smoke-top-banner{height:clamp(100px,13vw,205px)!important;background:#050505;}
+.smoke-top-banner{width:100%!important;margin-left:0!important;margin-right:0!important;height:clamp(100px,13vw,205px)!important;background:#fff!important;border:0!important;box-shadow:none!important}
 .smoke-top-banner img{width:100%;height:100%;object-fit:contain!important;object-position:center!important;image-rendering:auto;}
 .modal-image-viewer{position:relative;min-width:0;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;min-height:320px}
 .modal-product-image{transition:transform .25s ease;transform-origin:center center;cursor:zoom-in;user-select:none;-webkit-user-drag:none}
@@ -209,7 +199,7 @@ html,body{max-width:100%;overflow-x:hidden}img{max-width:100%;height:auto}
   <header class="header">
     
 <div class="smoke-top-banner video-banner" aria-label="Video principal SMOKE SALE">
-  <video id="smokeHeroVideo" class="smoke-hero-video" autoplay muted playsinline preload="auto">
+  <video id="smokeHeroVideo" class="smoke-hero-video" autoplay muted playsinline loop preload="auto">
     <source src="ALZAR LA VOZ.mp4" type="video/mp4">
   </video>
   <button id="smokeMuteBtn" class="smoke-mute-btn" type="button" aria-label="Activar sonido" title="Activar sonido">🔇</button>
