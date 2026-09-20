@@ -124,7 +124,63 @@ html,body{max-width:100%;overflow-x:hidden}img{max-width:100%;height:auto}
 @media(max-width:600px){.slider-arrow{width:36px;height:36px;font-size:21px}.vertical-arrow{width:34px;height:34px;font-size:19px}}
 <style>
 .smoke-top-banner{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);height:clamp(120px,22vw,250px);overflow:hidden;border:0!important;border-radius:0!important;padding:0!important;display:flex;align-items:center;justify-content:center;background:#000}.smoke-top-banner img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;border:0!important;border-radius:0!important}@media(max-width:600px){.smoke-top-banner{height:clamp(105px,30vw,170px)}}
-.smoke-payment-methods{width:100%;margin:38px auto 0;padding:28px 16px;text-align:center;box-sizing:border-box}.smoke-payment-methods h2{margin:0 0 18px;font-size:20px;letter-spacing:2px}.payment-logos{display:flex;justify-content:center;align-items:stretch;gap:14px;flex-wrap:wrap}.payment-item{min-width:150px;min-height:64px;padding:10px 15px;box-sizing:border-box;border:1px solid #ddd;border-radius:12px;background:#fff;color:#222;display:flex;align-items:center;justify-content:center;gap:10px;text-align:left;box-shadow:0 3px 12px #0001}.payment-icon{font-size:27px;line-height:1}.payment-mark{width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:17px}.payment-item.mp .payment-mark{background:#dff3ff;color:#0878b9}.payment-item.uala .payment-mark{background:#111;color:#fff}.payment-item.naranja .payment-mark{background:#ff7900;color:#fff}@media(max-width:600px){.smoke-payment-methods{padding:24px 10px}.payment-logos{gap:9px}.payment-item{min-width:140px;flex:1 1 140px}}</style>
+.smoke-payment-methods{width:100%;margin:38px auto 0;padding:28px 16px;text-align:center;box-sizing:border-box}.smoke-payment-methods h2{margin:0 0 18px;font-size:20px;letter-spacing:2px}.payment-logos{display:flex;justify-content:center;align-items:stretch;gap:14px;flex-wrap:wrap}.payment-item{min-width:150px;min-height:64px;padding:10px 15px;box-sizing:border-box;border:1px solid #ddd;border-radius:12px;background:#fff;color:#222;display:flex;align-items:center;justify-content:center;gap:10px;text-align:left;box-shadow:0 3px 12px #0001}.payment-icon{font-size:27px;line-height:1}.payment-mark{width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:17px}.payment-item.mp .payment-mark{background:#dff3ff;color:#0878b9}.payment-item.uala .payment-mark{background:#111;color:#fff}.payment-item.naranja .payment-mark{background:#ff7900;color:#fff}@media(max-width:600px){.smoke-payment-methods{padding:24px 10px}.payment-logos{gap:9px}.payment-item{min-width:140px;flex:1 1 140px}}
+/* === VIDEO HERO: reemplaza únicamente el banner superior === */
+.smoke-top-banner.video-banner{
+  position:relative;
+  width:100vw;
+  margin-left:calc(50% - 50vw);
+  margin-right:calc(50% - 50vw);
+  height:clamp(100px,13vw,205px);
+  overflow:hidden;
+  background:#fff!important;
+  border:0!important;
+  border-radius:0!important;
+  padding:0!important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:none!important;
+}
+.smoke-hero-video{
+  display:block;
+  width:100%;
+  height:100%;
+  max-width:none;
+  object-fit:contain;
+  object-position:center;
+  background:#fff;
+  border:0!important;
+  outline:0!important;
+}
+.smoke-mute-btn{
+  position:absolute;
+  right:18px;
+  bottom:14px;
+  z-index:5;
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:#111c;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:19px;
+  line-height:1;
+  box-shadow:0 3px 12px #0003;
+  backdrop-filter:blur(3px);
+  transition:transform .2s ease,background .2s ease;
+}
+.smoke-mute-btn:hover{transform:scale(1.07);background:#111e}
+@media(max-width:600px){
+  .smoke-top-banner.video-banner{height:120px!important}
+  .smoke-mute-btn{right:10px;bottom:9px;width:36px;height:36px;font-size:16px}
+}
+
+</style>
 </style>
 <style id="smoke-grafizona-layout">
 /* Estructura visual inspirada en la referencia suministrada */
@@ -151,7 +207,14 @@ html,body{max-width:100%;overflow-x:hidden}img{max-width:100%;height:auto}
 </head><body>
 <div class="page smoke-page">
   <header class="header">
-    <div class="smoke-top-banner"><img src="LOGO SMOKE5.jpg" alt="SMOKE SALE"></div>
+    
+<div class="smoke-top-banner video-banner" aria-label="Video principal SMOKE SALE">
+  <video id="smokeHeroVideo" class="smoke-hero-video" autoplay muted playsinline preload="auto">
+    <source src="ALZAR LA VOZ.mp4" type="video/mp4">
+  </video>
+  <button id="smokeMuteBtn" class="smoke-mute-btn" type="button" aria-label="Activar sonido" title="Activar sonido">🔇</button>
+</div>
+
     <div class="store-head-row">
       <div class="brand">
         <h1>SMOKE SALE</h1>
@@ -459,4 +522,101 @@ function enhance(){
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',enhance);else enhance();window.addEventListener('resize',function(){clearTimeout(window.__smokeT);window.__smokeT=setTimeout(enhance,150)});
 })();
 </script>
+
+<script>
+(function(){
+  const video = document.getElementById('smokeHeroVideo');
+  const muteBtn = document.getElementById('smokeMuteBtn');
+  if(!video || !muteBtn) return;
+
+  const FADE_SECONDS = 2.2;
+  let fading = false;
+  let fadeStart = 0;
+  let userVolume = 1;
+
+  function setButton(){
+    if(video.muted || video.volume === 0){
+      muteBtn.textContent = '🔇';
+      muteBtn.setAttribute('aria-label','Activar sonido');
+      muteBtn.title = 'Activar sonido';
+    }else{
+      muteBtn.textContent = '🔊';
+      muteBtn.setAttribute('aria-label','Silenciar video');
+      muteBtn.title = 'Silenciar video';
+    }
+  }
+
+  function startFade(){
+    if(fading) return;
+    fading = true;
+    fadeStart = performance.now();
+    userVolume = video.volume || 1;
+    requestAnimationFrame(fadeFrame);
+  }
+
+  function fadeFrame(now){
+    if(!fading) return;
+    const elapsed = (now - fadeStart) / 1000;
+    const progress = Math.min(1, elapsed / FADE_SECONDS);
+    video.volume = Math.max(0, userVolume * (1 - progress));
+
+    if(progress < 1){
+      requestAnimationFrame(fadeFrame);
+    }else{
+      fading = false;
+      video.pause();
+      video.currentTime = 0;
+      video.volume = video.muted ? 0 : userVolume;
+
+      // Reinicio con una entrada suave de volumen si el sonido está habilitado.
+      video.play().then(function(){
+        if(!video.muted){
+          const target = userVolume;
+          video.volume = 0;
+          const start = performance.now();
+          function volumeIn(t){
+            const p = Math.min(1,(t-start)/700);
+            video.volume = target*p;
+            if(p<1) requestAnimationFrame(volumeIn);
+          }
+          requestAnimationFrame(volumeIn);
+        }
+      }).catch(function(){});
+    }
+  }
+
+  video.addEventListener('timeupdate', function(){
+    if(video.duration && video.currentTime >= video.duration - FADE_SECONDS){
+      startFade();
+    }
+  });
+
+  video.addEventListener('ended', function(){
+    if(!fading) {
+      video.currentTime = 0;
+      video.play().catch(function(){});
+    }
+  });
+
+  muteBtn.addEventListener('click', function(){
+    if(video.muted || video.volume === 0){
+      video.muted = false;
+      video.volume = userVolume || 1;
+    }else{
+      userVolume = video.volume || 1;
+      video.muted = true;
+      video.volume = 0;
+    }
+    setButton();
+    video.play().catch(function(){});
+  });
+
+  // Ensure autoplay attempts immediately and remains compatible with browser policies.
+  video.muted = true;
+  video.volume = 0;
+  setButton();
+  video.play().catch(function(){});
+})();
+</script>
+
 </body></html>
