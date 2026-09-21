@@ -170,6 +170,20 @@ html,body{max-width:100%;overflow-x:hidden}img{max-width:100%;height:auto}
   .smoke-mute-btn{right:10px;bottom:9px;width:36px;height:36px;font-size:16px}
 }
 
+<style>
+.smoke-top-banner.video-banner{width:100%!important;margin:0!important;height:clamp(130px,16vw,220px)!important;padding:0!important;border:0!important;border-radius:0!important;background:#000!important;box-shadow:none!important;display:grid!important;grid-template-columns:minmax(100px,20%) minmax(0,60%) minmax(100px,20%);align-items:stretch;overflow:hidden!important}
+.smoke-video-center,.smoke-side-carousel{min-width:0;height:100%;background:#000!important;overflow:hidden}
+.smoke-video-center{position:relative;display:flex;align-items:center;justify-content:center}
+.smoke-hero-video{display:block;width:100%;height:100%;object-fit:contain;background:#000!important;border:0!important;outline:0!important;box-shadow:none!important}
+.smoke-side-track{display:flex;height:100%;width:1000%;gap:3px;will-change:transform}
+.smoke-side-item{flex:0 0 10%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000}
+.smoke-side-item img{width:100%;height:100%;object-fit:cover;border:0;display:block}
+.smoke-side-left .smoke-side-track{animation:smokeLeft 25s linear infinite}
+.smoke-side-right .smoke-side-track{animation:smokeRight 25s linear infinite}
+@keyframes smokeLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes smokeRight{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media(max-width:700px){.smoke-top-banner.video-banner{grid-template-columns:16% 68% 16%;height:120px!important}}
+</style>
 </style>
 </style>
 <style id="smoke-grafizona-layout">
@@ -194,29 +208,29 @@ html,body{max-width:100%;overflow-x:hidden}img{max-width:100%;height:auto}
 @media(max-width:600px){.store-actions{grid-template-columns:1fr auto!important}.payment-real-logo{height:29px;max-width:90px}.smoke-top-banner{height:120px!important}.modal-image-viewer{min-height:260px}}
 
 </style>
-<style id="smoke-video-carousel-final">
-.smoke-top-banner.video-banner{width:100%!important;margin:0!important;height:clamp(100px,13vw,205px)!important;overflow:hidden!important;background:#000!important;border:0!important;border-radius:0!important;padding:0!important;box-shadow:none!important;display:block!important}
-.smoke-banner-track{width:100%;height:100%;display:grid;grid-template-columns:1fr 2fr 1fr;gap:0;background:#000}
-.smoke-side,.smoke-video-center{height:100%;min-width:0;min-height:0;position:relative;overflow:hidden;background:#000}
-.smoke-side-img,.smoke-hero-video{display:block;width:100%;height:100%;object-fit:cover;object-position:center;border:0!important;outline:0!important;box-shadow:none!important}
-.smoke-hero-video{background:#000}
-.smoke-mute-btn{position:absolute;right:10px;bottom:10px;z-index:5;width:38px;height:38px;border:0;border-radius:50%;background:#111c;color:#fff;cursor:pointer;font-size:17px}
-.smoke-side-img{transition:opacity .55s ease}
-@media(max-width:700px){.smoke-banner-track{grid-template-columns:1fr 1.7fr 1fr}.smoke-top-banner.video-banner{height:120px!important}.smoke-mute-btn{width:32px;height:32px;font-size:15px}}
+
+<style id="smoke-carousel-black-final">
+.smoke-top-banner.video-banner,.smoke-banner-track,.smoke-side,.smoke-video-center{background:#000!important;border:0!important;outline:0!important;box-shadow:none!important}
+.smoke-top-banner.video-banner{width:100%!important;margin:0!important;padding:0!important;overflow:hidden!important}
+.smoke-banner-track{width:100%;height:100%;display:grid;grid-template-columns:1fr 2fr 1fr;gap:0}
+.smoke-side,.smoke-video-center{height:100%;min-width:0;min-height:0;position:relative;overflow:hidden}
+.smoke-side-img,.smoke-hero-video{display:block;width:100%;height:100%;object-fit:cover;object-position:center;border:0!important;outline:0!important;box-shadow:none!important;background:#000!important}
+.smoke-side-img{transition:opacity .6s ease,transform .6s ease}
+.smoke-hero-video{background:#000!important}
+@media(max-width:700px){.smoke-banner-track{grid-template-columns:1fr 1.7fr 1fr}}
 </style>
+
 </head><body>
 <div class="page smoke-page">
   <header class="header">
     
-<div class="smoke-top-banner video-banner" aria-label="Banner SMOKE SALE">
-  <div class="smoke-banner-track">
-    <div class="smoke-side"><img class="smoke-side-img" src="SMOKE LOBO.png" alt=""></div>
-    <div class="smoke-video-center">
-      <video id="smokeHeroVideo" class="smoke-hero-video" autoplay muted playsinline loop preload="auto"><source src="ALZAR LA VOZ.mp4" type="video/mp4"></video>
-      <button id="smokeMuteBtn" class="smoke-mute-btn" type="button" aria-label="Activar sonido">🔇</button>
-    </div>
-    <div class="smoke-side"><img class="smoke-side-img" src="ROTING.jpg" alt=""></div>
+<div class="smoke-top-banner video-banner" aria-label="Video principal SMOKE SALE">
+  <div class="smoke-side-carousel smoke-side-left"><div class="smoke-side-track" id="smokeSideLeft"></div></div>
+  <div class="smoke-video-center">
+    <video id="smokeHeroVideo" class="smoke-hero-video" autoplay muted playsinline loop preload="auto"><source src="ALZAR LA VOZ.mp4" type="video/mp4"></video>
+    <button id="smokeMuteBtn" class="smoke-mute-btn" type="button" aria-label="Activar sonido" title="Activar sonido">🔇</button>
   </div>
+  <div class="smoke-side-carousel smoke-side-right"><div class="smoke-side-track" id="smokeSideRight"></div></div>
 </div>
 
     <div class="store-head-row">
@@ -624,6 +638,36 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 </script>
 
 <script>
-(function(){const v=document.getElementById('smokeHeroVideo'),b=document.getElementById('smokeMuteBtn'),imgs=document.querySelectorAll('.smoke-side-img');if(!v||!b||imgs.length<2)return;const a=['SMOKE LOBO.png','ROTING.jpg','VEJE.jpg','MUJER1.jpg','MUJER2.jpg'];let i=0;setInterval(()=>{i=(i+1)%a.length;imgs[0].style.opacity=0;imgs[1].style.opacity=0;setTimeout(()=>{imgs[0].src=a[i];imgs[1].src=a[(i+1)%a.length];imgs[0].style.opacity=1;imgs[1].style.opacity=1},550)},4200);let vol=1,f=false;function fade(){if(f)return;f=true;vol=v.volume||1;let st=performance.now();function x(t){let p=Math.min(1,(t-st)/2200);v.volume=vol*(1-p);if(p<1)requestAnimationFrame(x);else{v.currentTime=0;v.volume=v.muted?0:vol;v.play().catch(()=>{});f=false}}requestAnimationFrame(x)}v.addEventListener('timeupdate',()=>{if(v.duration&&v.currentTime>=v.duration-2.2)fade()});b.onclick=()=>{v.muted=!v.muted;if(!v.muted)v.volume=vol||1;else v.volume=0;b.textContent=v.muted?'🔇':'🔊';v.play().catch(()=>{})};v.muted=true;v.volume=0;v.play().catch(()=>{})})();
+(function(){
+const imgs=["SMOKE LOBO.png","ROTING.jpg","VEJE.jpg","MUJER1.jpg","MUJER2.jpg"];
+function build(id,reverse){
+ const el=document.getElementById(id); if(!el)return;
+ const a=reverse?imgs.slice().reverse():imgs.slice();
+ el.innerHTML=a.concat(a).map(s=>'<div class="smoke-side-item"><img src="'+s.replace(/"/g,"&quot;")+'" alt="" draggable="false"></div>').join("");
+}
+build("smokeSideLeft",false);build("smokeSideRight",true);
+})();
 </script>
+
+<script id="smoke-side-carousel-final">
+(function(){
+  const imgs=["SMOKE LOBO.png","BLACK 10%.png","BLACK DISEÑO.png","DISEÑOS UNICOS.png","MUJER BLACK3.png","CHICA Y CHICO BLACK.png"];
+  const sides=document.querySelectorAll(".smoke-side-img");
+  if(!sides.length)return;
+  let index=0;
+  function next(){
+    sides.forEach(function(img,offset){
+      const src=imgs[(index+offset)%imgs.length];
+      img.style.opacity="0";
+      setTimeout(function(){
+        img.src=src;
+        img.onload=function(){img.style.opacity="1"};
+      },300);
+    });
+    index=(index+2)%imgs.length;
+  }
+  setInterval(next,3500);
+})();
+</script>
+
 </body></html>
