@@ -170,20 +170,6 @@ html,body{max-width:100%;overflow-x:hidden}img{max-width:100%;height:auto}
   .smoke-mute-btn{right:10px;bottom:9px;width:36px;height:36px;font-size:16px}
 }
 
-<style>
-.smoke-top-banner.video-banner{width:100%!important;margin:0!important;height:clamp(130px,16vw,220px)!important;padding:0!important;border:0!important;border-radius:0!important;background:#000!important;box-shadow:none!important;display:grid!important;grid-template-columns:minmax(100px,20%) minmax(0,60%) minmax(100px,20%);align-items:stretch;overflow:hidden!important}
-.smoke-video-center,.smoke-side-carousel{min-width:0;height:100%;background:#000!important;overflow:hidden}
-.smoke-video-center{position:relative;display:flex;align-items:center;justify-content:center}
-.smoke-hero-video{display:block;width:100%;height:100%;object-fit:contain;background:#000!important;border:0!important;outline:0!important;box-shadow:none!important}
-.smoke-side-track{display:flex;height:100%;width:1000%;gap:3px;will-change:transform}
-.smoke-side-item{flex:0 0 10%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000}
-.smoke-side-item img{width:100%;height:100%;object-fit:cover;border:0;display:block}
-.smoke-side-left .smoke-side-track{animation:smokeLeft 25s linear infinite}
-.smoke-side-right .smoke-side-track{animation:smokeRight 25s linear infinite}
-@keyframes smokeLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes smokeRight{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-@media(max-width:700px){.smoke-top-banner.video-banner{grid-template-columns:16% 68% 16%;height:120px!important}}
-</style>
 </style>
 </style>
 <style id="smoke-grafizona-layout">
@@ -209,30 +195,117 @@ html,body{max-width:100%;overflow-x:hidden}img{max-width:100%;height:auto}
 
 </style>
 
-<style id="smoke-carousel-black-final">
-.smoke-top-banner.video-banner,.smoke-banner-track,.smoke-side,.smoke-video-center{background:#000!important;border:0!important;outline:0!important;box-shadow:none!important}
-.smoke-top-banner.video-banner{width:100%!important;margin:0!important;padding:0!important;overflow:hidden!important}
-.smoke-banner-track{width:100%;height:100%;display:grid;grid-template-columns:1fr 2fr 1fr;gap:0}
-.smoke-side,.smoke-video-center{height:100%;min-width:0;min-height:0;position:relative;overflow:hidden}
-.smoke-side-img,.smoke-hero-video{display:block;width:100%;height:100%;object-fit:cover;object-position:center;border:0!important;outline:0!important;box-shadow:none!important;background:#000!important}
-.smoke-side-img{transition:opacity .6s ease,transform .6s ease}
-.smoke-hero-video{background:#000!important}
-@media(max-width:700px){.smoke-banner-track{grid-template-columns:1fr 1.7fr 1fr}}
+<style id="smoke-video-side-carousel-final">
+/* Banner negro: laterales + video central protagonista */
+.smoke-top-banner.video-banner{
+  width:100%!important;
+  margin:0!important;
+  height:clamp(150px,17vw,245px)!important;
+  overflow:hidden!important;
+  background:#000!important;
+  border:0!important;
+  border-radius:0!important;
+  padding:0!important;
+  box-shadow:none!important;
+  display:block!important;
+}
+.smoke-banner-track{
+  width:100%;
+  height:100%;
+  display:grid;
+  grid-template-columns:20% 60% 20%;
+  gap:0;
+  background:#000!important;
+}
+.smoke-side-carousel,
+.smoke-video-center{
+  height:100%;
+  min-width:0;
+  min-height:0;
+  position:relative;
+  overflow:hidden;
+  background:#000!important;
+}
+.smoke-side-img,
+.smoke-hero-video{
+  display:block;
+  width:100%;
+  height:100%;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+}
+.smoke-side-img{
+  object-fit:cover;
+  object-position:center;
+  background:#000;
+  opacity:1;
+  transform:scale(1.01);
+  transition:opacity .65s ease,transform 3.5s ease;
+}
+.smoke-side-img.smoke-fading{
+  opacity:0;
+  transform:scale(1.04);
+}
+.smoke-hero-video{
+  object-fit:cover;
+  object-position:center;
+  background:#000!important;
+}
+.smoke-mute-btn{
+  position:absolute;
+  right:12px;
+  bottom:10px;
+  z-index:10;
+  width:40px;
+  height:40px;
+  border:0;
+  border-radius:50%;
+  background:#111d;
+  color:#fff;
+  cursor:pointer;
+  font-size:18px;
+  line-height:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 2px 10px #0008;
+  backdrop-filter:blur(3px);
+}
+.smoke-mute-btn:hover{transform:scale(1.06)}
+@media(max-width:700px){
+  .smoke-top-banner.video-banner{height:125px!important}
+  .smoke-banner-track{grid-template-columns:15% 70% 15%}
+  .smoke-mute-btn{width:32px;height:32px;font-size:15px;right:7px;bottom:7px}
+}
+@media(max-width:420px){
+  .smoke-top-banner.video-banner{height:110px!important}
+  .smoke-banner-track{grid-template-columns:12% 76% 12%}
+}
 </style>
 
 </head><body>
 <div class="page smoke-page">
   <header class="header">
     
-<div class="smoke-top-banner video-banner" aria-label="Video principal SMOKE SALE">
-  <div class="smoke-side-carousel smoke-side-left"><div class="smoke-side-track" id="smokeSideLeft"></div></div>
-  <div class="smoke-video-center">
-    <video id="smokeHeroVideo" class="smoke-hero-video" autoplay muted playsinline loop preload="auto"><source src="ALZAR LA VOZ.mp4" type="video/mp4"></video>
-    <button id="smokeMuteBtn" class="smoke-mute-btn" type="button" aria-label="Activar sonido" title="Activar sonido">🔇</button>
-  </div>
-  <div class="smoke-side-carousel smoke-side-right"><div class="smoke-side-track" id="smokeSideRight"></div></div>
-</div>
+<div class="smoke-top-banner video-banner" aria-label="Banner principal SMOKE SALE">
+  <div class="smoke-banner-track">
+    <div class="smoke-side-carousel smoke-side-left">
+      <img class="smoke-side-img" id="smokeSideLeftImg" src="SMOKE LOBO.png" alt="" draggable="false">
+    </div>
 
+    <div class="smoke-video-center">
+      <video id="smokeHeroVideo" class="smoke-hero-video" autoplay muted playsinline loop preload="auto">
+        <source src="ALZAR LA VOZ.mp4" type="video/mp4">
+      </video>
+      <button id="smokeMuteBtn" class="smoke-mute-btn" type="button" aria-label="Activar sonido" title="Activar sonido">🔇</button>
+    </div>
+
+    <div class="smoke-side-carousel smoke-side-right">
+      <img class="smoke-side-img" id="smokeSideRightImg" src="BLACK 10%.png" alt="" draggable="false">
+    </div>
+  </div>
+</div>
     <div class="store-head-row">
       <div class="brand">
         <h1>SMOKE SALE</h1>
@@ -637,36 +710,117 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
-<script>
-(function(){
-const imgs=["SMOKE LOBO.png","ROTING.jpg","VEJE.jpg","MUJER1.jpg","MUJER2.jpg"];
-function build(id,reverse){
- const el=document.getElementById(id); if(!el)return;
- const a=reverse?imgs.slice().reverse():imgs.slice();
- el.innerHTML=a.concat(a).map(s=>'<div class="smoke-side-item"><img src="'+s.replace(/"/g,"&quot;")+'" alt="" draggable="false"></div>').join("");
-}
-build("smokeSideLeft",false);build("smokeSideRight",true);
-})();
-</script>
 
 <script id="smoke-side-carousel-final">
 (function(){
-  const imgs=["SMOKE LOBO.png","BLACK 10%.png","BLACK DISEÑO.png","DISEÑOS UNICOS.png","MUJER BLACK3.png","CHICA Y CHICO BLACK.png"];
-  const sides=document.querySelectorAll(".smoke-side-img");
-  if(!sides.length)return;
-  let index=0;
-  function next(){
-    sides.forEach(function(img,offset){
-      const src=imgs[(index+offset)%imgs.length];
-      img.style.opacity="0";
-      setTimeout(function(){
-        img.src=src;
-        img.onload=function(){img.style.opacity="1"};
-      },300);
-    });
-    index=(index+2)%imgs.length;
+  const video = document.getElementById('smokeHeroVideo');
+  const muteBtn = document.getElementById('smokeMuteBtn');
+  const left = document.getElementById('smokeSideLeftImg');
+  const right = document.getElementById('smokeSideRightImg');
+  if(!video || !muteBtn || !left || !right) return;
+
+  const images = [
+    "SMOKE LOBO.png",
+    "BLACK 10%.png",
+    "BLACK DISEÑO.png",
+    "DISEÑOS UNICOS.png",
+    "MUJER BLACK3.png",
+    "CHICA Y CHICO BLACK.png"
+  ];
+
+  let index = 0;
+  const intervalMs = 3500;
+
+  function changeImage(img, src){
+    img.classList.add('smoke-fading');
+    setTimeout(function(){
+      img.src = src;
+      img.onload = function(){
+        requestAnimationFrame(function(){
+          img.classList.remove('smoke-fading');
+        });
+      };
+      // Si el navegador ya tiene la imagen en caché.
+      if(img.complete) requestAnimationFrame(function(){
+        img.classList.remove('smoke-fading');
+      });
+    }, 550);
   }
-  setInterval(next,3500);
+
+  function advanceSides(){
+    const leftSrc = images[index % images.length];
+    const rightSrc = images[(index + 1) % images.length];
+    changeImage(left, leftSrc);
+    changeImage(right, rightSrc);
+    index = (index + 2) % images.length;
+  }
+
+  // El carrusel comienza mostrando las dos primeras imágenes y luego avanza solo.
+  setInterval(advanceSides, intervalMs);
+
+  // Control de sonido.
+  let userVolume = 1;
+  muteBtn.addEventListener('click', function(){
+    if(video.muted || video.volume === 0){
+      video.muted = false;
+      video.volume = userVolume || 1;
+      muteBtn.textContent = '🔊';
+      muteBtn.setAttribute('aria-label','Silenciar video');
+      muteBtn.title = 'Silenciar video';
+    }else{
+      userVolume = video.volume || 1;
+      video.muted = true;
+      video.volume = 0;
+      muteBtn.textContent = '🔇';
+      muteBtn.setAttribute('aria-label','Activar sonido');
+      muteBtn.title = 'Activar sonido';
+    }
+    video.play().catch(function(){});
+  });
+
+  // Autoplay compatible con navegadores: inicia sin sonido.
+  video.muted = true;
+  video.volume = 0;
+  video.play().catch(function(){});
+
+  // Loop visual continuo con bajada de volumen antes del final.
+  let fading = false;
+  const FADE_SECONDS = 2.2;
+
+  function softLoop(){
+    if(fading || !video.duration) return;
+    fading = true;
+    const startVolume = video.muted ? 0 : (video.volume || userVolume || 1);
+    const startTime = performance.now();
+
+    function frame(now){
+      const p = Math.min(1, (now-startTime)/(FADE_SECONDS*1000));
+      if(!video.muted) video.volume = startVolume*(1-p);
+
+      if(p < 1){
+        requestAnimationFrame(frame);
+      }else{
+        video.currentTime = 0;
+        if(!video.muted){
+          video.volume = 0;
+          const volStart = performance.now();
+          function fadeIn(t){
+            const q = Math.min(1,(t-volStart)/700);
+            video.volume = startVolume*q;
+            if(q < 1) requestAnimationFrame(fadeIn);
+          }
+          requestAnimationFrame(fadeIn);
+        }
+        video.play().catch(function(){});
+        fading = false;
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  video.addEventListener('timeupdate', function(){
+    if(video.duration && video.currentTime >= video.duration-FADE_SECONDS) softLoop();
+  });
 })();
 </script>
 
